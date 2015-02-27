@@ -1,5 +1,12 @@
 source 'https://rubygems.org'
 
+# Use devise for user login/logout/etc.
+gem 'devise', '>=3.2.4'
+
+#Bourbon and neat-grid framework and mixins
+gem 'bourbon'
+gem 'neat'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 
