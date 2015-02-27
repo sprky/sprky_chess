@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  state: MyString
+  white_player_id: 1
+  black_player_id: 1
+  winning_player_id: 1
+
+two:
+  name: MyString
+  state: MyString
+  white_player_id: 1
+  black_player_id: 1
+  winning_player_id: 1
