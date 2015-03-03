@@ -1,0 +1,13 @@
+.container {
+	@include outer-container;
+}
+
+nav {
+	@include span-columns(12);
+	background-color: #DDDDFF;
+
+	.navbar-right {
+		@include span-columns(6);
+		float: right;
+	}
+}
