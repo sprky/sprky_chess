@@ -5,15 +5,16 @@
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
+
+  
+
 </head>
 <body>
 	<div class='container'>
 		<nav class='navbar'>
 			<div class='navbar-right'>
-				<%= link_to 'Join Game', '#' %>  <!-- trigger javascript ajax call -->
-				<div class='modal'>
-					<input type='text' placeholder='Game ID' name='game_id' />
-				</div>
+				<%= link_to 'Join Game', '#', :class => 'join-game-link' %>  <!-- trigger javascript ajax call -->
+				<input type='text' placeholder='Game ID' name='game_id' />
 				<% if current_player %>
 					<%= link_to 'Sign Out', destroy_player_session_path, :method => :delete %>
 					<%= link_to current_player.email, '#' %>
@@ -33,23 +34,24 @@
 
 	</div>
 
+<script>
+  $(document).ready( function() {
+
+  	// this will be triggered by clicking join game
+  	$('.join-game-link').click( function()  {
+  		var game_id = $("input[name='game_id']").val();
+  		alert(game_id);
+  		// include ajax call, 'put', :game_id, :player_id
+  		// return path should be /game/:id
+
+  	});
+
+  });
+
+</script>
+
 </body>
 
 
-<script>
-$(document).ready( function() {
 
-	// this will be triggered by clicking join game
-	// function joinGame()
-	$("input[name='game_id']").change( function() {
-		var game_id = $("input[name='game_id']").val();
-		alert(game_id);
-		// include ajax call, 'put', :game_id, :player_id
-		// return path should be /game/:id
-
-	});
-
-});
-
-</script>
 </html>

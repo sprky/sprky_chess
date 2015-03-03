@@ -4,10 +4,16 @@
 
 nav {
 	@include span-columns(12);
-	background-color: #DDDDFF;
+	background-color: #6666EE;
+	height: 2em;
 
 	.navbar-right {
 		@include span-columns(6);
 		float: right;
 	}
+
+	* {
+		display: inline-block;
+	}
+
 }
