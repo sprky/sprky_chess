@@ -3,7 +3,9 @@
 one:
   name: MyString
   color: false
+  email: abc@example.com
 
 two:
   name: MyString
   color: false
+  email: def@example.com
