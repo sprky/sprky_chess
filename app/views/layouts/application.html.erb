@@ -10,18 +10,22 @@
 
 </head>
 <body>
-	<div class='container'>
+	<div class='container main-container'>
 		<nav class='navbar'>
 			<div class='navbar-right'>
-				<%= link_to 'Select Game', '#', :class => 'join-game-link' %>  <!-- trigger javascript ajax call -->
-				<input type='text' placeholder='Game ID' name='game_id' />
-				<% if current_player %>
-					<%= link_to 'Sign Out', destroy_player_session_path, :method => :delete %>
-					<%= link_to current_player.email, '#' %>
-				<% else %>
-					<%= link_to 'Sign In', new_player_session_path %>
-					<%= link_to 'Sign Up', new_player_registration_path %>
-				<% end %>
+				<ul>
+					<li><%= link_to 'Select Game', '#', :class => 'join-game-link' %> </li> <!-- trigger javascript ajax call -->
+					<li>
+						<input type='text' placeholder='Game ID' name='game_id' />
+					</li>
+					<% if current_player %>
+						<li><%= link_to 'Sign Out', destroy_player_session_path, :method => :delete %></li>
+						<li><%= link_to current_player.email, '#' %></li>
+					<% else %>
+						<li><%= link_to 'Sign In', new_player_session_path %></li>
+						<li><%= link_to 'Sign Up', new_player_registration_path %></li>
+					<% end %>
+				</ul>
 			</div>
 		</nav>
 

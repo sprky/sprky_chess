@@ -2,9 +2,10 @@
 	@include outer-container;
 }
 
+
 nav {
 	@include span-columns(12);
-	background-color: #6666EE;
+	background-color: #ff0000;
 	height: 2em;
 
 	.navbar-right {
@@ -16,8 +17,16 @@ nav {
 		display: inline-block;
 	}
 
+	li {
+		margin: 0 5px;
+	}
 }
 
+
+
+/**********************************************
+		GAMEBOARD STYLING 
+ **********************************************/
 
 #gameboard {
 
@@ -40,3 +49,15 @@ nav {
 	}
 
 }
+
+/**********************************************
+		TEXT STYLING 
+ **********************************************/
+
+a,
+a:visited {
+	color: #000000;
+	text-decoration: none;
+
+}
+
