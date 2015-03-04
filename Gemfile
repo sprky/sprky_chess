@@ -42,6 +42,12 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+group :test do 
+	# test factory
+	gem "factory_girl_rails", "~> 4.0"
+
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
