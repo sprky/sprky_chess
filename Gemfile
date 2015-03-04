@@ -3,9 +3,14 @@ source 'https://rubygems.org'
 # Use devise for user login/logout/etc.
 gem 'devise', '>=3.2.4'
 
-#Bourbon and neat-grid framework and mixins
+#Bourbon for base mixins
 gem 'bourbon'
+
+# Semnatic grid system built on top of bourbon
 gem 'neat'
+
+# Base styling for bourbon projects
+gem 'bitters'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
