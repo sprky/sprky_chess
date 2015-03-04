@@ -6,6 +6,5 @@ FactoryGirl.define do
 
   factory :game do
     name "Sprky Chess Game"
-    white_player_id 1
   end
 end
