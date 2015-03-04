@@ -1,1 +1,8 @@
-	<h1><%= @game.name %></h1>
+<h1><%= @game.name %></h1>
+<ul>
+	<li>Game ID: <%= @game.id %></li>
+	<li>Player(white): <%= @game.white_player_id %></li>
+	<li>Player(black): <%= @game.black_player_id %></li>
+	<li>Game State: <%= @game.state %></li>
+	<li>Winner: <%= @game.winning_player_id %></li>
+</ul>

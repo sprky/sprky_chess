@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+	before_action :authenticate_player!
 
 	def new
 		@game = Game.new
@@ -16,7 +17,7 @@ class GamesController < ApplicationController
 	private
 
 	def game_params
-		params.require(:game).permit(:name, :player1, :player2)
+		params.require(:game).permit(:name, :white_player_id, :black_player_id )
 	end
 
 end
