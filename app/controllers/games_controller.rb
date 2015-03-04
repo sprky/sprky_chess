@@ -14,6 +14,16 @@ class GamesController < ApplicationController
 		@game = Game.find(params[:id])
 	end
 
+	def update
+		@game = Game.find(params[:id])
+		@game.update_attributes( game_params )
+		if @game.valid?
+			redirect_to game_path(@game)
+		else
+			render :text, :status => :unprocessable_entity
+		end
+	end
+
 	private
 
 	def game_params
