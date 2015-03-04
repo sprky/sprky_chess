@@ -11,7 +11,10 @@ class GamesController < ApplicationController
 	end
 
 	def show
-		@game = Game.find(params[:id])
+		@game = Game.where(:id => params[:id]).first
+		if @game.nil?
+			redirect_to root_path
+		end
 	end
 
 	def update

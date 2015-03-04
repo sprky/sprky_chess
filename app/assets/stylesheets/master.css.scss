@@ -9,7 +9,7 @@ nav {
 	height: 2em;
 
 	.navbar-right {
-		@include span-columns(6);
+		@include span-columns(9);
 		float: right;
 	}
 
@@ -31,7 +31,7 @@ nav {
 #gameboard {
 
 	border-collapse: collapse;
-	margin: 0 auto;
+	margin: 40px auto;
 	background-color: #000000;
 	border: 1px solid #000000;
 

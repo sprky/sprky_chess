@@ -12,9 +12,15 @@
 <body>
 	<div class='container main-container'>
 		<nav class='navbar'>
+			<div class='navbar-left'>
+				<div class='logo'>
+					<%= link_to 'SPRKY CHESS', root_path %>
+				</div>
+			</div>
 			<div class='navbar-right'>
 				<ul>
-					<li><%= link_to 'Select Game', '#', :class => 'join-game-link' %> </li> <!-- trigger javascript ajax call -->
+					<li><%= link_to 'Create Game', new_game_path %></li>
+					<li><%= link_to 'Select Game', '#', :class => 'select-game-link' %> </li> <!-- trigger javascript ajax call -->
 					<li>
 						<input type='text' placeholder='Game ID' name='game_id' />
 					</li>
@@ -41,14 +47,18 @@
 <script>
   $(document).ready( function() {
 
-  	// this will be triggered by clicking join game
-  	// $('.join-game-link').click( function()  {
-  	// 	var game_id = $("input[name='game_id']").val();
-  	// 	alert(game_id);
-  		// include ajax call, 'put', :game_id, :player_id
-  		// return path should be /game/:id
+  	//this will be triggered by clicking select game
+  	$('.select-game-link').click( function()  {
+  		var game_id = $("input[name='game_id']").val();
+  		var url = '/games/'+game_id;
+  		$(location).attr('href',url); /// do
+  		//alert(ajax_url);
+  		// $.ajax({
+  		// 	type: 'get',
+  		// 	url: ajax_url
+  		// });
 
-  	// });
+		});
 
   });
 
