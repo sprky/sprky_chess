@@ -13,7 +13,7 @@
 	<div class='container'>
 		<nav class='navbar'>
 			<div class='navbar-right'>
-				<%= link_to 'Join Game', '#', :class => 'join-game-link' %>  <!-- trigger javascript ajax call -->
+				<%= link_to 'Select Game', '#', :class => 'join-game-link' %>  <!-- trigger javascript ajax call -->
 				<input type='text' placeholder='Game ID' name='game_id' />
 				<% if current_player %>
 					<%= link_to 'Sign Out', destroy_player_session_path, :method => :delete %>
@@ -38,13 +38,13 @@
   $(document).ready( function() {
 
   	// this will be triggered by clicking join game
-  	$('.join-game-link').click( function()  {
-  		var game_id = $("input[name='game_id']").val();
-  		alert(game_id);
+  	// $('.join-game-link').click( function()  {
+  	// 	var game_id = $("input[name='game_id']").val();
+  	// 	alert(game_id);
   		// include ajax call, 'put', :game_id, :player_id
   		// return path should be /game/:id
 
-  	});
+  	// });
 
   });
 

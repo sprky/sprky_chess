@@ -17,3 +17,26 @@ nav {
 	}
 
 }
+
+
+#gameboard {
+
+	border-collapse: collapse;
+	margin: 0 auto;
+	background-color: #000000;
+	border: 1px solid #000000;
+
+	tr {
+
+	}
+
+	td {
+		width: 40px;
+		height: 40px;
+	}
+
+	tr:nth-child(even) td:nth-child(even), tr:nth-child(odd) td:nth-child(odd) {
+ 		background: white;
+	}
+
+}
