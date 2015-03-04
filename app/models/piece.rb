@@ -9,7 +9,7 @@ class Piece < ActiveRecord::Base
 end
 #these can also be used to assign the name and symbol for each type of piece
 class Pawn < Piece
-
+	
 end
 
 class Rook < Piece

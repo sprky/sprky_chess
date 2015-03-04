@@ -1,6 +1,9 @@
 class Game < ActiveRecord::Base
   has_many :players
   has_many :pieces
+  require 'piece'
+  
+
 
   def initialize_board!
   	#white pawns
