@@ -1,5 +1,6 @@
 .container {
 	@include outer-container;
+	background-color: #c0cbea;
 }
 
 
@@ -31,9 +32,11 @@ nav {
 #gameboard {
 
 	border-collapse: collapse;
-	margin: 40px auto;
+	margin: 0 auto;
+	padding-top: 40px;
 	background-color: #000000;
 	border: 1px solid #000000;
+	width: auto;
 
 	tr {
 
