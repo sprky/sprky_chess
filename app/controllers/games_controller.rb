@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+	before_action :initialize_board!, :only => [:create]
 	before_action :authenticate_player!
 
 	def new
