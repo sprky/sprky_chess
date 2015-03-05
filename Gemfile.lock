@@ -27,6 +27,10 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.2)
     bcrypt (3.1.9)
+    bitters (1.0.0)
+      bourbon (>= 3.2)
+      sass (>= 3.2)
+      thor
     bourbon (3.2.4)
       sass (~> 3.2)
       thor
@@ -134,6 +138,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bitters
   bourbon
   coffee-rails (~> 4.0.0)
   devise (>= 3.2.4)
