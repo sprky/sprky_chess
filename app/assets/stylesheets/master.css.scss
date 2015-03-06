@@ -1,0 +1,66 @@
+.container {
+	@include outer-container;
+	background-color: #c0cbea;
+}
+
+
+nav {
+	@include span-columns(12);
+	background-color: #ff0000;
+	height: 2em;
+
+	.navbar-right {
+		@include span-columns(9);
+		float: right;
+	}
+
+	* {
+		display: inline-block;
+	}
+
+	li {
+		margin: 0 5px;
+	}
+}
+
+
+
+/**********************************************
+		GAMEBOARD STYLING 
+ **********************************************/
+
+#gameboard {
+
+	border-collapse: collapse;
+	margin: 0 auto;
+	padding-top: 40px;
+	background-color: #000000;
+	border: 1px solid #000000;
+	width: auto;
+
+	tr {
+
+	}
+
+	td {
+		width: 40px;
+		height: 40px;
+	}
+
+	tr:nth-child(even) td:nth-child(even), tr:nth-child(odd) td:nth-child(odd) {
+ 		background: white;
+	}
+
+}
+
+/**********************************************
+		TEXT STYLING 
+ **********************************************/
+
+a,
+a:visited {
+	color: #000000;
+	text-decoration: none;
+
+}
+
