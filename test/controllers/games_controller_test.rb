@@ -28,6 +28,19 @@ class GamesControllerTest < ActionController::TestCase
     assert_equal expected, game.white_player_id
   end
 
+  test "game created with :create action" do
+    player = FactoryGirl.create(:player)
+    sign_in player
+    game = FactoryGirl.create(:game, :white_player_id => player.id )
+
+    assert_difference('Game.count') do
+      post :create, :game => { :name => game.name, :white_player_id => game.white_player_id }
+    end
+
+    assert_redirected_to game_path(assigns(:game))
+
+  end
+
   test "pieces are initialized when a game is started" do
     player = FactoryGirl.create(:player)
     sign_in player
