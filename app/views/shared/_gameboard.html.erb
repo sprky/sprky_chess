@@ -1,0 +1,13 @@
+<div class='game-container'>
+	<table id='gameboard'>
+		<% (0..7).each do |row| %>
+			<tr class='x-position-<%= row %>' >
+				<% (0..7).each do |column| %>
+					<td class='y-position-<%= column %>' data-x-position='<%= row %>' data-y-position='<%= column %>' ></td>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+</div>
+
+
