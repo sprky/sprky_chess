@@ -24,7 +24,7 @@ nav {
 }
 
 .game-container {
-	
+
 }
 
 
@@ -55,7 +55,21 @@ nav {
  		background: white;
 	}
 
+	td.piece-selected {
+		background-color: yellow !important;
+		&.select-destination {
+			border: none;
+		}
+	}
+
+	td.select-destination {
+		border: 4px solid green;
+	}
+	
 }
+
+
+
 
 /**********************************************
 		TEXT STYLING 
