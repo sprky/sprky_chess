@@ -1,4 +1,6 @@
 class Game < ActiveRecord::Base
+  before_create :initialize_board!
+
   has_many :players
   has_many :pieces
   require 'piece'
