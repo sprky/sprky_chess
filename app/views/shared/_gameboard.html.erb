@@ -1,0 +1,17 @@
+<% if @game %>
+	<table id='gameboard'>
+		<% (0..7).each do |row| %>
+			<tr class='y-position-<%= row %>' >
+				<% (0..7).each do |column| %>
+					<td class='x-position-<%= column %>' data-y-position='<%= row %>' data-x-position='<%= column %>' >
+						<% p = @game.pieces.where( x_position: column, y_position: row).first %>
+						<% if p %>
+							<%= p.type %>
+						<% end %>
+					</td>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+<% end %>
+
