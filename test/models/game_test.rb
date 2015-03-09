@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class GameTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  game = FactoryGirl.create(:game)
+  assert_equal: game.id, Piece.game_id
 end
