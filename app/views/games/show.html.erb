@@ -1,21 +1,22 @@
-<h1><%= @game.name %></h1>
-
-<ul>
-	<li>Game ID: <%= @game.id %></li>
-	<li>Player(white): <%= @game.white_player_id %></li>
-	<li>Player(black): <%= @game.black_player_id %></li>
-	<li>Game State: <%= @game.state %></li>
-	<li>Winner: <%= @game.winning_player_id %></li>
-	<% if @game.black_player_id.nil? %>
-		<%= simple_form_for @game, :method => :put do |f| %>
-			<%= f.input :black_player_id, :as => :hidden, :input_html => { :value => current_player.id } %>
-			<%= f.submit 'Join Game' %>
+<hgroup class="game-details">
+	<h1 class="game-name"><%= @game.name %></h1>
+	<ul>
+		<li>Game ID: <%= @game.id %></li>
+		<li>Player(white): <%= @game.white_player_id %></li>
+		<li>Player(black): <%= @game.black_player_id %></li>
+		<li>Game State: <%= @game.state %></li>
+		<li>Winner: <%= @game.winning_player_id %></li>
+		<% if @game.black_player_id.nil? %>
+			<%= simple_form_for @game, :method => :put do |f| %>
+				<%= f.input :black_player_id, :as => :hidden, :input_html => { :value => current_player.id } %>
+				<%= f.submit 'Join Game' %>
+			<% end %>
 		<% end %>
-	<% end %>
-	<div class='game-container'>
-		<%= render 'shared/gameboard' %>
-	</div>
-</ul>
+		<div class='game-container'>
+			<%= render 'shared/gameboard' %>
+		</div>
+	</ul>
+</hgroup>
 
 <script>
 	$(document).ready(function() {

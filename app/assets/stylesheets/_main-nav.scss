@@ -1,0 +1,30 @@
+nav.main-nav {
+  @include span-columns(12);
+  background-color: $light-gray;
+  // height: 2em;
+  padding: 1em;
+
+  .logo {
+    font-weight: 700;
+    letter-spacing: 1.3px;
+  }
+
+  .navbar-right {
+    @include span-columns(9);
+    float: right;
+  }
+
+  * {
+    display: inline-block;
+  }
+
+  ul {
+    margin: 0;
+  }
+  li {
+    margin: 0 5px;
+  }
+  input {
+    margin: 0;
+  }
+}

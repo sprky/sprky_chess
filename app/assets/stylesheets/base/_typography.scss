@@ -38,6 +38,10 @@ a {
   &:focus {
     outline: none;
   }
+  a:visited {
+    color: $light-gray;
+    text-decoration: none;
+  }
 }
 
 hr {

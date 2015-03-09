@@ -1,0 +1,9 @@
+body {
+	margin: 0;
+}
+
+.main-container {
+	@include outer-container;
+}
+
+
