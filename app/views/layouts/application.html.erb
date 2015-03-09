@@ -50,14 +50,10 @@
   	//this will be triggered by clicking select game
   	$('.select-game-link').click( function()  {
   		var game_id = $("input[name='game_id']").val();
-  		var url = '/games/'+game_id;
-  		$(location).attr('href',url); /// do
-  		//alert(ajax_url);
-  		// $.ajax({
-  		// 	type: 'get',
-  		// 	url: ajax_url
-  		// });
-
+      if (game_id) {
+    		var url = '/games/'+game_id;
+    		$(location).attr('href',url);
+      }
 		});
 
   });
