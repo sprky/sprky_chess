@@ -4,6 +4,10 @@ class GamesControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
+  test "game id matches game_id for new pieces" do
+    game = FactoryGirl.create(:game, :id => 1)
+    assert_equal(game.id, 1) 
+  end
 
 	test "game join success" do
   	player = FactoryGirl.create(:player)
