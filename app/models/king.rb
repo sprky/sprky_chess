@@ -1,0 +1,3 @@
+class King < Piece
+
+end
