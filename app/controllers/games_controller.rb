@@ -23,8 +23,9 @@ class GamesController < ApplicationController
 		@game = Game.find(params[:id])
 		@game.update_attributes( game_params )
 		if @game.valid?
-			ensure_unique_players
-			randomize_players
+			if ensure_unique_players
+				randomize_players
+			end
 			redirect_to game_path(@game)
 		else
 			render :text, :status => :unprocessable_entity
@@ -40,11 +41,15 @@ class GamesController < ApplicationController
 	def ensure_unique_players
 		if @game.white_player_id == @game.black_player_id
 			@game.update_attributes(black_player_id: nil )
+			return false
+		else
+			return true
 		end
 	end	
 
 	def randomize_players 
 		if rand(0..1)==1
+			puts ('swap players')
 			temp_id = @game.white_player_id
 			@game.update_attributes(white_player_id: @game.black_player_id )
 			@game.update_attributes(black_player_id: temp_id)
