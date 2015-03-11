@@ -49,7 +49,6 @@ class GamesController < ApplicationController
 
 	def randomize_players 
 		if rand(0..1)==1
-			puts ('swap players')
 			temp_id = @game.white_player_id
 			@game.update_attributes(white_player_id: @game.black_player_id )
 			@game.update_attributes(black_player_id: temp_id)

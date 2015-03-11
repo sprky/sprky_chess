@@ -13,11 +13,23 @@ class GamesControllerTest < ActionController::TestCase
   	player = FactoryGirl.create(:player)
   	sign_in player
 
-  	game = FactoryGirl.create(:game)
-  	put :update, :id => game, :game => { :black_player_id => 37 }
-
+  	game = FactoryGirl.create(:game, white_player_id: player.id)
+  	put :update, :id => game.id, :game => { black_player_id: 37 }
+    game.reload
   	assert_response :found
-  	assert 37, game.black_player_id
+  	assert_equal 37, game.black_player_id
+  end
+
+  test "game join fail due to identical player_id" do
+    player = FactoryGirl.create(:player)
+    sign_in player
+
+    game = FactoryGirl.create(:game, white_player_id: player.id)
+    put :update, :id => game.id, :game => { :black_player_id => player.id }
+    game.reload
+    assert_response :found
+    expected = nil
+    assert_equal expected, game.black_player_id, "black_player_id should be nil"
   end
 
   test "game create success" do
