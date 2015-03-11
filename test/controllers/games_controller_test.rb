@@ -17,7 +17,7 @@ class GamesControllerTest < ActionController::TestCase
   	put :update, :id => game.id, :game => { black_player_id: 37 }
     game.reload
   	assert_response :found
-  	assert_equal 37, game.black_player_id
+  	assert game.white_player_id == 37 ||  game.black_player_id == 37
   end
 
   test "game join fail due to identical player_id" do
