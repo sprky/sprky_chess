@@ -42,6 +42,11 @@ gem 'jbuilder', '~> 1.2'
 # SimpleForm gem
 gem 'simple_form'
 
+group :development do
+  # Add byebug for testing https://github.com/deivid-rodriguez/byebug
+  gem 'byebug'
+end
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

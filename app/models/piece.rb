@@ -6,4 +6,6 @@ class Piece < ActiveRecord::Base
   def is_valid_move?
   end
 
+  
+
 end
