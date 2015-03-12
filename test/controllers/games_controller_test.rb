@@ -51,6 +51,6 @@ class GamesControllerTest < ActionController::TestCase
     g=Game.create(:white_player_id => player.id)
     g.initialize_board!
     assert :success
-
   end
+
 end

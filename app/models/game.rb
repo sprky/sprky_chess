@@ -53,6 +53,4 @@ class Game < ActiveRecord::Base
   	King.create(:player_id => black_player_id, :game_id => self.id, :x_position => 4, :y_position => 7, :color => 0)
   end
 
-
-
 end
