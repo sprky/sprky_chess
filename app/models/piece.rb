@@ -7,9 +7,7 @@ class Piece < ActiveRecord::Base
   belongs_to :player
   belongs_to :game
 
-  # This is a placeholder for the move logic associated with each piece
   def valid_move?(x, y)
-    # check if its on the board
     move_on_board?(x, y) || !legal_move?(x, y)
   end
 
