@@ -7,4 +7,7 @@ FactoryGirl.define do
   factory :game do
     name "Sprky Chess Game"
   end
+
+  factory :pawn do
+  end
 end
