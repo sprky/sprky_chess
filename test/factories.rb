@@ -10,4 +10,7 @@ FactoryGirl.define do
 
   factory :pawn do
   end
+
+  factory :rook do
+  end
 end
