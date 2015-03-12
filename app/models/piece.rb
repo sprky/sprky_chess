@@ -8,12 +8,11 @@ class Piece < ActiveRecord::Base
   belongs_to :game
 
   def valid_move?(x, y)
-    move_on_board?(x, y) || !legal_move?(x, y)
+    move_on_board?(x, y) && legal_move?(x, y)
   end
 
   def move_on_board?(x, y)
-    x > MAX_BOARD_SIZE || x < MIN_BOARD_SIZE ||
-      y > MAX_BOARD_SIZE || y < MIN_BOARD_SIZE
+    (x <= MAX_BOARD_SIZE && x >= MIN_BOARD_SIZE) && (y <= MAX_BOARD_SIZE && y >= MIN_BOARD_SIZE)
   end
 
   def legal_move?(x, y)
