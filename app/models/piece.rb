@@ -16,7 +16,11 @@ class Piece < ActiveRecord::Base
   end
 
   def legal_move?(x, y)
-    raise NotImplementedError "Pieces must implement #move_obstructed?"
+    raise NotImplementedError "Pieces must implement #legal_move?"
+  end
+
+  def obstructed_move?(x, y)
+    raise NotImplementedError "Pieces must implement #obstructed_move?"
   end
 
   def color_name
@@ -27,19 +31,6 @@ class Piece < ActiveRecord::Base
 
   def set_default_images
     self.symbol ||= "#{color_name}-#{type.downcase}.gif"
-  end
-
-  # Treating every piece as a rook
-  def is_move_obstructed?(destination_x, destination_y)
-  	(2..7).each do |row|
-      piece = self.game.pieces.where(x_position: 0, y_position: row).first
-      puts row
-      puts piece
-  		if !piece.nil?
-  			return true
-  		end
-  	end
-  	return false
   end
 
 end
