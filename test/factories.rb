@@ -1,7 +1,10 @@
 FactoryGirl.define do
 	factory :player do
-		email "playerfactory@example.com"
-		password "ringaroundtherosie"
+    sequence :email do |n|
+  		"playerfactory#{n}@example.com"
+	  end
+  	password "ringaroundtherosie"
+    password_confirmation "ringaroundtherosie"
 	end
 
   factory :game do
