@@ -18,6 +18,11 @@ class PawnTest < ActiveSupport::TestCase
     assert_equal false, pawn.legal_move?(1, 4)
   end
 
+  test "illegal white diagonal move" do
+    pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 1, color: true)
+    assert_equal false, pawn.legal_move?(2, 2)
+  end
+
   # Legal White Moves
   test "legal white first move" do
     pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 1, color: true)
@@ -43,6 +48,11 @@ class PawnTest < ActiveSupport::TestCase
   test "illegal black first move" do
     pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 6, color: false)
     assert_equal false, pawn.legal_move?(1, 3)
+  end
+
+  test "illegal black diagonal move" do
+    pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 5, color: false)
+    assert_equal false, pawn.legal_move?(0, 4)
   end
 
   # Legal Black Moves
