@@ -16,7 +16,11 @@ class Piece < ActiveRecord::Base
   end
 
   def legal_move?(x, y)
-    raise NotImplementedError "Pieces must implement #move_obstructed?"
+    raise NotImplementedError "Pieces must implement #legal_move?"
+  end
+
+  def obstructed_move?(x, y)
+    raise NotImplementedError "Pieces must implement #obstructed_move?"
   end
 
   def color_name

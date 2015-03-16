@@ -57,6 +57,9 @@ class Game < ActiveRecord::Base
   	King.create(:player_id => black_player_id, :game_id => self.id, :x_position => 4, :y_position => 7, :color => false)
   end
 
-
-
+  # obstruction?(x, y) method to determine 
+  # if an obstruction occurs at this location in this game
+  def obstruction?(x, y)
+    self.pieces.where( x_position: x, y_position: y).last.present?
+  end
 end
