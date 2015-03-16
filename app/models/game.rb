@@ -57,11 +57,13 @@ class Game < ActiveRecord::Base
   	King.create(:player_id => black_player_id, :game_id => self.id, :x_position => 4, :y_position => 7, :color => false)
   end
 
-  def capture(x, y)
+  def capture(x, y, piece_color)
     #check if a piece exists at this coordinate
     c=self.pieces.where(x_position:x, y_position:y).last
     #if nil do nothing-- if piece, mark as captured and move to (nil, nil)
     if c == nil
+      return
+    elsif c.color == piece_color
       return
     else
       c.update_attribute(:captured?, true)
