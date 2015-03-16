@@ -34,6 +34,14 @@ class PawnTest < ActiveSupport::TestCase
     assert_equal true, pawn.legal_move?(1, 3)
   end
 
+  test "legal white capture move" do
+    game = FactoryGirl.create(:game, id: 1)
+    white_pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 3, color: true, game: game.id)
+    black_pawn = FacotyrGirl.create(:pawn, x_position: 2, y_position: 4, color: false, game: game.id)
+
+    assert_equal true, white_pawn.capture_move?(2, 4)
+  end
+
   # Illegal Black Moves
   test "illegal backwards black move" do
     pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 5, color: false)
@@ -65,5 +73,7 @@ class PawnTest < ActiveSupport::TestCase
     pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 4, color: false)
     assert_equal true, pawn.legal_move?(1, 3)
   end
+
+  private
 
 end
