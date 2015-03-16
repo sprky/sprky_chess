@@ -1,10 +1,9 @@
 class Bishop < Piece
-	def initialize(args)
-		super
-		if args[:color] == 1
-			write_attribute(:symbol, "white-bishop.gif")
-		else
-			write_attribute(:symbol, "black-bishop.gif")
-		end
-	end
+	def legal_move?(x, y)
+    # add bishop-specific legal_move? logic here
+    x_diff = (x_position - x).abs
+    y_diff = (y_position - y).abs
+
+    x_diff == y_diff ? true : false
+  end
 end
