@@ -1,5 +1,3 @@
-require 'byebug'
-
 class Pawn < Piece
   
   def legal_move?(x, y)
