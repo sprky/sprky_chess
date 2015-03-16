@@ -1,7 +1,6 @@
 require 'test_helper'
-
-class GameTest < ActiveSupport::TestCase
-	test "piece is marked as captured" do
+    class GameTest < ActiveSupport::TestCase
+    test "piece is marked as captured" do
     #game created
     g=FactoryGirl.create(:game, :id => 1)
     #pawn put at 1,1 in game:1

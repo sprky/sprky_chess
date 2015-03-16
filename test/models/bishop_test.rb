@@ -19,10 +19,8 @@ class BishopTest < ActiveSupport::TestCase
     assert_not @bishop.legal_move?(1, 4)
   end
 
- 
   def setup_bishop
     @bishop = FactoryGirl.create(:bishop, x_position: 3, y_position: 4, color: true)
   end
 
-  
 end
