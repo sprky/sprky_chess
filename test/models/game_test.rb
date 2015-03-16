@@ -10,6 +10,7 @@ class GameTest < ActiveSupport::TestCase
     pawn = Piece.where(:x_position => 1, :y_position => 1, :game_id => 1).last
     #run capture method on the game
     g.capture(1, 1)
+    pawn.reload
     assert_equal(true, pawn.captured?)
     assert_equal(nil, pawn.x_position)
     assert_equal(nil, pawn.y_position)

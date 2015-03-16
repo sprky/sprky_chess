@@ -55,13 +55,14 @@ class Game < ActiveRecord::Base
 
   def capture(destination_x_position, destination_y_position)
     #check if a piece exists at this coordinate
-    capture=self.pieces.where(x_position:destination_x_position, y_position:destination_y_position).last
+    c=self.pieces.where(x_position:destination_x_position, y_position:destination_y_position).last
     #if nil do nothing-- if piece, mark as captured and move to (nil, nil)
-    capture.update_attribute(:captured?, true)
-    capture.update_attribute(:x_position, nil)
-    capture.update_attribute(:y_position, nil)
-    if capture == nil
+    if c == nil
       return
+    else
+      c.update_attribute(:captured?, true)
+      c.update_attribute(:x_position, nil)
+      c.update_attribute(:y_position, nil)
     end
   end
 
