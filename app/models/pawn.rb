@@ -1,16 +1,20 @@
-require 'byebug'
 class Pawn < Piece
+  
   def legal_move?(x, y)
-    # if move_obstructed?
-      # if one space diagonal-left || one space diagonal-right
-        # return true
-      # end
-    # else
 
+    x_diff = (x_position - x).abs
+
+    if x_diff.zero?  
       return false if backwards_move?(y)
       proper_length?(y)
-
-    # end (from move_obstructed )
+    elsif x_diff == 1
+      #  check for capture move
+      return false
+      # end
+    else  # otherwise has illegal horizontal component
+      return false
+    end
+    
   end
 
   private
@@ -25,7 +29,7 @@ class Pawn < Piece
 
   def proper_length?(y)
     y_diff = (y - y_position).abs
-    first_move?(y) ? y_diff == (1 || 2) : y_diff == 1
+    first_move?(y) ? (y_diff == 1 || y_diff == 2) : y_diff == 1
   end
 
 end
