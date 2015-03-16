@@ -76,4 +76,3 @@ class Game < ActiveRecord::Base
     self.pieces.where( x_position: x, y_position: y).last.present?
   end
 
-end
