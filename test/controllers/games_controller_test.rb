@@ -4,10 +4,6 @@ class GamesControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
-  test "game id matches game_id for new pieces" do
-    game = FactoryGirl.create(:game, :id => 1)
-    assert_equal(game.id, 1) 
-  end
 
 	test "game join success" do
   	player = FactoryGirl.create(:player)
@@ -17,6 +13,8 @@ class GamesControllerTest < ActionController::TestCase
   	put :update, :id => game.id, :game => { black_player_id: 37 }
     game.reload
   	assert_response :found
+    # method exists to randomize which player is white and which is black
+    # for this reason either color may end up being player 37
   	assert game.white_player_id == 37 ||  game.black_player_id == 37
   end
 
@@ -28,8 +26,7 @@ class GamesControllerTest < ActionController::TestCase
     put :update, :id => game.id, :game => { :black_player_id => player.id }
     game.reload
     assert_response :found
-    expected = nil
-    assert_equal expected, game.black_player_id, "black_player_id should be nil"
+    assert_nil game.black_player_id, "black_player_id should be nil"
   end
 
   test "game create success" do
