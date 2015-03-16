@@ -57,8 +57,11 @@ class Game < ActiveRecord::Base
     #check if a piece exists at this coordinate
     capture=self.pieces.where(x_position:destination_x_position, y_position:destination_y_position).last
     #if nil do nothing-- if piece, mark as captured and move to (nil, nil)
-    if capture != nil
-      capture.update_attributes(:captured? => 0, :x_position => nil, :y_position => nil)
+    capture.update_attribute(:captured?, true)
+    capture.update_attribute(:x_position, nil)
+    capture.update_attribute(:y_position, nil)
+    if capture == nil
+      return
     end
   end
 
