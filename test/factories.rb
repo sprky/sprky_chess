@@ -16,7 +16,10 @@ FactoryGirl.define do
   factory :bishop do
   end
 
+  factory :king do
+  end
+
   factory :queen do
   end
-  
+
 end
