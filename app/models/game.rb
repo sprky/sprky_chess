@@ -59,7 +59,7 @@ class Game < ActiveRecord::Base
 
   # obstruction?(x, y) method to determine 
   # if an obstruction occurs at this location in this game
-  def obstruction?(x, y)
+  def obstruction(x, y)
     return self.pieces.where( x_position: x, y_position: y).last
   end
 end
