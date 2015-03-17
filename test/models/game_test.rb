@@ -2,7 +2,7 @@ require 'test_helper'
 
 class GameTest < ActiveSupport::TestCase
 	
-  test "obstruction? method"  do
+  test "obstruction method"  do
     game = FactoryGirl.create(:game)
 
     assert_instance_of Rook, game.obstruction(0,0), "Should return rook"
