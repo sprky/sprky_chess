@@ -26,14 +26,14 @@ class Rook < Piece
     if x == pos_x # move is in y direction
       if y < pos_y # move is down
         while y < pos_y do 
-          if game.obstruction?(x, y)
+          if game.obstruction(x, y)
             return true
           end
           y += 1
         end
       else # move is up
         while y > pos_y do
-          if game.obstruction?(x,y)
+          if game.obstruction(x,y)
             return true
           end
           y -= 1
@@ -42,14 +42,14 @@ class Rook < Piece
     else # move is in x direction
       if x < pos_x # move is left
         while x < pos_x do
-          if game.obstruction?(x,y)
+          if game.obstruction(x,y)
             return true
           end
           x += 1
         end
       else # move is right
         while x > pos_x do
-          if game.obstruction?(x,y)
+          if game.obstruction(x,y)
             return true
           end
           x -= 1
