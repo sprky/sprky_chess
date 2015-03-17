@@ -32,7 +32,7 @@ class Pawn < Piece
   def capture_move?(x, y)
     x_diff = (x_position - x).abs
     y_diff = (y_position - y).abs
-    game.obstruction?(x, y) ? (x_diff == 1) && (y_diff == 1) : false
+    game.obstruction(x, y) ? (x_diff == 1) && (y_diff == 1) : false
   end
 
 
