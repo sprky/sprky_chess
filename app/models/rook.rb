@@ -1,6 +1,6 @@
 class Rook < Piece
   def legal_move?(x, y)
-    self.x_position == x || self.y_position == y
+    x_position == x || y_position == y
   end
 
   # obstructed_move?(x,y) implementation for a rook
