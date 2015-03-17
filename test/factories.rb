@@ -16,4 +16,7 @@ FactoryGirl.define do
 
   factory :bishop do
   end
+
+  factory :knight do
+  end
 end
