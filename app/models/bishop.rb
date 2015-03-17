@@ -11,7 +11,7 @@ class Bishop < Piece
   	#(this takes you up and right)
   	if pos_x < x && pos_y < y 
   		while x > pos_x && y > pos_y
-  			if game.obstruction?(x, y) != nil
+  			if game.obstruction(x, y) != nil
   				return true
   			end
   			x -= 1
@@ -20,7 +20,7 @@ class Bishop < Piece
   		#(this takes you down and right)
   	elsif pos_x < x && pos_y > y
   		while x > pos_x && y < pos_y
-  			if game.obstruction?(x, y) != nil
+  			if game.obstruction(x, y) != nil
   				return true
   			end
   			x -= 1
@@ -29,7 +29,7 @@ class Bishop < Piece
   		#(this takes you down and left)
   	elsif pos_x > x && pos_y > y 
   		while x < pos_x && y < pos_y
-  			if game.obstruction?(x, y) != nil
+  			if game.obstruction(x, y) != nil
   				return true
   			end
   			x += 1
@@ -38,7 +38,7 @@ class Bishop < Piece
   		#(this takes you up and left)
   	elsif pos_x > x && pos_y < y
   		while x < pos_x && y > pos_y
-  			if game.obstruction?(x, y) != nil
+  			if game.obstruction(x, y) != nil
   				return true
   			end
   			x += 1

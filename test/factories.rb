@@ -20,6 +20,7 @@ FactoryGirl.define do
   end
 
   factory :king do
+
   end
 
   factory :queen do
