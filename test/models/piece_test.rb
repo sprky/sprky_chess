@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class PieceTest < ActiveSupport::TestCase
+
   test "color name" do
     piece = FactoryGirl.create(:pawn)
 

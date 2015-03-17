@@ -4,7 +4,7 @@
 			<% (0..7).each do |column| %>
 				<td class='x-position-<%= column %>' data-x-position='<%= column %>' data-y-position='<%= row %>' >
 				<% if @game %> 
-					<% query_result = @game.pieces.where(x_position:column, y_position: row).last %>
+					<% query_result = @game.pieces.where(x_position: column, y_position: row).last %>
 					<% if query_result != nil %>
 						<%= image_tag query_result.symbol %>
 					<% end %>
