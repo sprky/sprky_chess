@@ -1,23 +1,20 @@
 class Pawn < Piece
-  
   def legal_move?(x, y)
+    return false if backwards_move?(y)
 
-    x_diff = (x_position - x).abs
-
-    if x_diff.zero?  
-      return false if backwards_move?(y)
-      proper_length?(y)
-    elsif x_diff == 1
-      #  check for capture move
-      return false
-      # end
-    else  # otherwise has illegal horizontal component
-      return false
+    unless capture_move?(x, y)
+      return false if horizontal_move?(x)
     end
-    
+
+    proper_length?(y)
   end
 
   private
+
+  def horizontal_move?(x)
+    x_diff = (x_position - x).abs
+    x_diff != 0
+  end
 
   def backwards_move?(y)
     color ? y_position > y : y_position < y   
@@ -31,5 +28,12 @@ class Pawn < Piece
     y_diff = (y - y_position).abs
     first_move?(y) ? (y_diff == 1 || y_diff == 2) : y_diff == 1
   end
+
+  def capture_move?(x, y)
+    x_diff = (x_position - x).abs
+    y_diff = (y_position - y).abs
+    game.obstruction(x, y) ? (x_diff == 1) && (y_diff == 1) : false
+  end
+
 
 end
