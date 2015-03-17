@@ -1,11 +1,6 @@
 class Rook < Piece
   def legal_move?(x, y)
-    # if the move is vertical or horizontal
-    if self.x_position == x || self.y_position == y
-      return true
-    else false
-
-    end 
+    self.x_position == x || self.y_position == y
   end
 
   # obstructed_move?(x,y) implementation for a rook
@@ -19,39 +14,30 @@ class Rook < Piece
   # of any obstruction will return false.
 
   def obstructed_move?(x, y)
-    pos_x = self.x_position
-    pos_y = self.y_position
-    game = self.game
+    pos_x = x_position
+    pos_y = y_position
 
     if x == pos_x # move is in y direction
       if y < pos_y # move is down
-        while y < pos_y do 
-          if game.obstruction?(x, y)
-            return true
-          end
+        while y < pos_y 
+          return true if game.obstruction?(x, y)  
           y += 1
         end
       else # move is up
-        while y > pos_y do
-          if game.obstruction?(x,y)
-            return true
-          end
+        while y > pos_y
+          return true if game.obstruction?(x,y)
           y -= 1
         end
       end
     else # move is in x direction
       if x < pos_x # move is left
-        while x < pos_x do
-          if game.obstruction?(x,y)
-            return true
-          end
+        while x < pos_x
+          return true if game.obstruction?(x,y)
           x += 1
         end
       else # move is right
-        while x > pos_x do
-          if game.obstruction?(x,y)
-            return true
-          end
+        while x > pos_x
+          return true if game.obstruction?(x,y)
           x -= 1
         end
       end
