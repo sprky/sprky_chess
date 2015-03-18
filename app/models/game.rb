@@ -3,16 +3,13 @@ class Game < ActiveRecord::Base
 
   has_many :players
   has_many :pieces
-  require 'piece'
-  
-
 
   def initialize_board!
   	#white pawns
     (0..7).each do |i|
       Pawn.create(
         player_id: white_player_id,
-        game_id: self.id,
+        game_id: id,
         x_position: i,
         y_position: 1,
         color: true
@@ -39,7 +36,7 @@ class Game < ActiveRecord::Base
     (0..7).each do |i|
       Pawn.create(
         player_id: black_player_id,
-        game_id: self.id,
+        game_id: id,
         x_position: i,
         y_position: 6,
         color: false
@@ -60,9 +57,8 @@ class Game < ActiveRecord::Base
   	King.create(:player_id => black_player_id, :game_id => self.id, :x_position => 4, :y_position => 7, :color => false)
   end
 
-  # obstruction?(x, y) method to determine 
-  # if an obstruction occurs at this location in this game
-  def obstruction?(x, y)
-    self.pieces.where( x_position: x, y_position: y).last.present?
+  # determind if obstruction occurs at x, y in game
+  def obstruction(x, y)
+    return self.pieces.where( x_position: x, y_position: y).last
   end
 end

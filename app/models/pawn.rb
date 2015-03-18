@@ -1,34 +1,39 @@
-require 'byebug'
 class Pawn < Piece
   def legal_move?(x, y)
-    # if move_obstructed?
-      # if one space diagonal-left || one space diagonal-right
-        # return true
-      # end
-    # else
+    return false if backwards_move?(y)
 
-      vertical_diff = (y - self.y_position).abs
+    unless capture_move?(x, y)
+      return false if horizontal_move?(x)
+    end
 
-      # is it the pawn's first move?
-      if (self.y_position == 1) || (self.y_position == 6)
-        # check if move is one or two spaces
-        (vertical_diff == (1 || 2)) ? true : false
-
-          # should the pawn register that it moved 2 spaces on its first move in order to setup conditions for en_passant?
-
-      else
-        vertical_diff == 1 ? true : false
-      end
-
-      # is it en_passant?
-        # if meets en_passant conditions
-          # true
-        # end
-      # else
-        # false
-      # end 
-
-    # end (from move_obstructed )
+    proper_length?(y)
   end
+
+  private
+
+  def horizontal_move?(x)
+    x_diff = (x_position - x).abs
+    x_diff != 0
+  end
+
+  def backwards_move?(y)
+    color ? y_position > y : y_position < y   
+  end
+
+  def first_move?(y)
+    (y_position == 1 && color) || (y_position == 6 && !color)
+  end
+
+  def proper_length?(y)
+    y_diff = (y - y_position).abs
+    first_move?(y) ? (y_diff == 1 || y_diff == 2) : y_diff == 1
+  end
+
+  def capture_move?(x, y)
+    x_diff = (x_position - x).abs
+    y_diff = (y_position - y).abs
+    game.obstruction(x, y) ? (x_diff == 1) && (y_diff == 1) : false
+  end
+
 
 end
