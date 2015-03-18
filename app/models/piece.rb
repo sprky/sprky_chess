@@ -27,6 +27,10 @@ class Piece < ActiveRecord::Base
     color ? "white" : "black"
   end
 
+  def mark_captured
+    self.update_attributes( captured?: true, x_position: nil, y_position: nil)
+  end
+
   private
 
   def set_default_images
