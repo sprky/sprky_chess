@@ -20,7 +20,6 @@ class Queen < Piece
       return false # no obstruction, piece should move there.
     end
     
-    return false
     return false 
   end
 end

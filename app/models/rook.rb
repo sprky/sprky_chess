@@ -28,5 +28,8 @@ class Rook < Piece
       # destination_obstruction.mark_captured
       return false # no obstruction, piece should move there.
     end
+
+    return false 
+
   end
 end
