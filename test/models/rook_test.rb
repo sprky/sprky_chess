@@ -24,7 +24,7 @@ class RookTest < ActiveSupport::TestCase
   test "obstructed moves" do
     setup_obstruction_tests
     assert @rook.obstructed_move?(4,6), "Rook is blocked up"
-    assert @rook.obstructed_move?(4,1), "Rook is blocked down"
+    assert @rook.obstructed_move?(4,0), "Rook is blocked down"
     assert @rook2.obstructed_move?(4,0), "Rook is blocked to right"
     assert @rook3.obstructed_move?(4,7), "Rook is blocked to left"
   end
