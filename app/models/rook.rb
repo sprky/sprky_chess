@@ -16,7 +16,7 @@ class Rook < Piece
 
   def obstructed_move?(x, y)
     
-    return true if obstructed_horizontally?(x, y)
+    return true if obstructed_rectilinearly?(x, y)
     
     # capture logic  - I think this can get refactored into a method used by all the pieces except pawn
     destination_obstruction = game.obstruction(x, y) # is there something at the destination?

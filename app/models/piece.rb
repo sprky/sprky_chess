@@ -62,7 +62,7 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  def obstructed_horizontally?(x, y)
+  def obstructed_rectilinearly?(x, y)
     pos_x = x_position
     pos_y = y_position
 
