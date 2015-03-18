@@ -27,12 +27,19 @@ class BishopTest < ActiveSupport::TestCase
     assert_equal false, @bishop.obstructed_move?(2, 5), "quad 4"
   end
 
-  test "Bishop is obstructed" do
+  test "Bishop(black) is obstructed by black " do
     setup_obstruction_tests
     assert_equal true, @bishop.obstructed_move?(6, 7), "quad 1"
-    assert_equal true, @bishop.obstructed_move?(6, 1), "quad 2"
-    assert_equal true, @bishop.obstructed_move?(0, 1), "quad 3"
     assert_equal true, @bishop.obstructed_move?(0, 7), "quad 4"
+  end
+
+  test "Bishop(white) is obstructed by white" do
+    setup_obstruction_tests
+    @bishop.update_attributes( color: true)
+    @bishop.reload
+
+    assert @bishop.obstructed_move?(6, 1), "quad 2"
+    assert @bishop.obstructed_move?(0, 1), "quad 3"
   end
 
   def setup_bishop
@@ -41,7 +48,7 @@ class BishopTest < ActiveSupport::TestCase
 
   def setup_obstruction_tests
     game = FactoryGirl.create(:game)
-    @bishop = game.pieces.where( type: 'Bishop').last
+    @bishop = game.pieces.where( type: 'Bishop', color: false).last
     @bishop.x_position = 3
     @bishop.y_position = 4
     @pawn = game.pieces.where( x_position: 5, y_position: 6).last
