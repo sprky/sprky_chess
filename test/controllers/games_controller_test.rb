@@ -4,65 +4,39 @@ class GamesControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
-  test "game id matches game_id for new pieces" do
-    game = FactoryGirl.create(:game, :id => 1)
-    assert_equal(game.id, 1) 
-  end
 
 	test "game join success" do
-  	player = FactoryGirl.create(:player)
-  	sign_in player
-
-  	game = FactoryGirl.create(:game, white_player_id: player.id)
-  	put :update, :id => game.id, :game => { black_player_id: 37 }
+    player = FactoryGirl.create(:player)
+    sign_in player
+  	game = FactoryGirl.create(:game, :white_player_id => player.id)
+  	patch :update, id: game.id, game: { black_player_id: 37 }
     game.reload
   	assert_response :found
-  	assert game.white_player_id == 37 ||  game.black_player_id == 37
+    assert_redirected_to game_path(assigns(:game))
+    # method exists to randomize which player is white and which is black
+    # for this reason either color may end up being player 37
+    assert game.white_player_id == 37 ||  game.black_player_id == 37
   end
 
-  test "game join fail due to identical player_id" do
+  test "game join fail due to identical@player_id" do
     player = FactoryGirl.create(:player)
     sign_in player
-
-    game = FactoryGirl.create(:game, white_player_id: player.id)
-    put :update, :id => game.id, :game => { :black_player_id => player.id }
+    game = FactoryGirl.create(:game, white_player_id: 3)
+    put :update, :id => game.id, :game => { :black_player_id => 3 }
     game.reload
+    # when we're not signed in this is still passing and it shouldn't
+    # is there a different assertion we should be using?
     assert_response :found
-    expected = nil
-    assert_equal expected, game.black_player_id, "black_player_id should be nil"
-  end
-
-  test "game create success" do
-    player = FactoryGirl.create(:player)
-    sign_in player
-    current_player = player
-
-    game = FactoryGirl.create(:game, white_player_id: current_player.id)
-
-    expected = current_player.id
-
-    assert_equal expected, game.white_player_id
+    assert_nil game.black_player_id, "black_player_id should be nil"
   end
 
   test "game created with :create action" do
     player = FactoryGirl.create(:player)
     sign_in player
-    game = FactoryGirl.create(:game, :white_player_id => player.id )
-
     assert_difference('Game.count') do
-      post :create, game: { name: game.name, white_player_id: game.white_player_id }
+      post :create, game: { name: "game1" }
     end
-
     assert_redirected_to game_path(assigns(:game))
   end
 
-  test "pieces are initialized when a game is started" do
-    player = FactoryGirl.create(:player)
-    sign_in player
-
-    g=Game.create(:white_player_id => player.id)
-    g.initialize_board!
-    assert :success
-
-  end
 end
