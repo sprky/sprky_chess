@@ -4,38 +4,9 @@ class Bishop < Piece
   end
 
   def obstructed_move?(x,y)
-  	pos_x = x_position
-  	pos_y = y_position
   	
-  	#(this takes you up and right)
-  	if pos_x < x && pos_y < y 
-  		while x > pos_x && y > pos_y
-  			return true if game.obstruction(pos_x, pos_y)
-  			pos_x += 1
-  			pos_y += 1
-  		end
-  	#(this takes you down and right)
-  	elsif pos_x < x && pos_y > y
-  		while x > pos_x && y < pos_y
-  			return true if game.obstruction(pos_x, pos_y)
-  			pos_x += 1
-  			pos_y -= 1
-  		end
-  	#(this takes you down and left)
-  	elsif pos_x > x && pos_y > y 
-  		while x < pos_x && y < pos_y
-  			return true if game.obstruction(pos_x, pos_y)
-  			pos_x -= 1
-  			pos_y -= 1
-      end
-  	#(this takes you up and left)
-  	elsif pos_x > x && pos_y < y
-  		while x < pos_x && y > pos_y
-  			return true if game.obstruction(pos_x, pos_y)
-  			pos_x -= 1
-  			pos_y += 1
-  		end
-    end
+    return true if obstructed_diagonally?(x, y)
+    
     # capture logic  - I think this can get refactored into a method used by all the pieces except pawn
     destination_obstruction = game.obstruction(x, y) # is there something at the destination?
     if destination_obstruction && destination_obstruction.color == self.color
