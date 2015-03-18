@@ -8,40 +8,28 @@ class Rook < Piece
   # pos_x, pos_y are current locations of piece (self)
   # determine if move is horizontal or vertical
   # then determine left/right or up/down
-  # check if there is an obstruction at x,y then iterate
-  # back to pos_x, pos_y.  If a single obstruction is
+  # iterate from pos_x, pos_y to 1 square before x,y.
+  # Then check x, y for obstruction or capture (returns false but 
+  # marks captured piece.) If a single obstruction is
   # found, immediately return true.  By default, lack
   # of any obstruction will return false.
 
   def obstructed_move?(x, y)
-    pos_x = x_position
-    pos_y = y_position
-
-    if x == pos_x # move is in y direction
-      if y < pos_y # move is down
-        while y < pos_y 
-          return true if game.obstruction(x, y)  
-          y += 1
-        end
-      else # move is up
-        while y > pos_y
-          return true if game.obstruction(x,y)
-          y -= 1
-        end
-      end
-    else # move is in x direction
-      if x < pos_x # move is left
-        while x < pos_x
-          return true if game.obstruction(x,y)
-          x += 1
-        end
-      else # move is right
-        while x > pos_x
-          return true if game.obstruction(x,y)
-          x -= 1
-        end
-      end
+    
+    return true if obstructed_rectilinearly?(x, y)
+    
+    # capture logic  - I think this can get refactored into a method used by all the pieces except pawn
+    destination_obstruction = game.obstruction(x, y) # is there something at the destination?
+    if destination_obstruction && destination_obstruction.color == self.color
+      # yes and it's the same color - it's an obstruction
+      return true
+    elsif destination_obstruction && destination_obstruction.color != self.color
+      # yes but it's a different color - capture it
+      # destination_obstruction.mark_captured
+      return false # no obstruction, piece should move there.
     end
+
     return false 
+
   end
 end
