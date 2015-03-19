@@ -5,11 +5,20 @@ class Knight < Piece
     proper_length?(x, y)
   end
 
-  private
+  def obstructed_move?(x, y)
+    
+    destination_obstruction = game.obstruction(x, y)
+    if destination_obstruction && destination_obstruction.color == self.color
+      # yes and it's the same color - it's an obstruction
+      return true
 
-  def diagonal_move?(x, y)
-   (x_position - x).abs == (y_position - y).abs
+      # can include else and capture logic here
+    end
+
+    return false 
   end
+
+  private
 
   def proper_length?(x, y)
     (x_position - x).abs + (y_position - y).abs == 3
