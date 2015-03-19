@@ -24,9 +24,7 @@ class GamesControllerTest < ActionController::TestCase
     game = FactoryGirl.create(:game, white_player_id: 3)
     put :update, :id => game.id, :game => { :black_player_id => 3 }
     game.reload
-    # when we're not signed in this is still passing and it shouldn't
-    # is there a different assertion we should be using?
-    assert_response :found
+    assert_response :unprocessable_entity, "Should respond unprocessable_entity"
     assert_nil game.black_player_id, "black_player_id should be nil"
   end
 
