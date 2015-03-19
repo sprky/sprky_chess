@@ -55,6 +55,7 @@ group :test do
 	# test factory
 	gem "factory_girl_rails", "~> 4.0"
 
+  gem 'rubocop'
 end
 
 # Use ActiveModel has_secure_password
