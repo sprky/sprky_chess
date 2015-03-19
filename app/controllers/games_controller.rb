@@ -26,7 +26,7 @@ class GamesController < ApplicationController
 			randomize_players  # if unique redirect to games path otherwise an error.
 			redirect_to game_path(@game)
 		else
-			render :text, :status => :unprocessable_entity
+			render :new, :status => :unprocessable_entity
 		end
 	end
 
