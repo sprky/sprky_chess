@@ -12,6 +12,7 @@ class GamesController < ApplicationController
 
 	def show
 		@game = Game.where(:id => params[:id]).first
+		@my_games = Game.where("white_player_id = ? or black_player_id = ?", current_player.id, current_player.id).to_a
 		if @game.nil?
 			redirect_to root_path
 		else

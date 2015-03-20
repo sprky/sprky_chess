@@ -6,4 +6,7 @@ body {
 	@include outer-container;
 }
 
+.alerts {
+  @include span-columns(12);
+}
 

@@ -1,4 +1,4 @@
-<hgroup class="game-details">
+<div class="game-details">
 	<h1 class="game-name"><%= @game.name %></h1>
 	<ul>
 		<li>Game ID: <%= @game.id %></li>
@@ -15,14 +15,22 @@
 		  	<li>Game created by: you</li>
 			<% end %>
 		<% else %>
-				<li>Player(white): <%= @game.white_player_id %></li>
-				<li>Player(black): <%= @game.black_player_id %></li>
+				<li>White Player: <%= player_email_from_id(@game.white_player_id) %></li>
+				<li>Black Player: <%= player_email_from_id(@game.black_player_id) %></li>
 		<% end %>
-		<div class='game-container'>
-			<%= render 'shared/gameboard' %>
-		</div>
+		<hr />
+		<h1>Other games</h1>
+		<ul>
+			<% @my_games.each do |game| %>
+				<li><%= link_to game.name, game_path(game) %></li>
+			<% end %>
+		</ul>
 	</ul>
-</hgroup>
+</div>
+
+<div class='game-container'>
+	<%= render 'shared/gameboard' %>
+</div>
 
 <script>
 	$(document).ready(function() {
