@@ -28,6 +28,7 @@ h1.game-name {
   td {
     width: 60px;
     height: 60px;
+    padding: 0;
     &:hover {
       border: 4px solid $blue;
     }
