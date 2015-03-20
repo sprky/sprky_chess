@@ -21,7 +21,7 @@ class GamesControllerTest < ActionController::TestCase
   test "game join fail due to identical@player_id" do
     player = FactoryGirl.create(:player)
     sign_in player
-    game = FactoryGirl.create(:game, white_player_id: 3)
+    game = FactoryGirl.create(:game, white_player_id: 3, black_player_id: 0)
     put :update, :id => game.id, :game => { :black_player_id => 3 }
     game.reload
     assert_response :unprocessable_entity, "Should respond unprocessable_entity"
