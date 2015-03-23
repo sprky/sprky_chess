@@ -1,6 +1,8 @@
-<div class='game-details'>
+<div class='games-information'>
   <% if player_signed_in? %>
     <%= render 'shared/my_games' %>
+    <hr />
+    <%= render 'shared/open_games' %>
   <% end %>
 </div>
 
