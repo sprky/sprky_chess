@@ -1,0 +1,9 @@
+<div class='my-games'>
+	<h1>Open games</h1>
+	<ul>
+		<% @open_games.each do |game| %>
+			<li><%= link_to game.name, game_path(game) %></li>
+		<% end %>
+	</ul>
+</div>
+

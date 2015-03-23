@@ -7,10 +7,12 @@ h1.game-name {
   margin: 0;
 }
 
+.games-information {
+  @include span-columns(3);
+}
 .game-container {
   @include span-columns(8);
-  @include shift(2);
-  padding-bottom: 4em;
+  /*padding-bottom: 4em;*/
 }
 
 #gameboard {

@@ -12,7 +12,12 @@ class GamesController < ApplicationController
 
 	def show
 		@game = Game.where(:id => params[:id]).first
-		if @game.nil?
+		# get @my_games from my_games method in application_controller
+		@my_games = my_games
+		# get @open_games from open_games method
+    @open_games = open_games
+  
+  	if @game.nil?
 			redirect_to root_path
 		else
 			@pieces = @game.pieces
