@@ -1,0 +1,22 @@
+<div class="game-details">
+	<h1 class="game-name"><%= @game.name %></h1>
+	<ul>
+		<li>Game ID: <%= @game.id %></li>
+		<li>Game State: <%= @game.state %></li>
+		<li>Winner: <%= @game.winning_player_id %></li>
+		<% if @game.black_player_id.nil? %> <!-- no black player is yet assigned, allow game joining -->
+			<% if @game.white_player_id != current_player.id %><!-- current player did not create game -->
+				<li>Game created by: <%= @game.white_player_id %></li>
+				<%= simple_form_for @game, :method => :put do |f| %>
+					<%= f.input :black_player_id, :as => :hidden, :input_html => { :value => current_player.id } %>
+					<%= f.submit 'Join Game' %>
+				<% end %>
+		  <% else %>
+		  	<li>Game created by: you</li>
+			<% end %>
+		<% else %>
+				<li>White Player: <%= player_email_from_id(@game.white_player_id) %></li>
+				<li>Black Player: <%= player_email_from_id(@game.black_player_id) %></li>
+		<% end %>
+	</ul>
+</div>
