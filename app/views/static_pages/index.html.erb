@@ -1,4 +1,8 @@
-
+<div class='game-details'>
+  <% if player_signed_in? %>
+    <%= render 'shared/my_games' %>
+  <% end %>
+</div>
 
 <div class='game-container'>
   <%= render 'shared/gameboard' %>

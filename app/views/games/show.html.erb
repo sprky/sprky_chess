@@ -19,12 +19,9 @@
 				<li>Black Player: <%= player_email_from_id(@game.black_player_id) %></li>
 		<% end %>
 		<hr />
-		<h1>Other games</h1>
-		<ul>
-			<% @my_games.each do |game| %>
-				<li><%= link_to game.name, game_path(game) %></li>
-			<% end %>
-		</ul>
+		<% if player_signed_in? %>
+			<%= render 'shared/my_games' %>
+		<% end %>
 	</ul>
 </div>
 
