@@ -18,13 +18,6 @@ class KnightTest < ActiveSupport::TestCase
 
   end
 
-  test "obstructed knight moves" do
-    setup_knight
-
-    assert @knight.obstructed_move?(5, 6)
-    assert @white_knight.obstructed_move?(5, 1)
-  end
-
   test "unobstructed knight moves" do
     setup_knight
 

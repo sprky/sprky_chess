@@ -10,6 +10,7 @@ class Pawn < Piece
   end
 
   def obstructed_move?(x, y)
+    # pawn could be obstructed on a 2 square move!
     return false
   end
 

@@ -6,12 +6,7 @@ class Knight < Piece
   end
 
   def obstructed_move?(x, y)
-    
-    destination_obstruction = game.obstruction(x, y)
-    if destination_obstruction && destination_obstruction.color == self.color
-      # yes and it's the same color - it's an obstruction
-      return true
-    end
+    # knight jumps over pieces - can't be obstructed
     return false 
   end
 

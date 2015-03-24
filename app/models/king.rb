@@ -4,6 +4,7 @@ class King < Piece
   end
 
   def obstructed_move?(x, y)
+    # king moves one space - can't be obstructed
     return false
   end
 end

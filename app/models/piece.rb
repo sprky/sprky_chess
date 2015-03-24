@@ -23,6 +23,9 @@ class Piece < ActiveRecord::Base
     # check that destination isn't blocked by piece of same color
     return false if destination_obstructed?(x, y)
 
+    # check that the move doesn't put the king into check
+    # return false if move_causes_check?(x, y)
+
     # otherwise return true
     return true
   end
