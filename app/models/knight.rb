@@ -11,10 +11,7 @@ class Knight < Piece
     if destination_obstruction && destination_obstruction.color == self.color
       # yes and it's the same color - it's an obstruction
       return true
-
-      # can include else and capture logic here
     end
-
     return false 
   end
 

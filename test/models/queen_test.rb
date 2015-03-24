@@ -2,18 +2,20 @@ require 'test_helper'
 
 class QueenTest < ActiveSupport::TestCase
   
-  test "queen valid moves" do
-    queen = FactoryGirl.create(:queen, x_position: 4, y_position: 4)
+  test "queen legal moves" do
+    game = FactoryGirl.create(:game)
+    queen = FactoryGirl.create(:queen, x_position: 4, y_position: 4, game_id: game.id)
 
-    assert queen.valid_move?(6, 6)
-    assert queen.valid_move?(4, 0)
-    assert queen.valid_move?(3, 4)
+    assert queen.legal_move?(6, 6)
+    assert queen.legal_move?(4, 0)
+    assert queen.legal_move?(3, 4)
   end
 
-  test "queen invalid moves" do
-    queen = FactoryGirl.create(:queen, x_position: 4, y_position: 4)
+  test "queen illegal moves" do
+    game = FactoryGirl.create(:game)
+    queen = FactoryGirl.create(:queen, x_position: 4, y_position: 4, game_id: game.id)
 
-    assert_not queen.valid_move?(5, 6)
+    assert_not queen.legal_move?(5, 6)
   end
 
   test "queen move obstructed" do 
@@ -22,10 +24,10 @@ class QueenTest < ActiveSupport::TestCase
     @game.pieces.create( type: 'Pawn', x_position: 6, y_position: 4, color: true )
     @game.pieces.create( type: 'Pawn', x_position: 2, y_position: 4, color: true )
 
-    assert @queen.obstructed_move?(4,7), "queen is blocked up"
-    assert @queen.obstructed_move?(4,1), "queen is blocked down"
-    assert @queen.obstructed_move?(7,4), "queen is blocked to right"
-    assert @queen.obstructed_move?(1,4), "queen is blocked to left"
+    assert @queen.obstructed_move?(4, 7), "queen is blocked up"
+    assert @queen.obstructed_move?(4, 0), "queen is blocked down"
+    assert @queen.obstructed_move?(7, 4), "queen is blocked to right"
+    assert @queen.obstructed_move?(1, 4), "queen is blocked to left"
     assert @queen.obstructed_move?(7, 7), "quad 1"
     assert @queen.obstructed_move?(7, 1), "quad 2"
     assert @queen.obstructed_move?(1, 1), "quad 3"

@@ -9,6 +9,10 @@ class Pawn < Piece
     proper_length?(y)
   end
 
+  def obstructed_move?(x, y)
+    return false
+  end
+
   private
 
   def horizontal_move?(x)
