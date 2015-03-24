@@ -61,4 +61,26 @@ class PawnTest < ActiveSupport::TestCase
     assert black_pawn.legal_move?(1, 3)
   end
 
+  test "pawn not obstructed test" do 
+    game = FactoryGirl.create(:game)
+    white_pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 1, color: true, game_id: game.id)
+    black_pawn = FactoryGirl.create(:pawn, x_position: 2, y_position: 6, color: false, game_id: game.id)
+    middle_pawn = FactoryGirl.create(:pawn, x_position: 6, y_position: 4, color: false, game_id: game.id)
+
+    assert_not white_pawn.obstructed_move?(1, 3), "White 2 square initial move"
+    assert_not white_pawn.obstructed_move?(1, 2), "White 1 square initial move"
+    assert_not black_pawn.obstructed_move?(2, 5), "Black 1 sqaure initial move"
+    assert_not middle_pawn.obstructed_move?(6, 3), "Black 1 square regular move"
+  end 
+
+  test "pawn obstructed test" do 
+    game = FactoryGirl.create(:game)
+    white_pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 1, color: true, game_id: game.id)
+    black_pawn = FactoryGirl.create(:pawn, x_position: 5, y_position: 6, color: false, game_id: game.id)
+    blocking_piece1 = FactoryGirl.create(:knight, x_position: 1, y_position: 2, color: false, game_id: game.id)
+    blocking_piece2 = FactoryGirl.create(:knight, x_position: 5, y_position: 5, color: false, game_id: game.id)
+
+    assert white_pawn.obstructed_move?(1, 3), "White 2 square initial move"
+    assert black_pawn.obstructed_move?(5, 4), "Black 2 square initial move"
+  end 
 end
