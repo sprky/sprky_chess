@@ -60,7 +60,14 @@
 			// source and destination are selected, send ajax call
 			destination_x_position = $(destination).data("x-position");
 			destination_y_position = $(destination).data("y-position");
-			console.log('make ajax call - move from (', piece_x_position, piece_y_position ,') to (', destination_x_position, destination_y_position, ')');		
+			$.ajax({
+				type: 'POST',
+				url: ,
+				dataType: 'json',
+				data: { x_position: destination_x_position,
+								y_position: destination_y_position 
+							}
+			});		
 		}
 
 	});
