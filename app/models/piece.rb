@@ -128,6 +128,8 @@ class Piece < ActiveRecord::Base
         end
       end
     end
+
+    return false
   end
 
   private

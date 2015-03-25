@@ -5,9 +5,6 @@ class Queen < Piece
   end
 
   def obstructed_move?(x, y)
-    return true if obstructed_diagonally?(x, y)
-    return true if obstructed_rectilinearly?(x, y)
-
-    return false 
+    obstructed_diagonally?(x, y) || obstructed_rectilinearly?(x, y)
   end
 end
