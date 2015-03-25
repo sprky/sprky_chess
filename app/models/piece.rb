@@ -51,7 +51,7 @@ class Piece < ActiveRecord::Base
   end
   
   def move_on_board?(x, y)
-    # (x <= MAX_BOARD_SIZE && x >= MIN_BOARD_SIZE) && (y <= MAX_BOARD_SIZE && y >= MIN_BOARD_SIZE)
+    (x <= MAX_BOARD_SIZE && x >= MIN_BOARD_SIZE) && (y <= MAX_BOARD_SIZE && y >= MIN_BOARD_SIZE)
   end
   
   def nil_move?(x, y)
