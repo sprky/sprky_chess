@@ -1,4 +1,5 @@
 Sprky::Application.routes.draw do
+  get "pieces/update"
   devise_for :players
   root 'static_pages#index'
 
