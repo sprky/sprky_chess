@@ -11,14 +11,14 @@ class Piece < ActiveRecord::Base
     #check to make sure move isn't back to same spot
     return false if nil_move?(x, y)
 
-    # check if move is on board
-    return false if !move_on_board?(x, y)
+    # # check if move is on board
+    # return false if !move_on_board?(x, y)
 
     # check that move is legal, implemented by each piece
     return false if !legal_move?(x, y)
 
-    # check that move is not obstructed
-    return false if obstructed_move?(x, y)
+    # # check that move is not obstructed
+    # return false if obstructed_move?(x, y)
     
     # check that destination isn't blocked by piece of same color
     return false if destination_obstructed?(x, y)
