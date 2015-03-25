@@ -10,7 +10,10 @@ class Pawn < Piece
   end
 
   def obstructed_move?(x, y)
-    # pawn could be obstructed on a 2 square move!
+    # check if a white 2 square move with obstruction
+    return true if y_position == 1 && y == 3 && game.obstruction(x, 2)
+    # check if a black 2 square move with obstruction
+    return true if y_position == 6 && y == 4 && game.obstruction(x, 5)
     return false
   end
 
