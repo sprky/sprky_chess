@@ -14,7 +14,6 @@ class Pawn < Piece
     return true if y_position == 1 && y == 3 && game.obstruction(x, 2)
     # check if a black 2 square move with obstruction
     return true if y_position == 6 && y == 4 && game.obstruction(x, 5)
-    
     return false
   end
 

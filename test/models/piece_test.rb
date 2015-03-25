@@ -39,4 +39,22 @@ class PieceTest < ActiveSupport::TestCase
 
   end
 
+  test "Should recognize nil move" do 
+    piece = FactoryGirl.create(:rook, x_position: 5, y_position: 4)
+
+    assert piece.nil_move?(5, 4)
+    assert_not piece.nil_move?(5, 5)
+  end
+
+  test "Should recognize destination_obstructed move" do 
+    game = FactoryGirl.create(:game)
+    piece = FactoryGirl.create(:rook, x_position: 5, y_position: 4, color: true, game_id: game.id)
+
+
+    assert piece.destination_obstructed?(5, 1), "White rook obstructed by white pawn"
+    assert_not piece.destination_obstructed?(5, 6), "White rook not obstructed by black pawn"
+    assert_not piece.destination_obstructed?(5, 9), "Not obstructed at empty space"
+  end
+
+
 end

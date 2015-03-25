@@ -1,28 +1,21 @@
 require 'test_helper'
 
-class PawnTest < ActiveSupport::TestCase
+class KnightTest < ActiveSupport::TestCase
 
-  test "valid knight moves" do
+  test "legal knight moves" do
     setup_knight
 
-    assert @knight.valid_move?(5, 6)
-    assert @knight.valid_move?(2, 3)
+    assert @knight.legal_move?(5, 6)
+    assert @knight.legal_move?(2, 3)
   end
  
-  test "invalid knight moves" do
+  test "illegal knight moves" do
     setup_knight
 
-    assert_not @knight.valid_move?(5, 5), "diagonal knight move"
-    assert_not @knight.valid_move?(4, 6), "vertical knight move"
-    assert_not @knight.valid_move?(5, 4), "horizontal knight move"
+    assert_not @knight.legal_move?(5, 5), "diagonal knight move"
+    assert_not @knight.legal_move?(4, 6), "vertical knight move"
+    assert_not @knight.legal_move?(5, 4), "horizontal knight move"
 
-  end
-
-  test "obstructed knight moves" do
-    setup_knight
-
-    assert @knight.obstructed_move?(5, 6)
-    assert @white_knight.obstructed_move?(5, 1)
   end
 
   test "unobstructed knight moves" do
