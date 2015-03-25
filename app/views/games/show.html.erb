@@ -17,10 +17,12 @@
 		// boolean to determine if a piece has been selected
 		var piece_selected = false;
 		// set up variables for ajax call
-		var piece_x_position;
-		var piece_y_position;
-		var destination_x_position;
-		var destination_y_position;
+		var piece_x_position,
+				piece_y_position,
+				destination_x_position,
+				destination_y_position,
+				piecePathUrl;
+
 
 		// set up click listener for all tds on gameboard
 		$('#gameboard td').click( function() {
@@ -54,19 +56,26 @@
 			piece_x_position = $(piece).data("x-position");
 			piece_y_position = $(piece).data("y-position");
 			console.log('select piece at ', piece_x_position, piece_y_position );
+			piecePathUrl = '/pieces/' + $(piece).data("piece-id");
 		}
 
 		function sendMove( destination ) {
 			// source and destination are selected, send ajax call
 			destination_x_position = $(destination).data("x-position");
 			destination_y_position = $(destination).data("y-position");
+
 			$.ajax({
-				type: 'POST',
-				url: ,
+				type: 'PUT',
+				url: piecePathUrl,
 				dataType: 'json',
-				data: { x_position: destination_x_position,
+				data: { piece: { 
+								x_position: destination_x_position,
 								y_position: destination_y_position 
-							}
+								}
+							},
+				success: function(data) {
+					$(location).attr('href', data.update_url);
+				}
 			});		
 		}
 
