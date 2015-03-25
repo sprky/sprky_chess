@@ -91,6 +91,8 @@ class Piece < ActiveRecord::Base
         pos_y += 1
       end
     end
+    
+    return false
   end
 
   def obstructed_move?(x, y)

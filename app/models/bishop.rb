@@ -4,8 +4,6 @@ class Bishop < Piece
   end
 
   def obstructed_move?(x,y)
-  	return true if obstructed_diagonally?(x, y)
-    
-    return false
+  	obstructed_diagonally?(x, y)
   end
 end
