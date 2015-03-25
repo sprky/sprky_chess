@@ -1,12 +1,17 @@
 class PiecesController < ApplicationController
   def update
     @piece = Piece.find(params[:id])
-    @piece.update_attributes(piece_params)
+    x = piece_params[:x_position]
+    y = piece_params[:y_position]
+
+    @piece.update_attributes(piece_params) if @piece.valid_move?(x, y)
+    
     game = @piece.game
 
     render :json => {
       :update_url => game_path(game)
     }
+
 
   end
 
