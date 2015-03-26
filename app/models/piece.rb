@@ -48,6 +48,12 @@ class Piece < ActiveRecord::Base
   def move_on_board?(x, y)
     (x <= MAX_BOARD_SIZE && x >= MIN_BOARD_SIZE) && (y <= MAX_BOARD_SIZE && y >= MIN_BOARD_SIZE)
   end
+
+  def move_to(piece, params)
+    x = params[:x_position].to_i
+    y = params[:y_position].to_i
+    piece.update_attributes(params) if piece.valid_move?(x, y)
+  end
   
   def nil_move?(x, y)
     x_position == x && y_position == y

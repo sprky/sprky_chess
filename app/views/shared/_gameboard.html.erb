@@ -6,11 +6,7 @@
 				<% 7.downto(0).each do |column| %>
 					<% if @game %> 
 						<% query_result = @game.pieces.where(x_position:column, y_position: row).last %>
-						<td class='x-position-<%= column %>' data-x-position='<%= column %>' data-y-position='<%= row %>' data-piece-id=
-							<% if query_result.present? %>
-								'<%= query_result.id %>'
-							<% end %>
-						>
+						<td class='x-position-<%= column %>' data-x-position='<%= column %>' data-y-position='<%= row %>' data-piece-id='<%= piece_id(query_result) %>'>
 							<% if query_result != nil %>
 								<%= image_tag query_result.symbol %>
 							<% end %>
@@ -26,11 +22,7 @@
 				<% (0..7).each do |column| %>
 					<% if @game %> 
 						<% query_result = @game.pieces.where(x_position:column, y_position: row).last %>
-						<td class='x-position-<%= column %>' data-x-position='<%= column %>' data-y-position='<%= row %>' data-piece-id=
-							<% if query_result.present? %>
-								'<%= query_result.id %>'
-							<% end %>
-						>
+						<td class='x-position-<%= column %>' data-x-position='<%= column %>' data-y-position='<%= row %>' data-piece-id='<%= piece_id(query_result) %>'>
 							<% if query_result != nil %>
 								<%= image_tag query_result.symbol %>
 							<% end %>

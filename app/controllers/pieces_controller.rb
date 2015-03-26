@@ -1,10 +1,8 @@
 class PiecesController < ApplicationController
   def update
     @piece = Piece.find(params[:id])
-    x = piece_params[:x_position].to_i
-    y = piece_params[:y_position].to_i
-
-    @piece.update_attributes(piece_params) if @piece.valid_move?(x, y)
+    # move piece if move is valid
+    @piece.move_to(@piece, piece_params)
     
     game = @piece.game
 
