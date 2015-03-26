@@ -64,6 +64,8 @@ class Piece < ActiveRecord::Base
     
     #(this takes you up and right)
     if pos_x < x && pos_y < y 
+      pos_x += 1
+      pos_y += 1
       while x > pos_x && y > pos_y
         return true if game.obstruction(pos_x, pos_y)
         pos_x += 1
@@ -71,6 +73,8 @@ class Piece < ActiveRecord::Base
       end
     #(this takes you down and right)
     elsif pos_x < x && pos_y > y
+      pos_x += 1
+      pos_y -= 1
       while x > pos_x && y < pos_y
         return true if game.obstruction(pos_x, pos_y)
         pos_x += 1
@@ -78,6 +82,8 @@ class Piece < ActiveRecord::Base
       end
     #(this takes you down and left)
     elsif pos_x > x && pos_y > y 
+      pos_x -= 1
+      pos_y -= 1
       while x < pos_x && y < pos_y
         return true if game.obstruction(pos_x, pos_y)
         pos_x -= 1
@@ -85,13 +91,14 @@ class Piece < ActiveRecord::Base
       end
     #(this takes you up and left)
     elsif pos_x > x && pos_y < y
+      pos_x -= 1
+      pos_y += 1
       while x < pos_x && y > pos_y
         return true if game.obstruction(pos_x, pos_y)
         pos_x -= 1
         pos_y += 1
       end
     end
-    
     return false
   end
 
@@ -105,30 +112,33 @@ class Piece < ActiveRecord::Base
 
     if x == pos_x # move is in y direction
       if y < pos_y # move is down
+        pos_y -= 1
         while y < pos_y 
           return true if game.obstruction(pos_x, pos_y)  
           pos_y -= 1
         end
       else # move is up
+        pos_y += 1
         while y > pos_y
           return true if game.obstruction(pos_x, pos_y)
           pos_y += 1
         end
       end
-    else # move is in x direction
+    elsif y == pos_y # move is in x direction
       if x < pos_x # move is left
+        pos_x -= 1
         while x < pos_x
           return true if game.obstruction(pos_x, pos_y)
           pos_x -= 1
         end
       else # move is right
+        pos_x += 1
         while x > pos_x
           return true if game.obstruction(pos_x, pos_y)
           pos_x += 1
         end
       end
     end
-
     return false
   end
 
