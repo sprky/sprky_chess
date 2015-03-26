@@ -8,4 +8,4 @@ Sprky::Application.load_tasks
 
 RuboCop::RakeTask.new
 
-task default: ['test', 'rubocop']
+task default: %w(test rubocop)

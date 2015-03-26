@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Use devise for user login/logout/etc.
 gem 'devise', '>=3.2.4'
 
-#Bourbon for base mixins
+# Bourbon for base mixins
 gem 'bourbon'
 
 # Semnatic grid system built on top of bourbon
@@ -45,15 +45,14 @@ gem 'simple_form'
 # Add byebug for testing https://github.com/deivid-rodriguez/byebug
 gem 'byebug'
 
-
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
 
-group :test do 
-	# test factory
-	gem "factory_girl_rails", "~> 4.0"
+group :test do
+  # test factory
+  gem 'factory_girl_rails', '~> 4.0'
 
   gem 'rubocop'
 end

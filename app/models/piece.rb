@@ -8,48 +8,48 @@ class Piece < ActiveRecord::Base
   belongs_to :game
 
   def valid_move?(x, y)
-    #check to make sure move isn't back to same spot
+    # check to make sure move isn't back to same spot
     return false if nil_move?(x, y)
 
-    return false if !move_on_board?(x, y)
+    return false unless move_on_board?(x, y)
 
-    return false if !legal_move?(x, y)
+    return false unless legal_move?(x, y)
 
     return false if obstructed_move?(x, y)
-    
+
     return false if destination_obstructed?(x, y)
 
     # check that the move doesn't put the king into check
     # return false if move_causes_check?(x, y)
 
-    return true
+    true
   end
 
   def capture_move?(x, y)
     captured_piece = game.obstruction(x, y)
-    captured_piece && captured_piece.color != self.color
+    captured_piece && captured_piece.color != color
   end
 
   def color_name
-    color ? "white" : "black"
+    color ? 'white' : 'black'
   end
 
   def destination_obstructed?(x, y)
     destination_obstruction = game.obstruction(x, y) # is there something at the destination?
-    if destination_obstruction && destination_obstruction.color == self.color
+    if destination_obstruction && destination_obstruction.color == color
       # yes and it's the same color - it's an destination_obstruction
       return true
     end
   end
 
-  def legal_move?(x, y)
-    raise NotImplementedError "Pieces must implement #legal_move?"
+  def legal_move?(_x, _y)
+    fail NotImplementedError 'Pieces must implement #legal_move?'
   end
 
   def mark_captured
-    self.update_attributes( captured?: true, x_position: nil, y_position: nil)
+    update_attributes(captured?: true, x_position: nil, y_position: nil)
   end
-  
+
   def move_on_board?(x, y)
     (x <= MAX_BOARD_SIZE && x >= MIN_BOARD_SIZE) && (y <= MAX_BOARD_SIZE && y >= MIN_BOARD_SIZE)
   end
@@ -60,13 +60,13 @@ class Piece < ActiveRecord::Base
 
     if piece.valid_move?(x, y)
       if capture_move?(x, y)
-        captured = game.obstruction(x,y)
+        captured = game.obstruction(x, y)
         captured.mark_captured
       end
       piece.update_attributes(params)
     end
   end
-  
+
   def nil_move?(x, y)
     x_position == x && y_position == y
   end
@@ -74,9 +74,9 @@ class Piece < ActiveRecord::Base
   def obstructed_diagonally?(x, y)
     pos_x = x_position
     pos_y = y_position
-    
-    #(this takes you up and right)
-    if pos_x < x && pos_y < y 
+
+    # (this takes you up and right)
+    if pos_x < x && pos_y < y
       pos_x += 1
       pos_y += 1
       while x > pos_x && y > pos_y
@@ -84,7 +84,7 @@ class Piece < ActiveRecord::Base
         pos_x += 1
         pos_y += 1
       end
-    #(this takes you down and right)
+    # (this takes you down and right)
     elsif pos_x < x && pos_y > y
       pos_x += 1
       pos_y -= 1
@@ -93,8 +93,8 @@ class Piece < ActiveRecord::Base
         pos_x += 1
         pos_y -= 1
       end
-    #(this takes you down and left)
-    elsif pos_x > x && pos_y > y 
+    # (this takes you down and left)
+    elsif pos_x > x && pos_y > y
       pos_x -= 1
       pos_y -= 1
       while x < pos_x && y < pos_y
@@ -102,7 +102,7 @@ class Piece < ActiveRecord::Base
         pos_x -= 1
         pos_y -= 1
       end
-    #(this takes you up and left)
+    # (this takes you up and left)
     elsif pos_x > x && pos_y < y
       pos_x -= 1
       pos_y += 1
@@ -112,11 +112,11 @@ class Piece < ActiveRecord::Base
         pos_y += 1
       end
     end
-    return false
+    false
   end
 
-  def obstructed_move?(x, y)
-    raise NotImplementedError "Pieces must implement #obstructed_move?"
+  def obstructed_move?(_x, _y)
+    fail NotImplementedError 'Pieces must implement #obstructed_move?'
   end
 
   def obstructed_rectilinearly?(x, y)
@@ -126,8 +126,8 @@ class Piece < ActiveRecord::Base
     if x == pos_x # move is in y direction
       if y < pos_y # move is down
         pos_y -= 1
-        while y < pos_y 
-          return true if game.obstruction(pos_x, pos_y)  
+        while y < pos_y
+          return true if game.obstruction(pos_x, pos_y)
           pos_y -= 1
         end
       else # move is up
@@ -152,7 +152,7 @@ class Piece < ActiveRecord::Base
         end
       end
     end
-    return false
+    false
   end
 
   private
@@ -160,5 +160,4 @@ class Piece < ActiveRecord::Base
   def set_default_images
     self.symbol ||= "#{color_name}-#{type.downcase}.gif"
   end
-
 end
