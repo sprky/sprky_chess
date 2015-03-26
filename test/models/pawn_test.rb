@@ -57,8 +57,16 @@ class PawnTest < ActiveSupport::TestCase
     game = FactoryGirl.create(:game)
     white_pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 3, color: true, game_id: game.id)
     black_pawn = FactoryGirl.create(:pawn, x_position: 2, y_position: 4, color: false, game_id: game.id)
-    assert white_pawn.legal_move?(2, 4)
-    assert black_pawn.legal_move?(1, 3)
+    assert white_pawn.capture_move?(2, 4)
+    assert black_pawn.capture_move?(1, 3)
+  end
+
+  test "illegal capture moves" do
+    game = FactoryGirl.create(:game)
+    white_pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 3, color: true, game_id: game.id)
+    white_pawn_2 = FactoryGirl.create(:pawn, x_position: 2, y_position: 4, color: true, game_id: game.id)
+    
+    assert_not white_pawn.capture_move?(2, 4)
   end
 
   test "pawn not obstructed test" do 

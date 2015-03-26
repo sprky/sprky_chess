@@ -28,6 +28,23 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal false, piece.move_on_board?(9, 0)
   end
 
+  test "not a capture move" do
+    game = FactoryGirl.create(:game)
+    piece = FactoryGirl.create(:rook, x_position: 5, y_position: 4, color: true, game_id: game.id)
+    captured = FactoryGirl.create(:pawn, x_position: 5, y_position: 5, color: true, game_id: game.id)
+
+    assert_not piece.capture_move?(5, 5), 'Is not a capture move'
+  end
+
+  test "capture move" do
+    game = FactoryGirl.create(:game)
+    piece = FactoryGirl.create(:rook, x_position: 5, y_position: 4, color: true, game_id: game.id)
+    captured = FactoryGirl.create(:pawn, x_position: 5, y_position: 5, color: false, game_id: game.id)
+
+    assert piece.capture_move?(5, 5), 'Is a capture move'
+  end
+
+
   test "Should mark piece as captured" do
     piece = FactoryGirl.create(:rook, x_position: 5, y_position: 4, captured?: false)
     piece.mark_captured
@@ -73,6 +90,16 @@ class PieceTest < ActiveSupport::TestCase
     assert_not piece.valid_move?(3, 3), "Is illegal move"
     assert_not piece.valid_move?(5, 0), "Is obstructed by pawn"
     assert_not piece.valid_move?(5, 1), "Destination is obstructed by white pawn"
+  end
+
+  test "should move to" do
+    game = FactoryGirl.create(:game)
+    piece = FactoryGirl.create(:rook, x_position: 5, y_position: 4, color: true, game_id: game.id)
+    
+    piece.move_to(piece, {x_position: 7, y_position: 4})
+
+    assert_equal 7, piece.x_position
+    assert_equal 4, piece.y_position
   end
 
 end
