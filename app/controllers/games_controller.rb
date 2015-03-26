@@ -11,7 +11,8 @@ class GamesController < ApplicationController
 	end
 
 	def show
-		@game = Game.where(:id => params[:id]).first
+		@game = Game.find(params[:id])
+		@pieces = @game.pieces.to_a
 		# get @my_games from my_games method in application_controller
 		@my_games = my_games
 		# get @open_games from open_games method
