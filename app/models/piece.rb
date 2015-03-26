@@ -11,22 +11,17 @@ class Piece < ActiveRecord::Base
     #check to make sure move isn't back to same spot
     return false if nil_move?(x, y)
 
-    # check if move is on board
     return false if !move_on_board?(x, y)
 
-    # check that move is legal, implemented by each piece
     return false if !legal_move?(x, y)
 
-    # check that move is not obstructed
     return false if obstructed_move?(x, y)
     
-    # check that destination isn't blocked by piece of same color
     return false if destination_obstructed?(x, y)
 
     # check that the move doesn't put the king into check
     # return false if move_causes_check?(x, y)
 
-    # otherwise return true
     return true
   end
 
@@ -64,6 +59,8 @@ class Piece < ActiveRecord::Base
     
     #(this takes you up and right)
     if pos_x < x && pos_y < y 
+      pos_x += 1
+      pos_y += 1
       while x > pos_x && y > pos_y
         return true if game.obstruction(pos_x, pos_y)
         pos_x += 1
@@ -71,6 +68,8 @@ class Piece < ActiveRecord::Base
       end
     #(this takes you down and right)
     elsif pos_x < x && pos_y > y
+      pos_x += 1
+      pos_y -= 1
       while x > pos_x && y < pos_y
         return true if game.obstruction(pos_x, pos_y)
         pos_x += 1
@@ -78,6 +77,8 @@ class Piece < ActiveRecord::Base
       end
     #(this takes you down and left)
     elsif pos_x > x && pos_y > y 
+      pos_x -= 1
+      pos_y -= 1
       while x < pos_x && y < pos_y
         return true if game.obstruction(pos_x, pos_y)
         pos_x -= 1
@@ -85,13 +86,14 @@ class Piece < ActiveRecord::Base
       end
     #(this takes you up and left)
     elsif pos_x > x && pos_y < y
+      pos_x -= 1
+      pos_y += 1
       while x < pos_x && y > pos_y
         return true if game.obstruction(pos_x, pos_y)
         pos_x -= 1
         pos_y += 1
       end
     end
-    
     return false
   end
 
@@ -105,30 +107,33 @@ class Piece < ActiveRecord::Base
 
     if x == pos_x # move is in y direction
       if y < pos_y # move is down
+        pos_y -= 1
         while y < pos_y 
           return true if game.obstruction(pos_x, pos_y)  
           pos_y -= 1
         end
       else # move is up
+        pos_y += 1
         while y > pos_y
           return true if game.obstruction(pos_x, pos_y)
           pos_y += 1
         end
       end
-    else # move is in x direction
+    elsif y == pos_y # move is in x direction
       if x < pos_x # move is left
+        pos_x -= 1
         while x < pos_x
           return true if game.obstruction(pos_x, pos_y)
           pos_x -= 1
         end
       else # move is right
+        pos_x += 1
         while x > pos_x
           return true if game.obstruction(pos_x, pos_y)
           pos_x += 1
         end
       end
     end
-
     return false
   end
 

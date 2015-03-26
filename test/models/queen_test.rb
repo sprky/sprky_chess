@@ -29,8 +29,7 @@ class QueenTest < ActiveSupport::TestCase
     assert @queen.obstructed_move?(7, 4), "queen is blocked to right"
     assert @queen.obstructed_move?(1, 4), "queen is blocked to left"
     assert @queen.obstructed_move?(7, 7), "quad 1"
-    assert @queen.obstructed_move?(7, 1), "quad 2"
-    assert @queen.obstructed_move?(1, 1), "quad 3"
+    assert @queen.obstructed_move?(0, 0), "quad 3"
     assert @queen.obstructed_move?(1, 7), "quad 4"
   end
 
@@ -48,8 +47,10 @@ class QueenTest < ActiveSupport::TestCase
 
   def setup_obstruction_tests
     @game = FactoryGirl.create(:game)
-    @queen = @game.pieces.where( type: 'Queen', color: true).last
-    @queen.x_position = 4
-    @queen.y_position = 4
+    @queen = @game.pieces.where( type: 'Queen', color: true, game_id: @game.id).last
+    
+    @queen.update_attributes( x_position: 4, y_position: 4)
+    @game.reload
+
   end
 end
