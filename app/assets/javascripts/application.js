@@ -54,12 +54,16 @@ $(document).ready(function() {
   // selected, give it a styling class, set 
   // boolean and variables
   function selectPiece( piece ) {
-    $(piece).addClass('piece-selected');
-    piece_selected = true; 
-    piece_x_position = $(piece).data("x-position");
-    piece_y_position = $(piece).data("y-position");
-    console.log('select piece at ', piece_x_position, piece_y_position );
-    piecePathUrl = '/pieces/' + $(piece).data("piece-id");
+    var pieceId = $(piece).data("piece-id");
+    // can't select a square that doesn't have a piece
+    if (pieceId != "" ) {
+      $(piece).addClass('piece-selected');
+      piece_selected = true; 
+      piece_x_position = $(piece).data("x-position");
+      piece_y_position = $(piece).data("y-position");
+      console.log('select piece at ', piece_x_position, piece_y_position );
+      piecePathUrl = '/pieces/' + pieceId;
+    }
   }
 
   function sendMove( destination ) {
