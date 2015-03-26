@@ -6,11 +6,7 @@
 				<tr class='y-position-<%= row %>' >
 					<% 7.downto(0).each do |column| %>
 						<% query_result = @pieces.select { |p| p["x_position"] == column && p["y_position"] == row }.first %>
-						<td class='x-position-<%= column %>' data-x-position='<%= column %>' data-y-position='<%= row %>' data-piece-id='<%= piece_id(query_result) %>'>
-							<% if query_result != nil %>
-								<%= image_tag query_result.symbol %>
-							<% end %>
-						</td>
+    				<%= raw gameboard_td(query_result, column, row) %>
 					<% end %>
 				</tr>
 		 	<% end %>
@@ -20,11 +16,7 @@
 				<tr class='y-position-<%= row %>' >
 					<% (0..7).each do |column| %>
 						<% query_result = @pieces.select { |p| p["x_position"] == column && p["y_position"] == row }.first %>
-						<td class='x-position-<%= column %>' data-x-position='<%= column %>' data-y-position='<%= row %>' data-piece-id='<%= piece_id(query_result) %>'>
-							<% if query_result != nil %>
-								<%= image_tag query_result.symbol %>
-							<% end %>
-						</td>
+    				<%= raw gameboard_td(query_result, column, row) %>
 					<% end %>
 				</tr>
 		 	<% end %>
