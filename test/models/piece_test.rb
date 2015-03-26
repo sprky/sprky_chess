@@ -107,12 +107,13 @@ class PieceTest < ActiveSupport::TestCase
     white_pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 3, color: true, game_id: game.id)
     black_pawn = FactoryGirl.create(:pawn, x_position: 2, y_position: 4, color: false, game_id: game.id)
     
-    white_pawn.move_to(white_pawn, {x_position: 2, y_position: 4})
-
     assert white_pawn.capture_move?(2, 4), 'capture move'
+    
+    white_pawn.move_to(white_pawn, {x_position: 2, y_position: 4})
+    white_pawn.reload
     assert_equal 2, white_pawn.x_position
     assert_equal 4, white_pawn.y_position
-
+    black_pawn.reload
     assert black_pawn.captured?, 'captured black pawn'
   end
 

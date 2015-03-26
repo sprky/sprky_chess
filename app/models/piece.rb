@@ -27,7 +27,7 @@ class Piece < ActiveRecord::Base
 
   def capture_move?(x, y)
     captured_piece = game.obstruction(x, y)
-    (captured_piece && captured_piece.color) != self.color
+    captured_piece && captured_piece.color != self.color
   end
 
   def color_name
@@ -59,11 +59,11 @@ class Piece < ActiveRecord::Base
     y = params[:y_position].to_i
 
     if piece.valid_move?(x, y)
-      piece.update_attributes(params)
       if capture_move?(x, y)
         captured = game.obstruction(x,y)
         captured.mark_captured
       end
+      piece.update_attributes(params)
     end
   end
   
