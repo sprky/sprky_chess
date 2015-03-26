@@ -59,7 +59,7 @@ class Piece < ActiveRecord::Base
     y = params[:y_position].to_i
 
     if piece.valid_move?(x, y)
-      piece.update_attributes(params) if piece.valid_move?(x, y)
+      piece.update_attributes(params)
       if capture_move?(x, y)
         captured = game.obstruction(x,y)
         captured.mark_captured
