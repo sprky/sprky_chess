@@ -10,8 +10,6 @@ class PiecesController < ApplicationController
     render :json => {
       :update_url => game_path(game)
     }
-
-
   end
 
   private 

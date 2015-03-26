@@ -9,6 +9,17 @@ class Pawn < Piece
     proper_length?(y)
   end
 
+  def capture_move?(x, y)
+    x_diff = (x_position - x).abs
+    y_diff = (y_position - y).abs
+    captured_piece = game.obstruction(x, y)
+
+    return false if captured_piece.blank?
+    return false if captured_piece.color == color
+
+    captured_piece ? (x_diff == 1) && (y_diff == 1) : false
+  end
+
   def obstructed_move?(x, y)
     # check if a white 2 square move with obstruction
     return true if y_position == 1 && y == 3 && game.obstruction(x, 2)
@@ -36,12 +47,4 @@ class Pawn < Piece
     y_diff = (y - y_position).abs
     first_move?(y) ? (y_diff == 1 || y_diff == 2) : y_diff == 1
   end
-
-  def capture_move?(x, y)
-    x_diff = (x_position - x).abs
-    y_diff = (y_position - y).abs
-    game.obstruction(x, y) ? (x_diff == 1) && (y_diff == 1) : false
-  end
-
-
 end
