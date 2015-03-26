@@ -1,4 +1,5 @@
 class PiecesController < ApplicationController
+
   def update
     @piece = Piece.find(params[:id])
     x = piece_params[:x_position].to_i

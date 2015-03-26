@@ -56,5 +56,23 @@ class PieceTest < ActiveSupport::TestCase
     assert_not piece.destination_obstructed?(5, 9), "Not obstructed at empty space"
   end
 
+  test "Should recognize valid move" do 
+    game = FactoryGirl.create(:game)
+    piece = FactoryGirl.create(:rook, x_position: 5, y_position: 4, color: true, game_id: game.id)
+
+    assert piece.valid_move?(7, 4)
+    assert piece.valid_move?(5, 6)
+  end
+
+  test "Should recognize invalid moves" do 
+    game = FactoryGirl.create(:game)
+    piece = FactoryGirl.create(:rook, x_position: 5, y_position: 4, color: true, game_id: game.id)
+
+    assert_not piece.valid_move?(5, 4), "Is nil move"
+    assert_not piece.valid_move?(8, 4), "Is not on board"
+    assert_not piece.valid_move?(3, 3), "Is illegal move"
+    assert_not piece.valid_move?(5, 0), "Is obstructed by pawn"
+    assert_not piece.valid_move?(5, 1), "Destination is obstructed by white pawn"
+  end
 
 end
