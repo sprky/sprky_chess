@@ -12,12 +12,12 @@ class Pawn < Piece
   def capture_move?(x, y)
     x_diff = (x_position - x).abs
     y_diff = (y_position - y).abs
-    captured = game.obstruction(x, y)
+    captured_piece = game.obstruction(x, y)
 
-    return false if captured.blank?
-    return false if captured.color == color
+    return false if captured_piece.blank?
+    return false if captured_piece.color == color
 
-    captured ? (x_diff == 1) && (y_diff == 1) : false
+    captured_piece ? (x_diff == 1) && (y_diff == 1) : false
   end
 
   def obstructed_move?(x, y)

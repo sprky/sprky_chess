@@ -57,7 +57,6 @@ class PawnTest < ActiveSupport::TestCase
     white_pawn = FactoryGirl.create(:pawn, x_position: 1, y_position: 3, color: true, game_id: game.id)
     black_pawn = FactoryGirl.create(:pawn, x_position: 2, y_position: 4, color: false, game_id: game.id)
     assert white_pawn.capture_move?(2, 4)
-    assert black_pawn.capture_move?(1, 3)
   end
 
   test "should not capture" do
