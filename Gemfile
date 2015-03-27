@@ -39,14 +39,14 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+# Rubocop style checker
+gem 'rubocop'
+
 # SimpleForm gem
 gem 'simple_form'
 
 # Add byebug for testing https://github.com/deivid-rodriguez/byebug
 gem 'byebug'
-
-# rubocop for ensuring correct formatting 
-gem 'rubocop'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
