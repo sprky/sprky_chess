@@ -25,7 +25,7 @@ class Pawn < Piece
     return true if y_position == 1 && y == 3 && game.obstruction(x, 2)
     # check if a black 2 square move with obstruction
     return true if y_position == 6 && y == 4 && game.obstruction(x, 5)
-    return false
+    false
   end
 
   private
@@ -36,10 +36,10 @@ class Pawn < Piece
   end
 
   def backwards_move?(y)
-    color ? y_position > y : y_position < y   
+    color ? y_position > y : y_position < y
   end
 
-  def first_move?(y)
+  def first_move?(_y)
     (y_position == 1 && color) || (y_position == 6 && !color)
   end
 

@@ -1,9 +1,9 @@
 class King < Piece
-	def legal_move?(x, y)
+  def legal_move?(x, y)
     proper_length?(x, y)
   end
 
-  def obstructed_move?(x, y)
+  def obstructed_move?(_x, _y)
     # king moves one space - can't be obstructed
     false
   end
