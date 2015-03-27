@@ -7,6 +7,14 @@ class King < Piece
     # king moves one space - can't be obstructed
     false
   end
+
+  def castle_move(x, y)
+    if x > x_position
+      #kingside castle
+    else
+      #queenside castle
+    end
+  end
 end
 
 private

@@ -29,6 +29,17 @@ class RookTest < ActiveSupport::TestCase
     assert @rook3.obstructed_move?(4,7), "Rook is blocked to left"
   end
 
+  test "Should give kingside rook" do 
+    setup_rook_for_castling
+
+    assert_equal @kings_rook, Rook.rook_for_castling( @king, "King")
+  end
+
+  test "Should give queenside rook" do 
+    setup_rook_for_castling
+
+    assert_equal @queens_rook, Rook.rook_for_castling( @king, "Queen")
+  end
   # sets up a game and chooses a rook, then moves it to the center
   # of the board so it has unobstructed moves
   # selects 2 more rooks with obstructed x direction moves
@@ -40,5 +51,14 @@ class RookTest < ActiveSupport::TestCase
     @rook2 = game.pieces.where( x_position: 0, y_position: 0).last
     @rook3 = game.pieces.where( x_position: 7, y_position: 7).last
   end
+
+  def setup_rook_for_castling
+    @game = FactoryGirl.create(:game)
+    @king = @game.pieces.find_by(type: 'King', x_position: 4, y_position: 0)
+    @kings_rook = @game.pieces.find_by(type: 'Rook', x_position: 7, y_position: 0)
+    @queens_rook = @game.pieces.find_by(type: 'Rook', x_position: 0, y_position: 0)
+
+  end
+
 
 end
