@@ -1,8 +1,8 @@
 Sprky::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  #Setting the default url
-  config.action_mailer.default_url_options = {:host=> 'localhost:3030'}
+  # Setting the default url
+  config.action_mailer.default_url_options = { host: 'localhost:3030' }
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

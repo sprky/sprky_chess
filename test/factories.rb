@@ -1,11 +1,11 @@
 FactoryGirl.define do
-	factory :player do
+  factory :player do
     sequence :email do |n|
-  		"playerfactory#{n}@example.com"
-	  end
-  	password "ringaroundtherosie"
-    password_confirmation "ringaroundtherosie"
-	end
+      "playerfactory#{n}@example.com"
+    end
+    password 'ringaroundtherosie'
+    password_confirmation 'ringaroundtherosie'
+  end
 
   factory :game do
   end
@@ -23,10 +23,8 @@ FactoryGirl.define do
   end
 
   factory :king do
-
   end
 
   factory :queen do
   end
-
 end
