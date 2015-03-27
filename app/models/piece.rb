@@ -48,7 +48,7 @@ class Piece < ActiveRecord::Base
   end
 
   def mark_captured
-    update_attributes(captured?: true, x_position: nil, y_position: nil)
+    update_attributes(x_position: nil, y_position: nil, state: "captured")
   end
 
   def move_on_board?(x, y)

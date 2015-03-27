@@ -46,11 +46,10 @@ class PieceTest < ActiveSupport::TestCase
 
 
   test "should mark piece as captured" do
-    piece = FactoryGirl.create(:rook, x_position: 5, y_position: 4, captured?: false)
+    piece = FactoryGirl.create(:rook, x_position: 5, y_position: 4)
     piece.mark_captured
     piece.reload
 
-    assert piece.captured?, "Should mark captured?: true"
     assert_nil piece.x_position, "Should be x_position: nil"
     assert_nil piece.y_position, "Should be y_position: nil"
     assert_equal "captured", piece.state, "Should mark piece as captured"
@@ -117,7 +116,6 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal 4, white_pawn.y_position
     assert_equal "moved", white_pawn.state
     black_pawn.reload
-    assert black_pawn.captured?, 'captured black pawn'
     assert_equal "captured", black_pawn.state
   end
 

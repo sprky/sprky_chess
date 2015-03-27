@@ -69,14 +69,13 @@ class PieceTest < ActiveSupport::TestCase
     piece = FactoryGirl.create(
       :rook,
       x_position: 5,
-      y_position: 4,
-      captured?: false)
+      y_position: 4)
     piece.mark_captured
     piece.reload
 
-    assert piece.captured?, 'Should mark captured?: true'
     assert_nil piece.x_position, 'Should be x_position: nil'
     assert_nil piece.y_position, 'Should be y_position: nil'
+    assert_equal "captured", piece.state
   end
 
   test 'should not be a move' do
