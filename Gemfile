@@ -45,6 +45,9 @@ gem 'simple_form'
 # Add byebug for testing https://github.com/deivid-rodriguez/byebug
 gem 'byebug'
 
+# rubocop for ensuring correct formatting 
+gem 'rubocop'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -53,8 +56,6 @@ end
 group :test do
   # test factory
   gem 'factory_girl_rails', '~> 4.0'
-
-  gem 'rubocop'
 end
 
 # Use ActiveModel has_secure_password
