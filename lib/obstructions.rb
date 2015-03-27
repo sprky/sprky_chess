@@ -1,4 +1,4 @@
-module ObstructionHelper
+module Obstructions
   def destination_obstructed?(x, y)
     destination_obstruction = game.obstruction(x, y) # is there something at the destination?
     if destination_obstruction && destination_obstruction.color == color
