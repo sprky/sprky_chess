@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# Tests specific to King logic
 class KingTest < ActiveSupport::TestCase
   test 'legal moves' do
     FactoryGirl.create(:game)
