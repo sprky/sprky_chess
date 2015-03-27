@@ -72,48 +72,52 @@ class Piece < ActiveRecord::Base
   end
 
   def obstructed_diagonally?(x, y)
-    pos_x = x_position
-    pos_y = y_position
+    obstruction = ObstructionHelper.new(self, x, y)
+    obstruction.obstructed_diagonally?(x, y)
+  end 
+  # def obstructed_diagonally?(x, y)
+  #   pos_x = x_position
+  #   pos_y = y_position
 
-    # (this takes you up and right)
-    if pos_x < x && pos_y < y
-      pos_x += 1
-      pos_y += 1
-      while x > pos_x && y > pos_y
-        return true if game.obstruction(pos_x, pos_y)
-        pos_x += 1
-        pos_y += 1
-      end
-    # (this takes you down and right)
-    elsif pos_x < x && pos_y > y
-      pos_x += 1
-      pos_y -= 1
-      while x > pos_x && y < pos_y
-        return true if game.obstruction(pos_x, pos_y)
-        pos_x += 1
-        pos_y -= 1
-      end
-    # (this takes you down and left)
-    elsif pos_x > x && pos_y > y
-      pos_x -= 1
-      pos_y -= 1
-      while x < pos_x && y < pos_y
-        return true if game.obstruction(pos_x, pos_y)
-        pos_x -= 1
-        pos_y -= 1
-      end
-    # (this takes you up and left)
-    elsif pos_x > x && pos_y < y
-      pos_x -= 1
-      pos_y += 1
-      while x < pos_x && y > pos_y
-        return true if game.obstruction(pos_x, pos_y)
-        pos_x -= 1
-        pos_y += 1
-      end
-    end
-    false
-  end
+  #   # (this takes you up and right)
+  #   if pos_x < x && pos_y < y
+  #     pos_x += 1
+  #     pos_y += 1
+  #     while x > pos_x && y > pos_y
+  #       return true if game.obstruction(pos_x, pos_y)
+  #       pos_x += 1
+  #       pos_y += 1
+  #     end
+  #   # (this takes you down and right)
+  #   elsif pos_x < x && pos_y > y
+  #     pos_x += 1
+  #     pos_y -= 1
+  #     while x > pos_x && y < pos_y
+  #       return true if game.obstruction(pos_x, pos_y)
+  #       pos_x += 1
+  #       pos_y -= 1
+  #     end
+  #   # (this takes you down and left)
+  #   elsif pos_x > x && pos_y > y
+  #     pos_x -= 1
+  #     pos_y -= 1
+  #     while x < pos_x && y < pos_y
+  #       return true if game.obstruction(pos_x, pos_y)
+  #       pos_x -= 1
+  #       pos_y -= 1
+  #     end
+  #   # (this takes you up and left)
+  #   elsif pos_x > x && pos_y < y
+  #     pos_x -= 1
+  #     pos_y += 1
+  #     while x < pos_x && y > pos_y
+  #       return true if game.obstruction(pos_x, pos_y)
+  #       pos_x -= 1
+  #       pos_y += 1
+  #     end
+  #   end
+  #   false
+  # end
 
   def obstructed_move?(_x, _y)
     fail NotImplementedError 'Pieces must implement #obstructed_move?'
