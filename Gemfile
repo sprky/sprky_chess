@@ -39,6 +39,9 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+# Rubocop style checker
+gem 'rubocop'
+
 # SimpleForm gem
 gem 'simple_form'
 
@@ -54,7 +57,6 @@ group :test do
   # test factory
   gem 'factory_girl_rails', '~> 4.0'
 
-  gem 'rubocop'
 end
 
 # Use ActiveModel has_secure_password
