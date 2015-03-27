@@ -48,7 +48,7 @@ class Piece < ActiveRecord::Base
   end
 
   def mark_captured
-    update_attributes(x_position: nil, y_position: nil, state: "captured")
+    update_attributes(x_position: nil, y_position: nil, state: 'captured')
   end
 
   def move_on_board?(x, y)
@@ -65,7 +65,7 @@ class Piece < ActiveRecord::Base
         captured.mark_captured
       end
       piece.update_attributes(params)
-      piece.state = "moved"
+      piece.state = 'moved'
       piece.save
     end
   end
@@ -165,6 +165,6 @@ class Piece < ActiveRecord::Base
   end
 
   def set_default_state
-    self.state ||= "unmoved"
+    self.state ||= 'unmoved'
   end
 end

@@ -75,7 +75,7 @@ class PieceTest < ActiveSupport::TestCase
 
     assert_nil piece.x_position, 'Should be x_position: nil'
     assert_nil piece.y_position, 'Should be y_position: nil'
-    assert_equal "captured", piece.state
+    assert_equal 'captured', piece.state
   end
 
   test 'should not be a move' do

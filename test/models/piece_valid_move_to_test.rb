@@ -65,6 +65,6 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
     assert_equal 2, white_pawn.x_position
     assert_equal 4, white_pawn.y_position
     black_pawn.reload
-    assert black_pawn.captured?, 'captured black pawn'
+    assert_equal 'captured', black_pawn.state, 'captured black pawn'
   end
 end
