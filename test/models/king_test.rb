@@ -27,18 +27,21 @@ class KingTest < ActiveSupport::TestCase
     setup_game_and_king
     setup_castling
 
+    assert @king.legal_castle_move?(6, 0)
+
     @king.castle_move(6, 0)
     @king.reload
     @kings_rook.reload
 
     assert_equal 6, @king.x_position, "King moves to castle position"
     assert_equal 5, @kings_rook.x_position, "Rook moves to castle position"
-
   end
 
   test "Should castle queenside" do 
     setup_game_and_king
     setup_castling
+
+    assert @king.legal_castle_move?(2, 0)
 
     @king.castle_move(2, 0)
     @king.reload

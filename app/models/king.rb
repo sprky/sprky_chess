@@ -17,28 +17,43 @@ class King < Piece
   end
 
   def castle_move(x, y)
-    # return false unless status = "unmoved"
-    if x > x_position
-      # kingside castle
-      rook = rook_for_castling("King")
-      king_x = 6
-      rook_x = 5
-    else
-      # queenside castle
-      rook = rook_for_castling("Queen")
-      king_x = 2
-      rook_x = 3
-    end
-    # return false unless rook.status = "unmoved"
-    update_attributes(x_position: king_x) # mark status "castled"
-    rook.update_attributes(x_position: rook_x)
+    # uses instance variables persisted from checking legal_castle_move?
+    update_attributes(x_position: @new_king_x) # mark status "castled"
+    @rook_for_castle.update_attributes(x_position: @new_rook_x)
   end
 
+  # checks for legal castle move to x, y
   def legal_castle_move?(x, y)
-    x_diff = (x - x_position).abs
-    y_diff = (y - y_position).abs
+    # ensure king hasn't moved yet
+    # return false unless state == "unmoved"
 
-    return false unless x_diff == 2 && y_diff == 0
+    # ensure king moves 2 squares
+    return false unless (x - x_position).abs == 2
+    
+    # ensure y position doesn't change
+    return false unless y == y_position
+
+    # get rook from correct side  
+    if x > x_position
+      # kingside castle
+      @rook_for_castle = rook_for_castling("King")
+      @new_king_x = 6
+      @new_rook_x = 5
+    else
+      # queenside castle
+      @rook_for_castle = rook_for_castling("Queen")
+      @new_king_x = 2
+      @new_rook_x = 3
+    end
+
+    # ensure that we found a rook in the correct location
+    return false if @rook_for_castle.nil?
+
+    # make sure rook has not moved
+    # return false unless @rook_for_castle.state == "unmoved"
+
+    # otherwise return true
+    return true
   end
 
   def rook_for_castling(side)
@@ -51,13 +66,13 @@ class King < Piece
     end
   end
 
-end
 
-private
+  private
 
-def proper_length?(x, y)
-  x_diff = (x - x_position).abs
-  y_diff = (y - y_position).abs
+  def proper_length?(x, y)
+    x_diff = (x - x_position).abs
+    y_diff = (y - y_position).abs
 
-  (x_diff <= 1) && (y_diff <= 1)
+    (x_diff <= 1) && (y_diff <= 1)
+  end
 end
