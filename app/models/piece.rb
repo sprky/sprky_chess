@@ -66,6 +66,7 @@ class Piece < ActiveRecord::Base
       end
       piece.update_attributes(params)
       piece.has_moved = "moved"
+      piece.save
     end
   end
   
