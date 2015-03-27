@@ -7,6 +7,8 @@ class Piece < ActiveRecord::Base
   belongs_to :player
   belongs_to :game
 
+  include ObstructionHelper
+
   def valid_move?(x, y)
     # check to make sure move isn't back to same spot
     return false if nil_move?(x, y)
@@ -71,10 +73,6 @@ class Piece < ActiveRecord::Base
     x_position == x && y_position == y
   end
 
-  def obstructed_diagonally?(x, y)
-    obstruction = ObstructionHelper.new(self, x, y)
-    obstruction.obstructed_diagonally?(x, y)
-  end 
   # def obstructed_diagonally?(x, y)
   #   pos_x = x_position
   #   pos_y = y_position
