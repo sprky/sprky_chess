@@ -53,6 +53,7 @@ class PieceTest < ActiveSupport::TestCase
     assert piece.captured?, "Should mark captured?: true"
     assert_nil piece.x_position, "Should be x_position: nil"
     assert_nil piece.y_position, "Should be y_position: nil"
+    assert_equal "captured", piece.has_moved, "Should mark piece as captured"
 
   end
 
@@ -100,6 +101,7 @@ class PieceTest < ActiveSupport::TestCase
 
     assert_equal 7, piece.x_position
     assert_equal 4, piece.y_position
+    assert_equal "moved", piece.has_moved
   end
 
   test "should move to and capture" do
