@@ -8,82 +8,71 @@ module Obstructions
   end
 
   def obstructed_diagonally?(x, y)
+    # store piece x & y positions in local variables
     pos_x = x_position
     pos_y = y_position
 
-    # (this takes you up and right)
-    if pos_x < x && pos_y < y
-      pos_x += 1
-      pos_y += 1
-      while x > pos_x && y > pos_y
-        return true if game.obstruction(pos_x, pos_y)
-        pos_x += 1
-        pos_y += 1
-      end
-    # (this takes you down and right)
-    elsif pos_x < x && pos_y > y
-      pos_x += 1
-      pos_y -= 1
-      while x > pos_x && y < pos_y
-        return true if game.obstruction(pos_x, pos_y)
-        pos_x += 1
-        pos_y -= 1
-      end
-    # (this takes you down and left)
-    elsif pos_x > x && pos_y > y
-      pos_x -= 1
-      pos_y -= 1
-      while x < pos_x && y < pos_y
-        return true if game.obstruction(pos_x, pos_y)
-        pos_x -= 1
-        pos_y -= 1
-      end
-    # (this takes you up and left)
-    elsif pos_x > x && pos_y < y
-      pos_x -= 1
-      pos_y += 1
-      while x < pos_x && y > pos_y
-        return true if game.obstruction(pos_x, pos_y)
-        pos_x -= 1
-        pos_y += 1
-      end
+    # check for moves that aren't diagonal
+    return false if x == pos_x
+    return false if y == pos_y
+
+    # determine horizontal and vertical increment values
+    horizontal_increment = x > pos_x ? 1 : -1
+    vertical_increment = y > pos_y ? 1 : -1
+
+    # increment once to move off of starting square
+    pos_x += horizontal_increment
+    pos_y += vertical_increment
+
+    # loop through all values stopping before x, y
+    while (x - pos_x).abs > 0 && (y - pos_y).abs > 0
+      # return true if we find an obstruction
+      return true if game.obstruction(pos_x, pos_y)
+      pos_x += horizontal_increment
+      pos_y += vertical_increment
+
     end
+
+    # default to false
     false
   end
 
   def obstructed_rectilinearly?(x, y)
+    # store piece x & y positions in local variables
     pos_x = x_position
     pos_y = y_position
+    if y == pos_y # move is in x direction
+      # determine horizontal increment value
+      horizontal_increment = x > pos_x ? 1 : -1
 
-    if x == pos_x # move is in y direction
-      if y < pos_y # move is down
-        pos_y -= 1
-        while y < pos_y
-          return true if game.obstruction(pos_x, pos_y)
-          pos_y -= 1
-        end
-      else # move is up
-        pos_y += 1
-        while y > pos_y
-          return true if game.obstruction(pos_x, pos_y)
-          pos_y += 1
-        end
+      # increment once to mvoe off of starting square
+      pos_x += horizontal_increment
+
+      # loop through all values stopping before x
+      while (x - pos_x).abs > 0
+        # return true if we find an obstruction
+        return true if game.obstruction(pos_x, pos_y)
+        pos_x += horizontal_increment
+
       end
-    elsif y == pos_y # move is in x direction
-      if x < pos_x # move is left
-        pos_x -= 1
-        while x < pos_x
-          return true if game.obstruction(pos_x, pos_y)
-          pos_x -= 1
-        end
-      else # move is right
-        pos_x += 1
-        while x > pos_x
-          return true if game.obstruction(pos_x, pos_y)
-          pos_x += 1
-        end
+
+    elsif x == pos_x # move is in y direction
+      # determine vertical increment value
+      vertical_increment = y > pos_y ? 1 : -1
+
+      # increment once to mvoe off of starting square
+      pos_y += vertical_increment
+
+      # loop through all values stopping before x
+      while (y - pos_y).abs > 0
+        # return true if we find an obstruction
+        return true if game.obstruction(pos_x, pos_y)
+        pos_y += vertical_increment
+
       end
     end
+
+    # default to false
     false
   end
 end
