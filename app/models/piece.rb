@@ -3,6 +3,7 @@ class Piece < ActiveRecord::Base
   MAX_BOARD_SIZE = 7
 
   after_initialize :set_default_images
+  after_initialize :set_default_state
 
   belongs_to :player
   belongs_to :game
@@ -41,7 +42,7 @@ class Piece < ActiveRecord::Base
   end
 
   def mark_captured
-    update_attributes(captured?: true, x_position: nil, y_position: nil)
+    update_attributes(x_position: nil, y_position: nil, state: 'captured')
   end
 
   def move_on_board?(x, y)
@@ -58,6 +59,8 @@ class Piece < ActiveRecord::Base
         captured.mark_captured
       end
       piece.update_attributes(params)
+      piece.state = 'moved'
+      piece.save
     end
   end
 
@@ -73,5 +76,9 @@ class Piece < ActiveRecord::Base
 
   def set_default_images
     self.symbol ||= "#{color_name}-#{type.downcase}.gif"
+  end
+
+  def set_default_state
+    self.state ||= 'unmoved'
   end
 end
