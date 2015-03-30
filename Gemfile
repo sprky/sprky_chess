@@ -48,6 +48,9 @@ gem 'simple_form'
 # Add byebug for testing https://github.com/deivid-rodriguez/byebug
 gem 'byebug'
 
+# new relic gem for application monitoring
+gem 'newrelic_rpm'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
