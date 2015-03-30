@@ -7,6 +7,11 @@ class KingTest < ActiveSupport::TestCase
 
     assert @king.legal_move?(4, 1)
     assert @king.legal_move?(5, 1)
+  end
+
+  test 'Should be legal castle move' do
+    setup_game_and_king
+
     assert @king.legal_move?(6, 0)
   end
 
@@ -29,7 +34,7 @@ class KingTest < ActiveSupport::TestCase
 
     assert @king.legal_castle_move?(6, 0)
 
-    @king.castle_move(6, 0)
+    @king.castle_move
     @king.reload
     @kings_rook.reload
 
@@ -43,7 +48,7 @@ class KingTest < ActiveSupport::TestCase
 
     assert @king.legal_castle_move?(2, 0)
 
-    @king.castle_move(2, 0)
+    @king.castle_move
     @king.reload
     @queens_rook.reload
 

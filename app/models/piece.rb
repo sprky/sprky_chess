@@ -58,9 +58,11 @@ class Piece < ActiveRecord::Base
         captured = game.obstruction(x, y)
         captured.mark_captured
       end
-      piece.update_attributes(params)
-      piece.state = 'moved'
-      piece.save
+      if piece.type == 'King' && piece.legal_castle_move?(x, y)
+        piece.castle_move
+      else
+        piece.update_attributes(x_position: x, y_position: y, state: 'moved')
+      end
     end
   end
 

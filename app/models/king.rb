@@ -16,16 +16,16 @@ class King < Piece
     end
   end
 
-  def castle_move(_x, _y)
+  def castle_move
     # uses instance variables persisted from checking legal_castle_move?
-    update_attributes(x_position: @new_king_x) # mark status "castled"
-    @rook_for_castle.update_attributes(x_position: @new_rook_x)
+    update_attributes(x_position: @new_king_x, state: 'castled')
+    @rook_for_castle.update_attributes(x_position: @new_rook_x, state: 'moved')
   end
 
   # checks for legal castle move to x, y
   def legal_castle_move?(x, y)
     # ensure king hasn't moved yet
-    # return false unless state == "unmoved"
+    return false unless state == 'unmoved'
 
     # ensure king moves 2 squares
     return false unless (x - x_position).abs == 2
