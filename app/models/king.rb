@@ -1,5 +1,5 @@
 class King < Piece
-	def legal_move?(x, y)
+  def legal_move?(x, y)
     proper_length?(x, y) || legal_castle_move?(x, y)
   end
 
@@ -16,7 +16,7 @@ class King < Piece
     end
   end
 
-  def castle_move(x, y)
+  def castle_move(_x, _y)
     # uses instance variables persisted from checking legal_castle_move?
     update_attributes(x_position: @new_king_x) # mark status "castled"
     @rook_for_castle.update_attributes(x_position: @new_rook_x)
@@ -29,19 +29,19 @@ class King < Piece
 
     # ensure king moves 2 squares
     return false unless (x - x_position).abs == 2
-    
+
     # ensure y position doesn't change
     return false unless y == y_position
 
-    # get rook from correct side  
+    # get rook from correct side
     if x > x_position
       # kingside castle
-      @rook_for_castle = rook_for_castling("King")
+      @rook_for_castle = rook_for_castling('King')
       @new_king_x = 6
       @new_rook_x = 5
     else
       # queenside castle
-      @rook_for_castle = rook_for_castling("Queen")
+      @rook_for_castle = rook_for_castling('Queen')
       @new_king_x = 2
       @new_rook_x = 3
     end
@@ -50,22 +50,21 @@ class King < Piece
     return false if @rook_for_castle.nil?
 
     # make sure rook has not moved
-    # return false unless @rook_for_castle.state == "unmoved"
+    return false unless @rook_for_castle.state == 'unmoved'
 
     # otherwise return true
-    return true
+    true
   end
 
   def rook_for_castling(side)
-    if side == "King" 
+    if side == 'King'
       return game.pieces.find_by(type: 'Rook', x_position: 7, y_position: y_position)
-    elsif side == "Queen"
+    elsif side == 'Queen'
       return game.pieces.find_by(type: 'Rook', x_position: 0, y_position: y_position)
     else
       return nil
     end
   end
-
 
   private
 

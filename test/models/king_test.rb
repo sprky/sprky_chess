@@ -1,8 +1,8 @@
 require 'test_helper'
 
+# Tests specific to King logic
 class KingTest < ActiveSupport::TestCase
-
-  test "Should be legal moves" do
+  test 'Should be legal moves' do
     setup_game_and_king
 
     assert @king.legal_move?(4, 1)
@@ -10,20 +10,20 @@ class KingTest < ActiveSupport::TestCase
     assert @king.legal_move?(6, 0)
   end
 
-  test "Should be illegal moves" do
+  test 'Should be illegal moves' do
     setup_game_and_king
 
     assert_not @king.legal_move?(7, 0)
     assert_not @king.legal_move?(4, 3)
   end
 
-  test "Should be obstructed move" do 
+  test 'Should be obstructed move' do
     setup_game_and_king
 
     assert @king.obstructed_move?(6, 0)
   end
 
-  test "Should castle kingside" do 
+  test 'Should castle kingside' do
     setup_game_and_king
     setup_castling
 
@@ -33,11 +33,11 @@ class KingTest < ActiveSupport::TestCase
     @king.reload
     @kings_rook.reload
 
-    assert_equal 6, @king.x_position, "King moves to castle position"
-    assert_equal 5, @kings_rook.x_position, "Rook moves to castle position"
+    assert_equal 6, @king.x_position, 'King moves to castle position'
+    assert_equal 5, @kings_rook.x_position, 'Rook moves to castle position'
   end
 
-  test "Should castle queenside" do 
+  test 'Should castle queenside' do
     setup_game_and_king
     setup_castling
 
@@ -47,30 +47,30 @@ class KingTest < ActiveSupport::TestCase
     @king.reload
     @queens_rook.reload
 
-    assert_equal 2, @king.x_position, "King moves to castle position"
-    assert_equal 3, @queens_rook.x_position, "Rook moves to castle position"
+    assert_equal 2, @king.x_position, 'King moves to castle position'
+    assert_equal 3, @queens_rook.x_position, 'Rook moves to castle position'
   end
 
-  test "Should return kingside rook" do 
+  test 'Should return kingside rook' do
     setup_game_and_king
     setup_castling
 
-    assert_equal @kings_rook, @king.rook_for_castling("King")
+    assert_equal @kings_rook, @king.rook_for_castling('King')
   end
 
-  test "Should return queenside rook" do 
+  test 'Should return queenside rook' do
     setup_game_and_king
     setup_castling
 
-    assert_equal @queens_rook, @king.rook_for_castling("Queen")
+    assert_equal @queens_rook, @king.rook_for_castling('Queen')
   end
 
-  test "Should return nil for no rook" do
+  test 'Should return nil for no rook' do
     setup_game_and_king
     setup_castling
 
     @kings_rook.destroy
-    assert_equal nil, @king.rook_for_castling("King")
+    assert_equal nil, @king.rook_for_castling('King')
   end
 
   def setup_game_and_king
@@ -82,5 +82,4 @@ class KingTest < ActiveSupport::TestCase
     @kings_rook = @game.pieces.find_by(type: 'Rook', x_position: 7, y_position: 0)
     @queens_rook = @game.pieces.find_by(type: 'Rook', x_position: 0, y_position: 0)
   end
-
 end
