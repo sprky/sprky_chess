@@ -76,10 +76,10 @@ class Piece < ActiveRecord::Base
   end
 
   def switch_players
-    if piece.player_id == game.white_player_id
-      game.update_attribute(turn: game.black_player_id)
+    if player_id == game.white_player_id
+      game.update_attributes(turn: game.black_player_id)
     else
-      game.update_attribute(turn: game.white_player_id)
+      game.update_attributes(turn: game.white_player_id)
     end
   end
 
