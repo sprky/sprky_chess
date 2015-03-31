@@ -3,4 +3,8 @@ module GamesHelper
     player = Player.find(player_id)
     player.email
   end
+
+  def message(game)
+    game.present? && game.turn == game.white_player_id ? 'White turn' : 'Black turn'
+  end
 end

@@ -1,3 +1,4 @@
+<div class='game-message'><%= message(@game) %></div>
 <table id='gameboard'>
 	<% if @game %>
 		<% if current_player.id != @game.white_player_id %>

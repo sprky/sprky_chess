@@ -28,7 +28,6 @@ class PiecesControllerTest < ActionController::TestCase
 
   test 'Should fail update move for invalid move' do
     setup_piece
-
     xhr :put, :update, id: @knight.id, piece: { id: @knight.id, x_position: 3, y_position: 1 }
 
     @knight.reload
@@ -45,7 +44,7 @@ class PiecesControllerTest < ActionController::TestCase
   def setup_piece
     @player = FactoryGirl.create(:player)
     sign_in @player
-    @game = FactoryGirl.create(:game, turn: @player.id)
+    @game = FactoryGirl.create(:game, white_player_id: @player.id, black_player_id: @player.id, turn: @player.id)
     @knight = @game.pieces.where(x_position: 1, y_position: 0).last
   end
 end

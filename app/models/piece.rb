@@ -16,6 +16,8 @@ class Piece < ActiveRecord::Base
 
     return false unless move_on_board?(x, y)
 
+    return false unless moving_own_piece?
+
     return false unless legal_move?(x, y)
 
     return false if obstructed_move?(x, y)
@@ -81,6 +83,10 @@ class Piece < ActiveRecord::Base
     else
       game.update_attributes(turn: game.white_player_id)
     end
+  end
+
+  def moving_own_piece?
+    player_id == game.turn
   end
 
   private
