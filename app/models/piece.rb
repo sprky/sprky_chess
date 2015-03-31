@@ -86,8 +86,7 @@ class Piece < ActiveRecord::Base
   end
 
   def moving_own_piece?
-    puts "Player is #{player_id}, turn is #{game.turn}"
-    self.player_id == game.turn
+    player_id == game.turn
   end
 
   private
