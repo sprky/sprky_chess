@@ -71,6 +71,9 @@ class PieceTest < ActiveSupport::TestCase
 
   test 'Should check if moving own piece' do
     setup_pieces
+
+    assert @piece.moving_own_piece?
+    assert_not @pawn.moving_own_piece?
   end
 
   def setup_pieces

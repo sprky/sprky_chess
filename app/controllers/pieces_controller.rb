@@ -5,10 +5,11 @@ class PiecesController < ApplicationController
     if your_turn?
       # move piece if move is valid
       @piece.move_to(@piece, piece_params)
-      render json: {
-        update_url: game_path(@game)
-      }
     end
+    render json: {
+      update_url: game_path(@game)
+    }
+  
   end
 
   private
