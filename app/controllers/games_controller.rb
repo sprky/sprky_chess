@@ -30,6 +30,7 @@ class GamesController < ApplicationController
     @game.update_attributes(game_params)
     if @game.valid? && ensure_unique_players
       randomize_players  # if unique redirect to games path otherwise an error.
+      @game.update_attributes(turn: @game.white_player_id)
       redirect_to game_path(@game)
     else
       render :new, status: :unprocessable_entity

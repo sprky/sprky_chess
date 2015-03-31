@@ -61,4 +61,5 @@ class Game < ActiveRecord::Base
   def obstruction(x, y)
     pieces.where(x_position: x, y_position: y).last
   end
+
 end

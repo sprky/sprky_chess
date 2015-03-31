@@ -1,19 +1,23 @@
 class PiecesController < ApplicationController
   def update
     @piece = Piece.find(params[:id])
-    # move piece if move is valid
-    @piece.move_to(@piece, piece_params)
-
-    game = @piece.game
-
-    render json: {
-      update_url: game_path(game)
-    }
+    @game = @piece.game
+    if your_turn?  
+      # move piece if move is valid
+      @piece.move_to(@piece, piece_params)
+      render json: {
+        update_url: game_path(@game)
+      }
+    end
   end
 
   private
 
   def piece_params
     @piece_params = params.require(:piece).permit(:x_position, :y_position)
+  end
+
+  def your_turn?
+    @game.turn == current_player.id
   end
 end
