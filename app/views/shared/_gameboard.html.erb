@@ -1,6 +1,6 @@
-<div class='game-message'><%= message(@game) %></div>
-<table id='gameboard'>
-	<% if @game %>
+<% if @game %>
+	<div class='game-message'><%= message(@game) %></div>
+	<table id='gameboard' data-game-state='<%= @game.state %>' data-your-turn='<%= your_turn? %>'>
 		<% if current_player.id != @game.white_player_id %>
 			<!-- show board from black player perspective -->
 			<% (0..7).each do |row| %>
@@ -22,6 +22,7 @@
 				</tr>
 		 	<% end %>
 		<% end %>
-	<% end %>
-</table>
+	</table>
+<% end %>
+
 
