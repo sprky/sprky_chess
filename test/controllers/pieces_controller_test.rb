@@ -18,7 +18,7 @@ class PiecesControllerTest < ActionController::TestCase
     setup_piece
   
     xhr :put, :update, id: @knight.id, piece: { id: @knight.id, x_position: 2, y_position: 2 }
-    p @knight
+    @knight.reload
     
     assert_equal 2, @knight.x_position, 'Knight should register move'
 
