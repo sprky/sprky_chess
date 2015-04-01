@@ -16,10 +16,10 @@ class PiecesControllerTest < ActionController::TestCase
 
   test 'Should update game with piece move' do
     setup_piece
-  
+
     xhr :put, :update, id: @knight.id, piece: { id: @knight.id, x_position: 2, y_position: 2 }
     @knight.reload
-    
+
     assert_equal 2, @knight.x_position, 'Knight should register move'
 
     expected_response = "/games/#{@game.id}"
