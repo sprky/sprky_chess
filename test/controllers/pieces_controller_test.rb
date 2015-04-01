@@ -3,15 +3,15 @@ require 'test_helper'
 class PiecesControllerTest < ActionController::TestCase
   # update needs to be a put, updates data
   test 'should get update' do
-    game = FactoryGirl.create(:game)
-    piece = FactoryGirl.create(:pawn, x_position: 1, y_position: 1, color: true, game_id: game.id)
+    setup_piece
+    piece = FactoryGirl.create(:pawn, x_position: 1, y_position: 1, color: true, game_id: @game.id)
 
     patch :update, id: piece.id, piece: { x_position: 1, y_position: 2 }
 
     assert_response :success
 
     body = JSON.parse(response.body)
-    assert_equal "/games/#{game.id}", body['update_url']
+    assert_equal "/games/#{@game.id}", body['update_url']
   end
 
   test 'Should update game with piece move' do
@@ -28,7 +28,6 @@ class PiecesControllerTest < ActionController::TestCase
 
   test 'Should fail update move for invalid move' do
     setup_piece
-
     xhr :put, :update, id: @knight.id, piece: { id: @knight.id, x_position: 3, y_position: 1 }
 
     @knight.reload
@@ -43,7 +42,9 @@ class PiecesControllerTest < ActionController::TestCase
   end
 
   def setup_piece
-    @game = FactoryGirl.create(:game)
+    @player = FactoryGirl.create(:player)
+    sign_in @player
+    @game = FactoryGirl.create(:game, white_player_id: @player.id, black_player_id: @player.id, turn: @player.id)
     @knight = @game.pieces.where(x_position: 1, y_position: 0).last
   end
 end

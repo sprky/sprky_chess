@@ -30,52 +30,28 @@ class PieceTest < ActiveSupport::TestCase
   end
 
   test 'should not capture' do
-    game = FactoryGirl.create(:game)
-    piece = FactoryGirl.create(
-      :rook,
-      x_position: 5,
-      y_position: 4,
-      color: true,
-      game_id: game.id)
-    FactoryGirl.create(
-      :pawn,
-      x_position: 5,
-      y_position: 5,
-      color: true,
-      game_id: game.id)
+    setup_pieces
+    @pawn.update_attributes(color: true)
+    @pawn.reload
 
-    assert_not piece.capture_move?(5, 5), 'Is not a capture move'
+    assert_not @piece.capture_move?(5, 5), 'Is not a capture move'
   end
 
   test 'should capture' do
-    game = FactoryGirl.create(:game)
-    piece = FactoryGirl.create(
-      :rook,
-      x_position: 5,
-      y_position: 4,
-      color: true,
-      game_id: game.id)
-    FactoryGirl.create(
-      :pawn,
-      x_position: 5,
-      y_position: 5,
-      color: false,
-      game_id: game.id)
+    setup_pieces
 
-    assert piece.capture_move?(5, 5), 'Is a capture move'
+    assert @piece.capture_move?(5, 5), 'Is a capture move'
   end
 
   test 'should mark piece as captured' do
-    piece = FactoryGirl.create(
-      :rook,
-      x_position: 5,
-      y_position: 4)
-    piece.mark_captured
-    piece.reload
+    setup_pieces
 
-    assert_nil piece.x_position, 'Should be x_position: nil'
-    assert_nil piece.y_position, 'Should be y_position: nil'
-    assert_equal 'captured', piece.state
+    @piece.mark_captured
+    @piece.reload
+
+    assert_nil @piece.x_position, 'Should be x_position: nil'
+    assert_nil @piece.y_position, 'Should be y_position: nil'
+    assert_equal 'captured', @piece.state
   end
 
   test 'should not be a move' do
@@ -86,16 +62,36 @@ class PieceTest < ActiveSupport::TestCase
   end
 
   test 'destination should be obstructed' do
-    game = FactoryGirl.create(:game)
-    piece = FactoryGirl.create(
+    setup_pieces
+
+    assert @piece.destination_obstructed?(5, 1), 'not obstructed '
+    assert_not @piece.destination_obstructed?(5, 6), 'not obstructed'
+    assert_not @piece.destination_obstructed?(5, 9), 'Not obstructed'
+  end
+
+  test 'Should check if moving own piece' do
+    setup_pieces
+
+    assert @piece.moving_own_piece?
+    assert_not @pawn.moving_own_piece?
+  end
+
+  def setup_pieces
+    @player = FactoryGirl.create(:player)
+    @game = FactoryGirl.create(:game, turn: @player.id)
+    @piece = FactoryGirl.create(
       :rook,
       x_position: 5,
       y_position: 4,
       color: true,
-      game_id: game.id)
-
-    assert piece.destination_obstructed?(5, 1), 'not obstructed '
-    assert_not piece.destination_obstructed?(5, 6), 'not obstructed'
-    assert_not piece.destination_obstructed?(5, 9), 'Not obstructed'
+      player_id: @player.id,
+      game_id: @game.id)
+    @pawn = FactoryGirl.create(
+      :pawn,
+      x_position: 5,
+      y_position: 5,
+      color: false,
+      player_id: 99,
+      game_id: @game.id)
   end
 end

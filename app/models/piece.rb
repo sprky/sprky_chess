@@ -16,6 +16,8 @@ class Piece < ActiveRecord::Base
 
     return false unless move_on_board?(x, y)
 
+    return false unless moving_own_piece?
+
     return false unless legal_move?(x, y)
 
     return false if obstructed_move?(x, y)
@@ -62,6 +64,7 @@ class Piece < ActiveRecord::Base
         piece.castle_move
       else
         piece.update_attributes(x_position: x, y_position: y, state: 'moved')
+        switch_players
       end
     end
   end
@@ -72,6 +75,18 @@ class Piece < ActiveRecord::Base
 
   def obstructed_move?(_x, _y)
     fail NotImplementedError 'Pieces must implement #obstructed_move?'
+  end
+
+  def switch_players
+    if player_id == game.white_player_id
+      game.update_attributes(turn: game.black_player_id)
+    else
+      game.update_attributes(turn: game.white_player_id)
+    end
+  end
+
+  def moving_own_piece?
+    player_id == game.turn
   end
 
   private
