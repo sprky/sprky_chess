@@ -25,7 +25,7 @@ class Piece < ActiveRecord::Base
     return false if destination_obstructed?(x, y)
 
     # check that the move doesn't put the king into check
-    # return false if move_causes_check?(x, y)
+    # return false if move_causes_check?(x, y) - pull this out of valid_move?
 
     true
   end
@@ -83,6 +83,12 @@ class Piece < ActiveRecord::Base
     else
       game.update_attributes(turn: game.white_player_id)
     end
+  end
+
+  def move_causes_check?(x, y)
+    self.update_attributes(x_position: x, y_position: y)
+    puts game.check?(!color)
+    return true if game.check?(!color)
   end
 
   def moving_own_piece?

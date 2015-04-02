@@ -4,6 +4,22 @@ class Game < ActiveRecord::Base
   has_many :players
   has_many :pieces
 
+  def assign_pieces
+    pieces.where(color: true).each { |p| p.update_attributes(player_id: white_player_id) }
+    pieces.where(color: false).each { |p| p.update_attributes(player_id: black_player_id) }
+  end
+
+  def check?(color)
+    king = pieces.find_by(type: 'King', color: color)
+    king_x = king.x_position
+    king_y = king.y_position
+    opposing_pieces = pieces.where(color: !color).all
+    opposing_pieces.each do |piece|
+      return true if piece.valid_move?(king_x, king_y)
+    end
+    return false
+  end
+
   def initialize_board!
     # white pawns
     (0..7).each do |i|
@@ -58,10 +74,5 @@ class Game < ActiveRecord::Base
   # determind if obstruction occurs at x, y in game
   def obstruction(x, y)
     pieces.where(x_position: x, y_position: y).last
-  end
-
-  def assign_pieces
-    pieces.where(color: true).each { |p| p.update_attributes(player_id: white_player_id) }
-    pieces.where(color: false).each { |p| p.update_attributes(player_id: black_player_id) }
   end
 end
