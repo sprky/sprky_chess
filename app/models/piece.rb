@@ -55,17 +55,28 @@ class Piece < ActiveRecord::Base
     x = params[:x_position].to_i
     y = params[:y_position].to_i
 
+    # copy_of_piece = Piece.new(piece.attributes)
+
     if piece.valid_move?(x, y)
       if capture_move?(x, y)
         captured = game.obstruction(x, y)
+        # copy_of_captured = Piece.new(captured.attributes)
         captured.mark_captured
       end
       if piece.type == 'King' && piece.legal_castle_move?(x, y)
-        piece.castle_move
+        piece.castle_move  ##  need to find way to also undo the castle move - perhaps castle move returns copy of the rook
       else
         piece.update_attributes(x_position: x, y_position: y, state: 'moved')
         switch_players
       end
+    end
+
+    if game.check?(!color)
+      puts '*' * 48
+      puts 'Caused check!  Put everything back'
+    else
+      puts '*' * 48
+      puts "Didn't cause check."
     end
   end
 
@@ -86,7 +97,7 @@ class Piece < ActiveRecord::Base
   end
 
   def move_causes_check?(x, y)
-    self.update_attributes(x_position: x, y_position: y)
+    update_attributes(x_position: x, y_position: y)
     puts game.check?(!color)
     return true if game.check?(!color)
   end
