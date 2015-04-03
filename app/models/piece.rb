@@ -67,17 +67,19 @@ class Piece < ActiveRecord::Base
         piece.castle_move  ##  need to find way to also undo the castle move - perhaps castle move returns copy of the rook
       else
         piece.update_attributes(x_position: x, y_position: y, state: 'moved')
-        switch_players
       end
     end
 
+    # puts '-' * 96
+    # puts "See if #{!color} is in check"
+
     if game.check?(!color)
-      puts '*' * 48
-      puts 'Caused check!  Put everything back'
-    else
-      puts '*' * 48
-      puts "Didn't cause check."
+      # puts '*' * 48
+      # puts 'Caused check!'
+      game.update_attributes(state: 'check')
     end
+
+    switch_players
   end
 
   def nil_move?(x, y)

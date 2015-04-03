@@ -10,11 +10,12 @@ class Game < ActiveRecord::Base
   end
 
   def check?(color)
-    puts "looking to see if #{color} king is in check"
+    # puts '-' * 96
+    # puts "looking to see if #{color} king is in check"
     king = pieces.find_by(type: 'King', color: color)
     king_x = king.x_position
     king_y = king.y_position
-    opposing_pieces = pieces.where(color: !color)
+    opposing_pieces = pieces.where("color = ? and state != 'captured'", !color).to_a
     opposing_pieces.each do |piece|
       return true if piece.valid_move?(king_x, king_y)
     end
