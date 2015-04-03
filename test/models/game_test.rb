@@ -30,4 +30,11 @@ class GameTest < ActiveSupport::TestCase
     assert_equal 16, game.pieces.where(player_id: 1).count
     assert_equal 16, game.pieces.where(player_id: 2).count
   end
+
+  test 'Should note game is in a state of check' do
+    game = FactoryGirl.create(:game, black_player_id: 1, white_player_id: 2, turn: 1)
+    game.assign_pieces
+    FactoryGirl.create(:knight, player_id: 1, x_position: 5, y_position: 2, game_id: game.id, color: false)
+    assert game.check?(true)
+  end
 end
