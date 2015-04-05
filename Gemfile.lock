@@ -83,6 +83,7 @@ GEM
     neat (1.5.1)
       bourbon (>= 3.1)
       sass (~> 3.2.19)
+    newrelic_rpm (3.11.1.284)
     orm_adapter (0.5.0)
     parser (2.2.0.3)
       ast (>= 1.1, < 3.0)
@@ -166,6 +167,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   neat
+  newrelic_rpm
   pg
   rails (= 4.0.1)
   rubocop
