@@ -3,7 +3,8 @@ class Pawn < Piece
     return false if backwards_move?(y)
 
     unless capture_move?(x, y)
-      return false if horizontal_move?(x)
+      return false if horizontal_move?(x) || 
+        game.obstruction(x, y)
     end
 
     proper_length?(y)
@@ -47,4 +48,5 @@ class Pawn < Piece
     y_diff = (y - y_position).abs
     first_move?(y) ? (y_diff == 1 || y_diff == 2) : y_diff == 1
   end
+
 end

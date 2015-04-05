@@ -91,7 +91,7 @@ class PawnCaptureObstructedTest < ActiveSupport::TestCase
       color: false,
       game_id: game.id)
 
-    assert white_pawn.obstructed_move?(1, 3), 'White 2 square initial move'
-    assert black_pawn.obstructed_move?(5, 4), 'Black 2 square initial move'
+    assert white_pawn.obstructed_move?(1, 3), 'White 2 square initial'
+    assert black_pawn.obstructed_move?(5, 4), 'Black 2 square initial'
   end
 end

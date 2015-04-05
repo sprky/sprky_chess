@@ -64,4 +64,35 @@ class PawnLegalMoveTest < ActiveSupport::TestCase
     assert black_pawn.legal_move?(1, 5)
     assert black_pawn.legal_move?(1, 4)
   end
+
+  test 'destination obstructed' do
+    game = FactoryGirl.create(:game)
+    pawn = FactoryGirl.create(
+      :pawn,
+      x_position: 1,
+      y_position: 1,
+      color: true,
+      game_id: game.id)
+    FactoryGirl.create(
+      :pawn,
+      x_position: 1,
+      y_position: 2,
+      color: false,
+      game_id: game.id)
+    black_pawn = FactoryGirl.create(
+      :pawn,
+      x_position: 1,
+      y_position: 6,
+      color: false,
+      game_id: game.id)
+    FactoryGirl.create(
+      :pawn,
+      x_position: 1,
+      y_position: 5,
+      color: false,
+      game_id: game.id)
+
+    assert_not pawn.legal_move?(1, 2), 'destination obstructed'
+    assert_not black_pawn.legal_move?(1, 5), 'destination obstructed'
+  end
 end
