@@ -1,45 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Sprky</title>
-  <%= stylesheet_link_tag    "application", media: "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-</head>
-<body>
-  <%= render 'shared/navigation' %>
-	<div class='alerts'>
-    <% if notice.present? %>
-		 <p class="notice"><%= notice %></p>
-    <% end %>
-    <% if alert.present? %>
-		 <p class="alert"><%= alert %></p>
-    <% end %>
-	</div>
+  <head>
+    <title>Sprky</title>
+    <%= stylesheet_link_tag    "application", media: "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  </head>
+  <body>
+    <%= render 'shared/navigation' %>
+  	<div class='alerts'>
+      <% if notice.present? %>
+  		 <p class="notice"><%= notice %></p>
+      <% end %>
+      <% if alert.present? %>
+  		 <p class="alert"><%= alert %></p>
+      <% end %>
+  	</div>
 
-	<%= yield %>
+  	<%= yield %>
 
-<script>
-  $(document).ready( function() {
+    <script src="//use.typekit.net/lqn1oxe.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
 
-  	//this will be triggered by clicking select game
-  	$('.select-game-link').click( function()  {
-  		var game_id = $("input[name='game_id']").val();
-      if (game_id) {
-    		var url = '/games/'+game_id;
-    		$(location).attr('href',url);
-      }
-		});
-
-  });
-</script>
-
-<script src="//use.typekit.net/lqn1oxe.js"></script>
-<script>try{Typekit.load();}catch(e){}</script>
-
-</body>
-
-
-
+  </body>
 </html>

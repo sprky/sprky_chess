@@ -11,9 +11,13 @@
 
 hgroup.welcome {
   text-align: center;
-  padding-top: 9em;
+  padding-top: 4em;
   position: relative;
   animation: fade-down 1s;
+
+  @include media($large-screen) {
+    padding-top: 9.5em;
+  }
 
   h1 {
     font-weight: 700;
