@@ -25,7 +25,7 @@ class Piece < ActiveRecord::Base
     return false if destination_obstructed?(x, y)
 
     # check that the move doesn't put the king into check
-    # return false if move_causes_check?(x, y)
+    # return false if move_causes_check?(x, y) - pull this out of valid_move?
 
     true
   end
@@ -55,18 +55,31 @@ class Piece < ActiveRecord::Base
     x = params[:x_position].to_i
     y = params[:y_position].to_i
 
+    # copy_of_piece = Piece.new(piece.attributes)
+
     if piece.valid_move?(x, y)
       if capture_move?(x, y)
         captured = game.obstruction(x, y)
+        # copy_of_captured = Piece.new(captured.attributes)
         captured.mark_captured
       end
       if piece.type == 'King' && piece.legal_castle_move?(x, y)
-        piece.castle_move
+        piece.castle_move  ##  need to find way to also undo the castle move - perhaps castle move returns copy of the rook
       else
         piece.update_attributes(x_position: x, y_position: y, state: 'moved')
-        switch_players
       end
     end
+
+    # puts '-' * 96
+    # puts "See if #{!color} is in check"
+
+    if game.check?(!color)
+      # puts '*' * 48
+      # puts 'Caused check!'
+      game.update_attributes(state: 'check')
+    end
+
+    switch_players
   end
 
   def nil_move?(x, y)
@@ -83,6 +96,12 @@ class Piece < ActiveRecord::Base
     else
       game.update_attributes(turn: game.white_player_id)
     end
+  end
+
+  def move_causes_check?(x, y)
+    update_attributes(x_position: x, y_position: y)
+    puts game.check?(!color)
+    return true if game.check?(!color)
   end
 
   def moving_own_piece?

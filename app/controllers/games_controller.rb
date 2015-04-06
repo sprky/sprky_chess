@@ -29,7 +29,8 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @game.update_attributes(game_params)
     if @game.valid? && ensure_unique_players
-      randomize_players  # if unique redirect to games path otherwise an error.
+      randomize_players
+      @game.assign_pieces
       @game.update_attributes(turn: @game.white_player_id)
       redirect_to game_path(@game)
     else

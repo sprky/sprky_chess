@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
 
 
@@ -47,7 +46,6 @@ $(document).ready(function() {
   function deselectPiece( piece ) {
     $(piece).removeClass('piece-selected');
     piece_selected = false;
-    console.log('deselect piece');
   }
 
   // this piece (passed as this from click handler) was 
@@ -64,7 +62,6 @@ $(document).ready(function() {
       piece_selected = true; 
       piece_x_position = $(piece).data("x-position");
       piece_y_position = $(piece).data("y-position");
-      console.log('select piece at ', piece_x_position, piece_y_position );
       piecePathUrl = '/pieces/' + pieceId;
     }
   }
