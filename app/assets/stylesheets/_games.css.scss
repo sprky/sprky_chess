@@ -39,7 +39,7 @@ h1.game-name {
     height: 60px;
     padding: 0;
     &:hover {
-      border: 4px solid $blue;
+      background-color: $blue !important;
     }
     &.piece-selected {
       background-color: $blue !important;

@@ -5,4 +5,6 @@ class StaticPagesController < ApplicationController
     # get @open_games from open_games method
     @open_games = open_games
   end
+  def about
+  end
 end

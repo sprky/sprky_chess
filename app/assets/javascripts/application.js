@@ -16,6 +16,19 @@
 
 
 $(document).ready(function() {
+  // Navigation
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+
   // boolean to determine if a piece has been selected
   var piece_selected = false;
   // set up variables for ajax call
@@ -87,5 +100,4 @@ $(document).ready(function() {
       }
     });   
   }
-
 });

@@ -1,6 +1,7 @@
 Sprky::Application.routes.draw do
   devise_for :players
   root 'static_pages#index'
+  get 'about', to: 'static_pages#about' 
 
   resources :games, only: [:new, :create, :show, :update]
   resources :pieces, only: [:update]

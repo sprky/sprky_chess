@@ -5,34 +5,36 @@
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-
-  
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 <body>
-  <nav class='main-nav'>
-    <div class='navbar-left'>
-      <div class='logo'>
-        <%= link_to 'SPRKY CHESS', root_path %>
-      </div>
-    </div>
-    <div class='navbar-right'>
-      <ul>
-        <li><%= link_to 'Create Game', new_game_path %></li>
-        <li><%= link_to 'Select Game', '#', :class => 'select-game-link' %> </li> <!-- trigger javascript ajax call -->
-        <li>
-          <input type='text' placeholder='Game ID' name='game_id' />
-        </li>
-        <% if current_player %>
-          <li><%= link_to 'Sign Out', destroy_player_session_path, :method => :delete %></li>
-          <li><%= link_to current_player.email, '#' %></li>
-        <% else %>
-          <li><%= link_to 'Sign In', new_player_session_path %></li>
-          <li><%= link_to 'Sign Up', new_player_registration_path %></li>
-        <% end %>
+  <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <%= link_to root_path, class: "logo" do %>
+      <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/placeholder_logo_1.png" alt="Logo Image">
+    <% end %>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">MENU</a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        <li class="nav-link"><%= link_to 'Create Game', new_game_path %></li>
+        <li class="nav-link"><%= link_to 'Find Game', '#', class: 'select-game-link' %></li>
+        <li class="nav-link"><%= link_to 'About', about_path %></li>
       </ul>
+    </nav>
+    <div class="navigation-tools">
+      <% if current_player %>
+        <%= link_to 'Log Out', destroy_player_session_path, method: :delete, class: 'log-out' %>
+      <% else %>
+        <%= link_to 'Sign Up', new_player_registration_path, class: 'sign-up' %>
+        <%= link_to 'Log In', new_player_session_path, class: 'log-in' %>
+        <p>
+          or
+        </p>
+      <% end %>
     </div>
-  </nav>
+  </div>
+</header>
+
 	<div class='container main-container'>
 		<div class='alerts'>
       <% if notice.present? %>
