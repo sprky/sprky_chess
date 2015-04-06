@@ -17,7 +17,10 @@
     <nav role="navigation">
       <ul id="js-navigation-menu" class="navigation-menu show">
         <li class="nav-link"><%= link_to 'Create Game', new_game_path %></li>
-        <li class="nav-link"><%= link_to 'Find Game', '#', class: 'select-game-link' %></li>
+        <li class="nav-link">
+          <%= link_to 'Find Game', '#', class: 'select-game-link' %>
+          <input type='text' placeholder='Game ID' name='game_id' />
+        </li>
         <li class="nav-link"><%= link_to 'About', about_path %></li>
       </ul>
     </nav>
