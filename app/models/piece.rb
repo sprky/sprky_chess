@@ -111,7 +111,7 @@ class Piece < ActiveRecord::Base
   private
 
   def set_default_images
-    self.symbol ||= "#{color_name}-#{type.downcase}.gif"
+    self.symbol ||= "#{color_name}-#{type.downcase}.svg"
   end
 
   def set_default_state

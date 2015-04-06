@@ -28,12 +28,18 @@
   border-collapse: collapse;
   margin: 0 auto .5em auto;
   padding-top: 40px;
-  background-color: #000000;
-  border: 1px solid #000000;
   width: auto;
+  border: 2px solid black;
 
   tr:nth-child(even) td:nth-child(even), tr:nth-child(odd) td:nth-child(odd) {
-    background: white;
+    background-image: url('/assets/white-square.jpg');
+  }
+  tr:nth-child(even) td:nth-child(odd), tr:nth-child(odd) td:nth-child(even) {
+    background-image: url('/assets/black-square.jpg');
+  }
+
+  tr, td {
+    border: 1px solid black;
   }
 
   td {
@@ -41,10 +47,11 @@
     height: 60px;
     padding: 0;
     &:hover {
-      background-color: $blue !important;
+      border: 2px solid $primary-color !important;
     }
     &.piece-selected {
-      background-color: $blue !important;
+      border: 2px solid $primary-color !important;
+
       &.select-destination {
         border: none;
       }
