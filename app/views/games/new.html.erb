@@ -1,10 +1,10 @@
-<div>
-	<h1>Enter The Game Details Here</h1>
-		<%= simple_form_for @game do |f| %>
-		<%= f.input :name %>
-		<%= f.input :white_player_id, :as => :hidden, :input_html => { :value => current_player.id } %>
-		<br />
-		<%= f.submit 'Create' %>
-	<% end %>
+<div class="new-game-container">
+  <div class="new-game-content">
+    <h3>Name Your Game</h3>
+      <%= simple_form_for @game do |f| %>
+      <%= f.input :name %>
+      <%= f.input :white_player_id, :as => :hidden, :input_html => { :value => current_player.id } %>
+      <br />
+      <%= f.submit 'Create' %>
+    <% end %></div>
 </div>
-

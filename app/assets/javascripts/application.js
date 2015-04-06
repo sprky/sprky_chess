@@ -19,11 +19,10 @@ $(document).ready(function() {
 
   //this will be triggered by clicking select game
   $('.select-game-link').click( function()  {
-    console.log('game selected');
     var game_id = $("input[name='game_id']").val();
     if (game_id) {
       var url = '/games/'+game_id;
-      $(location).attr('href',url);
+      $(location).attr('href', url);
     }
   });
 

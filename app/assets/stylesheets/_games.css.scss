@@ -2,29 +2,31 @@
 // Include in application.scss
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-h1.game-name {
-  font-size: 1.5em;
-  margin: 0;
-}
 
-.games-information {
-  @include span-columns(3);
-}
 .game-container {
-  @include span-columns(8);
-  /*padding-bottom: 4em;*/
+  @include outer-container;
 }
 
-.game-message {
-  width: 100%;
+.game-content {
+  @include fill-parent;
   text-align: center;
-  color: #477dca;
-  font-size: 28px;
+  padding: 1em 0 4em 0;
+  h1 {
+    font-size: 2.5em;
+  }
+  button {
+    padding: .25em .5em;
+    margin: 0;
+  }
+}
+
+.game-turn-message {
+  @extend .flash-notice;
 }
 
 #gameboard {
   border-collapse: collapse;
-  margin: 0 auto;
+  margin: 0 auto .5em auto;
   padding-top: 40px;
   background-color: #000000;
   border: 1px solid #000000;
@@ -47,5 +49,37 @@ h1.game-name {
         border: none;
       }
     }
+  }
+}
+
+.new-game-container {
+  @include outer-container;
+}
+
+.new-game-content {
+  padding: 4em 2em;
+  background-color: $light-gray;
+  margin-top: 2em;
+  border-radius: $base-border-radius;
+  border: 1px solid $medium-gray;
+  @include span-columns(10);
+  @include shift(1);
+
+  @include media($medium-screen) {
+    @include span-columns(8);
+    @include shift(2);
+  }
+
+  @include media($large-screen) {
+    @include span-columns(6);
+    @include shift(3);
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  input[type="submit"] {
+    float: right;
   }
 }

@@ -1,5 +1,12 @@
 <% if @game %>
-	<div class='game-message'><%= message(@game) %></div>
+	<p>
+		Black Player: 
+		<% if @game.black_player_id.present? %> 
+		  <%= player_email_from_id(@game.black_player_id) %> 
+		<% else %>
+		  <button>Invite Player</button> 
+		<% end %>
+	</p>
 	<table id='gameboard' data-game-state='<%= @game.state %>' data-your-turn='<%= your_turn? %>'>
 		<% if current_player.id != @game.white_player_id %>
 			<!-- show board from black player perspective -->
@@ -23,6 +30,14 @@
 		 	<% end %>
 		<% end %>
 	</table>
+	<p>
+		White Player: 
+		<% if @game.white_player_id.present? %> 
+		  <%= player_email_from_id(@game.white_player_id) %> 
+		<% else %>
+		  <button>Invite Player</button> 
+		<% end %>
+  </p>
 <% end %>
 
 
