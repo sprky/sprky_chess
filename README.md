@@ -1,4 +1,4 @@
-== SPRKY Chess
+##SPRKY Chess
 
 This is a chess app built in Ruby on Rails by SPRKY for [The Firehose Project](http://thefirehoseproject.com).
 
