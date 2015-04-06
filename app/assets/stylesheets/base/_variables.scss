@@ -1,6 +1,8 @@
 // Typography
-$base-font-family: $helvetica;
-$heading-font-family: $base-font-family;
+$serif-font: 'minion-pro', times, garamond, georgia, serif;
+$sans-serif-font: 'adelle-sans', helvetica, arial, sans-serif;
+$base-font-family: $serif-font;
+$heading-font-family: $sans-serif-font;
 
 // Font Sizes
 $base-font-size: 1em;

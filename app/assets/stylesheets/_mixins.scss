@@ -1,0 +1,10 @@
+// Omega Reset for creating unique grid settings for different media queries
+@mixin omega-reset($nth) {
+  &:nth-child(#{$nth}) { margin-right: flex-gutter(); }
+  &:nth-child(#{$nth}+1) { clear: none }
+}
+
+@mixin round {
+  border-radius: 999px;
+  border-radius: 50%;
+}

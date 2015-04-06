@@ -9,19 +9,16 @@
 </head>
 <body>
   <%= render 'shared/navigation' %>
-	<div class='container main-container'>
-		<div class='alerts'>
-      <% if notice.present? %>
-			 <p class="notice"><%= notice %></p>
-      <% end %>
-      <% if alert.present? %>
-			 <p class="alert"><%= alert %></p>
-      <% end %>
-		</div>
-
-		<%= yield %>
-
+	<div class='alerts'>
+    <% if notice.present? %>
+		 <p class="notice"><%= notice %></p>
+    <% end %>
+    <% if alert.present? %>
+		 <p class="alert"><%= alert %></p>
+    <% end %>
 	</div>
+
+	<%= yield %>
 
 <script>
   $(document).ready( function() {
@@ -36,8 +33,10 @@
 		});
 
   });
-
 </script>
+
+<script src="//use.typekit.net/lqn1oxe.js"></script>
+<script>try{Typekit.load();}catch(e){}</script>
 
 </body>
 

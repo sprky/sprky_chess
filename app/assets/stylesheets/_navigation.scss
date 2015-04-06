@@ -5,6 +5,7 @@ header.navigation {
   $base-accent-color: #477DCA !default;
   $dark-gray: #333 !default;
   $large-screen: em(860) !default;
+  font-family: $sans-serif-font;
   
   a {
     text-decoration: none;
@@ -130,6 +131,7 @@ header.navigation {
       color: $navigation-color;
       display: inline-block;
       font-weight: 400;
+      float: left;
 
       @include media ($horizontal-bar-mode) {
         padding-right: 1em;
@@ -316,6 +318,7 @@ header.navigation {
   // Search bar
 
   .search-bar {
+    font-family: $sans-serif-font;
     $search-bar-border-color: $base-border-color;
     $search-bar-border: 1px solid $search-bar-border-color;
     $search-bar-background: lighten($search-bar-border-color, 10%);
@@ -334,6 +337,7 @@ header.navigation {
         border-radius: $base-border-radius * 2;
         border: $navigation-search-border;
         color: $navigation-color;
+        font-family: $sans-serif-font;
         font-size: 0.9em;
         font-style: italic;
         margin: 0;
@@ -371,6 +375,7 @@ header.navigation {
       input {
         @include box-sizing(border-box);
         display: block;
+        margin-bottom: 0;
       }
     }
   }

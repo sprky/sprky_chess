@@ -14,12 +14,17 @@
 /* Base Imports */
  @import 'bourbon',
          'base/base',
-         'neat';
+         'neat',
+         'animation',
+         'mixins';
 
 // Application styling by scope
  @import 'global',
          'games',
          'navigation';
+
+// Static Pages Styling
+@import 'index';
 
 // used to debug styling
 // @import 'debug';

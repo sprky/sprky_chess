@@ -1,11 +1,54 @@
-<div class='games-information'>
-  <% if player_signed_in? %>
-    <%= render 'shared/my_games' %>
-    <hr />
-    <%= render 'shared/open_games' %>
-  <% end %>
-</div>
+<article role="main">
+  <section class="top">
+    <hgroup class="welcome vertical">
+      <h1>THIS IS SPRKY</h1>
+      <h4 class="subheader">Online Chess&mdash;Ruby on Rails Style.</h4>
+    </hgroup>
+  </section>
+  <section class="features">
+    <div class="feature-container">
+      <div class="feature-content">
+        <h3>Handcrafted Web App</h3>
+        <p>For the capstone of <a href="http://thefirehoseproject.com">The Firehose Project</a> we hand-crafted an open source chess application using <a href="http://rubyonrails.org/">Ruby on Rails</a>. We used the following tools to build SPRKY:</p>
+        <dl class="tool-list">
+          <dt class="tool-title">Distributed VCS:</dt>
+          <dd class="tool-name"><a href="https://github.com/sprky/sprky_chess">Git &amp; Github</a></dd>
+          <dt class="tool-title">Continuous Integration:</dt>
+          <dd class="tool-name"><a href="https://codeship.com/projects">Codeship</a></dd>
+          <dt class="tool-title">Team Communication:</dt>
+          <dd class="tool-name"><a href="https://slack.com/">Slack</a></dd>
+          <dt class="tool-title">Project Management:</dt>
+          <dd class="tool-name"><a href="https://trello.com/">Trello</a></dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+  <section class="team">
+    <div class="team-container">
+      <div class="team-content">
+        <h3>Our Team</h3>
+        <div class="team-member">
+          <%= image_tag "aaron-washburn-bw@2x.jpg", size: '200x200' %>
+          <div class="clearfix"></div>
+          <caption><a href="javascript:void(0)">Aaron Washburn</a></caption>
+        </div>
+        <div class="team-member">
+          <%= image_tag "john-ellison-bw@2x.jpg", size: '200x200' %>
+          <div class="clearfix"></div>
+          <caption><a href="http://john-ellison.com">John Ellison</a></caption>
+        </div>
+        <div class="team-member">
+          <%= image_tag "headshot", size: '200x200' %>
+          <div class="clearfix"></div>
+          <caption><a href="javascript:void(0)">Hilary Sinkoff</a></caption>
 
-<div class='game-container'>
-  <%= render 'shared/gameboard' %>
-</div>
+        </div>
+        <div class="team-member">
+          <%= image_tag "michael-warren-bw@2x.jpg", size: '200x200' %>
+          <div class="clearfix"></div>
+          <caption><a href="javascript:void(0)">Michael Warren</a></caption>
+        </div>
+      </div>
+    </div>
+  </section>
+</article>
