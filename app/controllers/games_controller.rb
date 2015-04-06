@@ -13,10 +13,6 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @pieces = @game.pieces.to_a
-    # get @my_games from my_games method in application_controller
-    @my_games = my_games
-    # get @open_games from open_games method
-    @open_games = open_games
 
     if @game.nil?
       redirect_to root_path

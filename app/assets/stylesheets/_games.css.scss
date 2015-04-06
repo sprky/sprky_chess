@@ -34,6 +34,7 @@
   tr:nth-child(even) td:nth-child(even), tr:nth-child(odd) td:nth-child(odd) {
     background-image: url('/assets/white-square.jpg');
   }
+
   tr:nth-child(even) td:nth-child(odd), tr:nth-child(odd) td:nth-child(even) {
     background-image: url('/assets/black-square.jpg');
   }
@@ -56,37 +57,5 @@
         border: none;
       }
     }
-  }
-}
-
-.new-game-container {
-  @include outer-container;
-}
-
-.new-game-content {
-  padding: 4em 2em;
-  background-color: $light-gray;
-  margin-top: 2em;
-  border-radius: $base-border-radius;
-  border: 1px solid $medium-gray;
-  @include span-columns(10);
-  @include shift(1);
-
-  @include media($medium-screen) {
-    @include span-columns(8);
-    @include shift(2);
-  }
-
-  @include media($large-screen) {
-    @include span-columns(6);
-    @include shift(3);
-  }
-
-  h3 {
-    text-align: center;
-  }
-
-  input[type="submit"] {
-    float: right;
   }
 }

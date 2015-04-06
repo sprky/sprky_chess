@@ -1,0 +1,39 @@
+<div class='dashboard-container'>
+  <div class='dashboard-content'>
+    <hgroup>
+      <h2>My Dashboard</h1>
+      <h4 class='subheader'><%= current_player.email %></h3>
+    </hgroup>
+    <section class='games-information'>
+      <hr />
+      <% if player_signed_in? %>
+        <section class='my-games'>
+          <h4>My games</h4>
+          <ul class='game-list'>
+            <% @my_games.each do |game| %>
+              <li class='game-list-item'>
+                <h5>
+                  <%= link_to game.name, game_path(game) %>
+                </h5>
+                <p>
+                  <% if game.black_player_id.present? %> 
+                    <%= player_email_from_id(game.black_player_id) %> 
+                  <% else %>
+                    <button>Invite Player</button> 
+                  <% end %>
+                  vs.
+                  <% if game.white_player_id.present? %> 
+                    <%= player_email_from_id(game.white_player_id) %> 
+                  <% else %>
+                    <button>Invite Player</button> 
+                  <% end %>
+                </p>
+              </li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+    </section>
+
+  </div>
+</div>

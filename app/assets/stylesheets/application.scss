@@ -22,10 +22,12 @@
  @import 'global',
          'games',
          'navigation',
+         'form-pages',
          'flashes';
 
 // Static Pages Styling
-@import 'index';
+@import 'index',
+        'dashboards';
 
 // used to debug styling
 // @import 'debug';

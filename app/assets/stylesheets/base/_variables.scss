@@ -1,8 +1,7 @@
 // Typography
-$serif-font: 'minion-pro', times, garamond, georgia, serif;
-$sans-serif-font: 'adelle-sans', helvetica, arial, sans-serif;
-$base-font-family: $serif-font;
-$heading-font-family: $sans-serif-font;
+$sans-serif-font: 'brandon-grotesque', helvetica, arial, sans-serif;
+$base-font-family: $sans-serif-font;
+$heading-font-family: 'adelle-sans', helvetica, arial, sans-serif;
 
 // Font Sizes
 $base-font-size: 1em;
@@ -21,7 +20,8 @@ $base-z-index: 0;
 $blue: #3498DB;
 $navy-blue: #2C3E50;
 $red: #E74C3C;
-$dark-gray: #333;
+$oil: #222;
+$dark-gray: #444;
 $medium-gray: #999;
 $light-gray: #ddd;
 $off-white: #ECF0F1;

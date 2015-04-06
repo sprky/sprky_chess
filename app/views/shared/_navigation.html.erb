@@ -15,10 +15,10 @@
             </button>
           </form>
         </div>
+        <li class="nav-link"><%= link_to 'My Dashboard', dashboard_path %></li>
       </ul>
     </nav>
     <div class="navigation-tools">
-      
       <% if current_player %>
         <%= link_to 'Log Out', destroy_player_session_path, method: :delete, class: 'log-out' %>
       <% else %>

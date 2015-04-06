@@ -16,12 +16,14 @@ h6 {
   font-family: $heading-font-family;
   line-height: $heading-line-height;
   font-weight: 700;
+  color: $oil;
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
 }
 
 h1 {
   font-size: 7.594em;
-  text-transform: uppercase;
 }
 
 h2 {
@@ -47,6 +49,8 @@ h6 {
 .subheader {
   font-family: $base-font-family;
   font-style: italic;
+  text-transform: none;
+  font-weight: 200;
 }
 
 p {

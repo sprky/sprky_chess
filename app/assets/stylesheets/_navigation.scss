@@ -3,7 +3,6 @@ header.navigation {
   $base-border-color: gainsboro !default;
   $base-border-radius: 3px !default;
   $base-accent-color: #477DCA !default;
-  $dark-gray: #333 !default;
   $large-screen: em(860) !default;
   font-family: $sans-serif-font;
   
@@ -13,7 +12,7 @@ header.navigation {
   //////////////////////////////////////////////////////////////////////////////////
 
   $navigation-padding: 1em;
-  $navigation-background: $dark-gray;
+  $navigation-background: $oil;
   $navigation-color: transparentize(white, 0.3);
   $navigation-color-hover: white;
   $navigation-height: 60px;
@@ -280,6 +279,7 @@ header.navigation {
       float: right;
     }
     p {
+      font-size: 1em;
       display: inline;
       padding-right: .8em;
       line-height: 58px;
