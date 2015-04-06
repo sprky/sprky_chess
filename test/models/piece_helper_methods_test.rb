@@ -14,7 +14,7 @@ class PieceTest < ActiveSupport::TestCase
     piece = FactoryGirl.create(:pawn)
     piece.color = 0
 
-    assert_equal 'black-pawn.gif', piece.symbol
+    assert_equal 'black-pawn.svg', piece.symbol
   end
 
   test 'move on board' do

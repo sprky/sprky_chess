@@ -23,7 +23,7 @@ class ApplicationHelperTest < ActionView::TestCase
 
   test 'Should return correct gameboard td for occupied square' do
     knight = FactoryGirl.create(:knight, color: false)
-    expected = "<td class='x-position-6'' data-x-position='6' data-y-position='7' data-piece-id='#{knight.id}'><img alt=\"Black knight\" src=\"/images/black-knight.gif\" /></td>"
+    expected = "<td class='x-position-6'' data-x-position='6' data-y-position='7' data-piece-id='#{knight.id}'><img alt=\"Black knight\" src=\"/images/black-knight.svg\" /></td>"
 
     assert_equal expected, gameboard_td(knight, 6, 7)
   end
