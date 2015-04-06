@@ -3,7 +3,8 @@ class Pawn < Piece
     return false if backwards_move?(y)
 
     unless capture_move?(x, y)
-      return false if horizontal_move?(x)
+      return false if horizontal_move?(x) ||
+                      game.obstruction(x, y)
     end
 
     proper_length?(y)
