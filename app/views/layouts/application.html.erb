@@ -8,36 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 <body>
-  <header class="navigation" role="banner">
-  <div class="navigation-wrapper">
-    <%= link_to root_path, class: "logo" do %>
-      <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/placeholder_logo_1.png" alt="Logo Image">
-    <% end %>
-    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">MENU</a>
-    <nav role="navigation">
-      <ul id="js-navigation-menu" class="navigation-menu show">
-        <li class="nav-link"><%= link_to 'Create Game', new_game_path %></li>
-        <li class="nav-link">
-          <%= link_to 'Find Game', '#', class: 'select-game-link' %>
-          <input type='text' placeholder='Game ID' name='game_id' />
-        </li>
-        <li class="nav-link"><%= link_to 'About', about_path %></li>
-      </ul>
-    </nav>
-    <div class="navigation-tools">
-      <% if current_player %>
-        <%= link_to 'Log Out', destroy_player_session_path, method: :delete, class: 'log-out' %>
-      <% else %>
-        <%= link_to 'Sign Up', new_player_registration_path, class: 'sign-up' %>
-        <%= link_to 'Log In', new_player_session_path, class: 'log-in' %>
-        <p>
-          or
-        </p>
-      <% end %>
-    </div>
-  </div>
-</header>
-
+  <%= render 'shared/navigation' %>
 	<div class='container main-container'>
 		<div class='alerts'>
       <% if notice.present? %>

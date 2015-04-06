@@ -1,0 +1,33 @@
+  <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <%= link_to root_path, class: "logo" do %>
+      <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/placeholder_logo_1.png" alt="Logo Image">
+    <% end %>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">MENU</a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        <li class="nav-link"><%= link_to 'Create Game', new_game_path %></li>
+        <li class="nav-link"><%= link_to 'About', about_path %></li>
+      </ul>
+    </nav>
+    <div class="navigation-tools">
+      <div class="search-bar">
+        <form role="search">
+          <input type="text" placeholder="Find Game by ID" name='game_id' />
+          <button type="submit" class="select-game-link">
+            <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon.png" alt="Search Icon">
+          </button>
+        </form>
+      </div>
+      <% if current_player %>
+        <%= link_to 'Log Out', destroy_player_session_path, method: :delete, class: 'log-out' %>
+      <% else %>
+        <%= link_to 'Sign Up', new_player_registration_path, class: 'sign-up' %>
+        <%= link_to 'Log In', new_player_session_path, class: 'log-in' %>
+        <p>
+          or
+        </p>
+      <% end %>
+    </div>
+  </div>
+</header>
