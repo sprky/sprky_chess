@@ -69,16 +69,9 @@ class Piece < ActiveRecord::Base
       switch_players
     end
 
-    # puts '-' * 96
-    # puts "See if #{!color} is in check"
-
     if game.check?(!color)
-      # puts '*' * 48
-      # puts 'Caused check!'
       game.update_attributes(state: 'check')
     end
-
-    
   end
 
   def nil_move?(x, y)
