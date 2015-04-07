@@ -1,0 +1,38 @@
+// Place all the styles related to the dashboards controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.dashboard-container {
+  @include outer-container;
+}
+
+.dashboard-content {
+  padding: 4em 0;
+  @include span-columns(10);
+  @include shift(1);
+  text-align: center;
+
+  .game-list {
+    text-align: left;
+    margin-top: 1em;
+    @include media($large-screen) {
+      width: 80%;
+      margin: 1em auto 0em auto;
+    }
+  }
+
+  .game-list-item {
+    padding: 2em 2em 1em 2em;
+    border: 1px solid $light-gray;
+    border-radius: $base-border-radius;
+    margin-bottom: .5em;
+    background-color: $light-gray;
+    a {
+      color: $base-font-color;
+    }
+    button {
+      padding: .25em .5em;
+      margin: 0;
+    }
+  }
+}
+

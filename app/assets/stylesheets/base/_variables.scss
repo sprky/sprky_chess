@@ -1,6 +1,7 @@
 // Typography
-$base-font-family: $helvetica;
-$heading-font-family: $base-font-family;
+$sans-serif-font: 'brandon-grotesque', helvetica, arial, sans-serif;
+$base-font-family: $sans-serif-font;
+$heading-font-family: 'adelle-sans', helvetica, arial, sans-serif;
 
 // Font Sizes
 $base-font-size: 1em;
@@ -16,10 +17,17 @@ $small-spacing: $base-spacing / 2;
 $base-z-index: 0;
 
 // Colors
-$blue: #477dca;
-$dark-gray: #333;
+$blue: #3498DB;
+$navy-blue: #2C3E50;
+$red: #E74C3C;
+$oil: #222;
+$dark-gray: #444;
 $medium-gray: #999;
 $light-gray: #ddd;
+$off-white: #ECF0F1;
+
+$primary-color: $blue;
+$secondary-color: $light-gray;
 
 // Font Colors
 $base-background-color: #fff;

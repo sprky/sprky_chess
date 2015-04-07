@@ -14,12 +14,47 @@ h4,
 h5,
 h6 {
   font-family: $heading-font-family;
-  font-size: $base-font-size;
   line-height: $heading-line-height;
-  margin: 0 0 $small-spacing;
+  font-weight: 700;
+  color: $oil;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+}
+
+h1 {
+  font-size: 7.594em;
+}
+
+h2 {
+  font-size: 4.863em;
+}
+
+h3 {
+  font-size: 3.175em;
+}
+
+h4 {
+  font-size: 2em;
+}
+
+h5 {
+  font-size: 1.2em;
+}
+
+h6 {
+  font-size: .8em;
+}
+
+.subheader {
+  font-family: $base-font-family;
+  font-style: italic;
+  text-transform: none;
+  font-weight: 200;
 }
 
 p {
+  font-size: 1.5em;
   margin: 0 0 $small-spacing;
 }
 

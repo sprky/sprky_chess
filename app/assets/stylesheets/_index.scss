@@ -1,0 +1,94 @@
+.top {
+  height: 550px;
+  background: url('/assets/chess-board-1280x853.jpg');
+  background-position: 50% 50%;
+  color: white;
+  @include media($large-screen) {
+    background: url('/assets/chess-board-1920x1280.jpg');
+    background-position: 50% 50%;
+  }
+}
+
+hgroup.welcome {
+  text-align: center;
+  padding-top: 4em;
+  position: relative;
+  animation: fade-down 1s;
+
+  @include media($large-screen) {
+    padding-top: 9.5em;
+  }
+
+  h1 {
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 3px;
+    color: #fff;
+  }
+  .subheader {
+    font-style: italic;
+    margin: 0;
+    color: #fff;
+  }
+}
+
+.feature-container {
+  @include outer-container;
+}
+
+.feature-content {
+  padding: 4em 0;
+  @include span-columns(8);
+  @include shift(2);
+}
+
+.tool-list {
+  margin-left: 1em;
+  .tool-title {
+    @extend h5;
+  }
+  .tool-name {
+    display: inline-block;
+    margin-bottom: 1em;
+    @extend p;
+  }
+}
+
+.team {
+  background-color: $light-gray;
+}
+
+.team-container {
+  @include outer-container;
+}
+
+.team-content {
+  padding: 4em 0;
+  text-align: center;
+  @include fill-parent;
+  font-size: 1.5em;
+
+  .team-member {
+    padding: 2em 0;
+
+    @include media($medium-screen) {
+      @include span-columns(3);
+    }
+    img {
+      @include round;
+      border: 3px solid #fff;
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+

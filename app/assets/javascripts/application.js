@@ -16,6 +16,29 @@
 
 
 $(document).ready(function() {
+
+  //this will be triggered by clicking select game
+  $('.select-game-link').click( function()  {
+    var game_id = $("input[name='game_id']").val();
+    if (game_id) {
+      var url = '/games/'+game_id;
+      $(location).attr('href', url);
+    }
+  });
+
+  // Navigation
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+
   // boolean to determine if a piece has been selected
   var piece_selected = false;
   // set up variables for ajax call
@@ -85,5 +108,4 @@ $(document).ready(function() {
       }
     });   
   }
-
 });

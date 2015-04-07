@@ -12,6 +12,9 @@ gem 'neat'
 # Base styling for bourbon projects
 gem 'bitters'
 
+# Autoprefixer for CSS vendor prefixes
+gem "autoprefixer-rails"
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 

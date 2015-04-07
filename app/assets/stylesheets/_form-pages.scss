@@ -1,0 +1,48 @@
+.form-page-container {
+  @include outer-container;
+}
+
+.form-page-content {
+  padding: 4em 2em;
+  background-color: $light-gray;
+  margin-top: 2em;
+  border-radius: $base-border-radius;
+  border: 1px solid $medium-gray;
+  @include span-columns(10);
+  @include shift(1);
+
+  @include media($medium-screen) {
+    @include span-columns(8);
+    @include shift(2);
+  }
+
+  @include media($large-screen) {
+    @include span-columns(6);
+    @include shift(3);
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  input[type="submit"] {
+    float: right;
+  }
+
+  label {
+    // margin-bottom: 0;
+    display: inline
+  }
+
+  .min-pass-chars {
+    display: inline;
+  }
+
+  input[type='submit'] {
+    margin: 1rem 0;
+  }
+
+  span.error {
+    @extend .flash-error;
+  }
+}

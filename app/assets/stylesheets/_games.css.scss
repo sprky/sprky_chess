@@ -2,36 +2,45 @@
 // Include in application.scss
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-h1.game-name {
-  font-size: 1.5em;
-  margin: 0;
-}
 
-.games-information {
-  @include span-columns(3);
-}
 .game-container {
-  @include span-columns(8);
-  /*padding-bottom: 4em;*/
+  @include outer-container;
 }
 
-.game-message {
-  width: 100%;
+.game-content {
+  @include fill-parent;
   text-align: center;
-  color: #477dca;
-  font-size: 28px;
+  padding: 1em 0 4em 0;
+  h1 {
+    font-size: 2.5em;
+  }
+  button {
+    padding: .25em .5em;
+    margin: 0;
+  }
+}
+
+.game-turn-message {
+  @extend .flash-notice;
 }
 
 #gameboard {
   border-collapse: collapse;
-  margin: 0 auto;
+  margin: 0 auto .5em auto;
   padding-top: 40px;
-  background-color: #000000;
-  border: 1px solid #000000;
   width: auto;
+  border: 2px solid black;
 
   tr:nth-child(even) td:nth-child(even), tr:nth-child(odd) td:nth-child(odd) {
-    background: white;
+    background-image: url('/assets/white-square.jpg');
+  }
+
+  tr:nth-child(even) td:nth-child(odd), tr:nth-child(odd) td:nth-child(even) {
+    background-image: url('/assets/black-square.jpg');
+  }
+
+  tr, td {
+    border: 1px solid black;
   }
 
   td {
@@ -39,10 +48,11 @@ h1.game-name {
     height: 60px;
     padding: 0;
     &:hover {
-      border: 4px solid $blue;
+      border: 2px solid $primary-color !important;
     }
     &.piece-selected {
-      background-color: $blue !important;
+      border: 2px solid $primary-color !important;
+
       &.select-destination {
         border: none;
       }
