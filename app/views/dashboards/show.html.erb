@@ -8,7 +8,9 @@
       <hr />
       <% if player_signed_in? %>
         <section class='my-games'>
-          <h4>My games</h4>
+          <% if @my_games.present? %>
+            <h4>My games</h4>
+          <% end %>
           <ul class='game-list'>
             <% @my_games.each do |game| %>
               <li class='game-list-item'>
@@ -25,7 +27,33 @@
                   <% if game.white_player_id.present? %> 
                     <%= player_email_from_id(game.white_player_id) %> 
                   <% else %>
+                    <%= button_to 'Invite Player', '#' %> 
+                  <% end %>
+                </p>
+              </li>
+            <% end %>
+          </ul>
+        </section>
+        <section class='open-games'>
+          <% if @open_games.present? %>
+            <h4>Open games</h4>
+          <% end %>
+          <ul class='game-list'>
+            <% @open_games.each do |game| %>
+              <li class='game-list-item'>
+                <h5>
+                  <%= link_to game.name, game_path(game) %>
+                </h5>
+                <p>
+                  <% if game.white_player_id.present? %> 
+                    <%= player_email_from_id(game.white_player_id) %> 
+                  <% else %>
                     <button>Invite Player</button> 
+                  <% end %>
+                  vs.
+                  <%= simple_form_for game, :method => :put do |f| %>
+                    <%= f.input :black_player_id, :as => :hidden, :input_html => { :value => current_player.id } %>
+                    <%= f.submit 'Join Game' %>
                   <% end %>
                 </p>
               </li>

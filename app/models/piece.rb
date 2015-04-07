@@ -55,12 +55,9 @@ class Piece < ActiveRecord::Base
     x = params[:x_position].to_i
     y = params[:y_position].to_i
 
-    # copy_of_piece = Piece.new(piece.attributes)
-
     if piece.valid_move?(x, y)
       if capture_move?(x, y)
         captured = game.obstruction(x, y)
-        # copy_of_captured = Piece.new(captured.attributes)
         captured.mark_captured
       end
       if piece.type == 'King' && piece.legal_castle_move?(x, y)
@@ -68,18 +65,13 @@ class Piece < ActiveRecord::Base
       else
         piece.update_attributes(x_position: x, y_position: y, state: 'moved')
       end
-    end
 
-    # puts '-' * 96
-    # puts "See if #{!color} is in check"
+      switch_players
+    end
 
     if game.check?(!color)
-      # puts '*' * 48
-      # puts 'Caused check!'
       game.update_attributes(state: 'check')
     end
-
-    switch_players
   end
 
   def nil_move?(x, y)
