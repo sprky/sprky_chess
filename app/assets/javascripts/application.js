@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require prism
 //= require_tree .
 
 

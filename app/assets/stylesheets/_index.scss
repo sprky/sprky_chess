@@ -42,6 +42,35 @@ hgroup.welcome {
   @include shift(2);
 }
 
+.code-container {
+  @include row;
+  margin: 0;
+  width: 100%;
+  background: $light-gray;
+  padding: 4em 0;
+  h3 {
+    text-align: center;
+    margin-bottom: 1em;
+  } 
+}
+
+.code-content, .code-description {
+  // @include fill-parent;
+  @include media($medium-screen-up) {
+    @include span-columns(6);
+  }
+}
+
+.code-description {
+  background-color: $primary-color;
+  margin: 0;
+  padding: 2em 1em;
+  color: white;
+  h4 {
+  }
+}
+
+
 .tool-list {
   margin-left: 1em;
   .tool-title {

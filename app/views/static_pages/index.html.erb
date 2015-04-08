@@ -9,19 +9,50 @@
     <div class="feature-container">
       <div class="feature-content">
         <h3>Handcrafted Web App</h3>
-        <p>For the capstone of <a href="http://thefirehoseproject.com">The Firehose Project</a> we hand-crafted an open source chess application using <a href="http://rubyonrails.org/">Ruby on Rails</a>. We used the following tools to build SPRKY:</p>
-        <dl class="tool-list">
-          <dt class="tool-title">Distributed VCS:</dt>
-          <dd class="tool-name"><a href="https://github.com/sprky/sprky_chess">Git &amp; Github</a></dd>
-          <dt class="tool-title">Continuous Integration:</dt>
-          <dd class="tool-name"><a href="https://codeship.com/projects">Codeship</a></dd>
-          <dt class="tool-title">Team Communication:</dt>
-          <dd class="tool-name"><a href="https://slack.com/">Slack</a></dd>
-          <dt class="tool-title">Project Management:</dt>
-          <dd class="tool-name"><a href="https://trello.com/">Trello</a></dd>
-        </dl>
+        <p>For the capstone of <a href="http://thefirehoseproject.com">The Firehose Project</a> we hand-crafted an open source chess application using <a href="http://rubyonrails.org/">Ruby on Rails</a>. With Test Driven Development (TDD) as our guide, we crafted every element of the application from the ground up. Committed to sharpening our Ruby chops, we collaborated on pull requests to refactor and refine our code. We kept the red-green-refactor cycle tight, and above all we kept on shipping.</div>
+    </div>
+  </section>
+  <section class="code">
+    <div class="code-container">
+      <h3>OUR CODE</h3>
+
+      <div class="code-content">
+        <pre><code class="language-ruby">
+def capture_move?(x, y)
+  captured_piece = game.obstruction(x, y)
+  captured_piece && captured_piece.color != color
+end
+
+def mark_captured
+  update_attributes(
+    x_position: nil,
+    y_position: nil, 
+    state: 'captured')
+end
+        </code></pre>
+      </div>
+      <div class="code-description">
+        <h4>Code Title</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam sint consequuntur inventore atque corrupti temporibus animi qui explicabo natus accusamus eum, nostrum eveniet, unde repudiandae in modi, iure aut tempora.</p>
       </div>
     </div>
+  </section>
+  <section class="tools">
+    <h3>Tools</h3>
+    <p>We used the following tools to build SPRKY:</p>
+    <dl class="tool-list">
+      <dt class="tool-title">Version Control:</dt>
+      <dd class="tool-name"><a href="https://github.com/sprky/sprky_chess">Git &amp; Github</a></dd>
+      <dt class="tool-title">Continuous Integration:</dt>
+      <dd class="tool-name"><a href="https://codeship.com/projects">Codeship</a></dd>
+      <dt class="tool-title">Team Communication:</dt>
+      <dd class="tool-name"><a href="https://slack.com/">Slack</a></dd>
+      <dt class="tool-title">Project Management:</dt>
+      <dd class="tool-name"><a href="https://trello.com/">Trello</a></dd>
+      <dt class="tool-title">Code Analyzer:</dt>
+      <dd class="tool-name"><a href="https://github.com/bbatsov/rubocop">Rubocop</a></dd>
+
+    </dl>
   </section>
   <section class="team">
     <div class="team-container">
