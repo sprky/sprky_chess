@@ -14,9 +14,8 @@ class Pawn < Piece
     x = params[:x_position].to_i
     y = params[:y_position].to_i
 
-    if piece.type == 'Pawn' && piece.pawn_can_promote?(y)
-      piece.pawn_promotion(x, y)
-    end
+    piece.pawn_promotion(x, y) if piece.pawn_can_promote?(y)
+    super(piece, params)
   end
 
   def capture_move?(x, y)
