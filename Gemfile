@@ -54,6 +54,9 @@ gem 'byebug'
 # new relic gem for application monitoring
 gem 'newrelic_rpm'
 
+# firebase gem for realtime updates
+gem 'firebase', '~> 0.2.3'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

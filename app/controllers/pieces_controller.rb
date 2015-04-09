@@ -9,6 +9,7 @@ class PiecesController < ApplicationController
     render json: {
       update_url: game_path(@game)
     }
+    update_firebase(update_url: game_path(@game))
   end
 
   private
@@ -19,5 +20,13 @@ class PiecesController < ApplicationController
 
   def your_turn?
     @game.turn == current_player.id
+  end
+
+  def update_firebase(data)
+    base_uri = 'https://amber-inferno-5356.firebaseio.com/'
+    firebase = Firebase::Client.new(base_uri)
+
+    response = firebase.push("game#{@game.id}", data)
+    response.success?
   end
 end

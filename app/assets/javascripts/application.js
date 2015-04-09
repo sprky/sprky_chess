@@ -47,8 +47,7 @@ $(document).ready(function() {
       destination_x_position,
       destination_y_position,
       piecePathUrl;
-
-
+  
   // set up click listener for all tds on gameboard
   $('#gameboard td').click( function() {
     if (piece_selected) {
@@ -108,4 +107,18 @@ $(document).ready(function() {
       }
     });   
   }
+
+  var gameID = $('#gameboard').data('game-id')
+  var fbRef = new Firebase('https://amber-inferno-5356.firebaseio.com/');
+  var indexRef = fbRef.child('moves');
+
+  function updateGame(snap, Id) {
+    if (snap.key() == 'game')
+      console.log('refresh game # ',snap.val() );
+      console.log(Id);
+  }
+
+  indexRef.on('child_added', updateGame);
+  
+ 
 });
