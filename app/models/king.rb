@@ -4,12 +4,15 @@ class King < Piece
   end
 
   def obstructed_move?(x, y)
-    if x - x_position == 2
+    x_diff = (x - x_position)
+
+    case x_diff 
+    when 2
       # move is kingside castle
-      return true if obstructed_rectilinearly?(7, y)
-    elsif x - x_position == -2
+      obstructed_rectilinearly?(7, y)
+    when -2
       # move is queenside castle
-      return true if obstructed_rectilinearly?(0, y)
+      obstructed_rectilinearly?(0, y)
     else
       # otherwise king moves one space - can't be obstructed
       return false
@@ -57,10 +60,19 @@ class King < Piece
   end
 
   def rook_for_castling(side)
-    if side == 'King'
-      return game.pieces.find_by(type: 'Rook', x_position: 7, y_position: y_position)
-    elsif side == 'Queen'
-      return game.pieces.find_by(type: 'Rook', x_position: 0, y_position: y_position)
+    case side
+    when 'King'
+      game.pieces.find_by(
+        type: 'Rook',
+        x_position: 7,
+        y_position: y_position)
+
+    when 'Queen'
+      game.pieces.find_by(
+        type: 'Rook',
+        x_position: 0,
+        y_position: y_position)
+      
     else
       return nil
     end
