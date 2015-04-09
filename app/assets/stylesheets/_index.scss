@@ -54,11 +54,20 @@ hgroup.welcome {
   } 
 }
 
-.code-content, .code-description {
-  // @include fill-parent;
-  @include media($medium-screen-up) {
-    @include span-columns(6);
-  }
+.code-boxes {
+  @include display(flex);
+  @include justify-content(center);
+  @include align-items(stretch);
+  @include flex-wrap(wrap);
+  clear: both;
+}
+
+.code-example, .code-description {
+  @include transition (all 0.2s ease-in-out);
+  margin: 0;
+  flex: 2 2 35em;
+  @include align-self(stretch);
+
 }
 
 .code-description {

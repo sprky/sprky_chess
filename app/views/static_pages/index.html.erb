@@ -16,24 +16,26 @@
     <div class="code-container">
       <h3>OUR CODE</h3>
 
-      <div class="code-content">
-        <pre><code class="language-ruby">
-def capture_move?(x, y)
-  captured_piece = game.obstruction(x, y)
-  captured_piece && captured_piece.color != color
-end
-
-def mark_captured
-  update_attributes(
-    x_position: nil,
-    y_position: nil, 
-    state: 'captured')
-end
-        </code></pre>
-      </div>
-      <div class="code-description">
-        <h4>Code Title</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam sint consequuntur inventore atque corrupti temporibus animi qui explicabo natus accusamus eum, nostrum eveniet, unde repudiandae in modi, iure aut tempora.</p>
+      <div class="code-boxes">
+        <div class="code-example">
+          <pre><code class="language-ruby">
+        def capture_move?(x, y)
+          captured_piece = game.obstruction(x, y)
+          captured_piece && captured_piece.color != color
+        end
+        
+        def mark_captured
+          update_attributes(
+            x_position: nil,
+            y_position: nil, 
+            state: 'captured')
+        end
+          </code></pre>
+        </div>
+        <div class="code-description">
+          <h4>Code Title</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam sint consequuntur inventore atque corrupti temporibus animi qui explicabo natus accusamus eum, nostrum eveniet, unde repudiandae in modi, iure aut tempora.</p>
+        </div>
       </div>
     </div>
   </section>
