@@ -38,9 +38,8 @@ class Pawn < Piece
     end
   end
 
-  def pawn_promotion
-    x = x_position
-    y = y_position
+  def pawn_promotion(x, y)
+    puts "a"
     update_attributes(x_position: nil, y_position: nil)
     Queen.create(game_id: game_id, x_position: x, y_position: y)
   end
