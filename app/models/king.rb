@@ -64,6 +64,7 @@ class King < Piece
     y = params[:y_position].to_i
 
     piece.castle_move if piece.legal_castle_move?(x, y)
+    super(piece, params)
   end
 
   def rook_for_castling(side)

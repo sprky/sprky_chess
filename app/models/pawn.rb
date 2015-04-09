@@ -10,6 +10,14 @@ class Pawn < Piece
     proper_length?(y)
   end
 
+  def move_to(piece, params)
+    x = params[:x_position].to_i
+    y = params[:y_position].to_i
+
+    piece.pawn_promotion(x, y) if piece.pawn_can_promote?(y)
+    super(piece, params)
+  end
+
   def capture_move?(x, y)
     x_diff = (x_position - x).abs
     y_diff = (y_position - y).abs
@@ -27,6 +35,19 @@ class Pawn < Piece
     # check if a black 2 square move with obstruction
     return true if y_position == 6 && y == 4 && game.obstruction(x, 5)
     false
+  end
+
+  def pawn_can_promote?(y)
+    if y == 7 || y == 0
+      return true
+    else
+      return false
+    end
+  end
+
+  def pawn_promotion(x, y)
+    update_attributes(x_position: nil, y_position: nil)
+    Queen.create(game_id: game_id, x_position: x, y_position: y)
   end
 
   private
