@@ -9,17 +9,10 @@ class KingTest < ActiveSupport::TestCase
     assert @king.legal_move?(5, 1)
   end
 
-  test 'Should allow King to move' do
-    setup_game_and_king
-    Piece.where(x_position: 4, y_position: 1).last.update_attributes(x_position: nil, y_position: nil)
-    @king.move_to(@king, x_position: 4, y_position: 1)
-    assert_equal 'King', Piece.where(x_position: 4, y_position: 1).last.type
-  end
-
   test 'Should be legal castle move' do
     setup_game_and_king
 
-    assert @king.legal_move?(6, 0)
+    assert @king.legal_castle_move?(6, 0)
   end
 
   test 'Should be illegal moves' do
