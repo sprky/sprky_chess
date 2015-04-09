@@ -6,7 +6,7 @@ class King < Piece
   def obstructed_move?(x, y)
     x_diff = (x - x_position)
 
-    case x_diff 
+    case x_diff
     when 2
       # move is kingside castle
       obstructed_rectilinearly?(7, y)
@@ -59,6 +59,14 @@ class King < Piece
     true
   end
 
+  def move_to(piece, _params)
+    if piece.legal_castle_move?(x, y)
+      piece.castle_move  ##  need to find way to also undo the castle move - perhaps castle move returns copy of the rook
+    else
+      piece.update_attributes(x_position: x, y_position: y, state: 'moved')
+    end
+  end
+
   def rook_for_castling(side)
     case side
     when 'King'
@@ -72,7 +80,7 @@ class King < Piece
         type: 'Rook',
         x_position: 0,
         y_position: y_position)
-      
+
     else
       return nil
     end

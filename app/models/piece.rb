@@ -60,18 +60,16 @@ class Piece < ActiveRecord::Base
         captured = game.obstruction(x, y)
         captured.mark_captured
       end
-      if piece.type == 'King' && piece.legal_castle_move?(x, y)
-        piece.castle_move  ##  need to find way to also undo the castle move - perhaps castle move returns copy of the rook
-      else
-        piece.update_attributes(x_position: x, y_position: y, state: 'moved')
-      end
+
+      piece.update_attributes(
+        x_position: x,
+        y_position: y,
+        state: 'moved')
 
       switch_players
     end
 
-    if game.check?(!color)
-      game.update_attributes(state: 'check')
-    end
+    game.update_attributes(state: 'check') if game.check?(!color)
   end
 
   def nil_move?(x, y)
