@@ -48,7 +48,8 @@ class Piece < ActiveRecord::Base
   end
 
   def move_on_board?(x, y)
-    (x <= MAX_BOARD_SIZE && x >= MIN_BOARD_SIZE) && (y <= MAX_BOARD_SIZE && y >= MIN_BOARD_SIZE)
+    (x <= MAX_BOARD_SIZE && x >= MIN_BOARD_SIZE) &&
+      (y <= MAX_BOARD_SIZE && y >= MIN_BOARD_SIZE)
   end
 
   def move_to(piece, params)
@@ -90,8 +91,7 @@ class Piece < ActiveRecord::Base
 
   def move_causes_check?(x, y)
     update_attributes(x_position: x, y_position: y)
-    puts game.check?(!color)
-    return true if game.check?(!color)
+    game.check?(!color)
   end
 
   def moving_own_piece?
