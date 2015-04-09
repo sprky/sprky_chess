@@ -94,16 +94,26 @@
           <h5 class="subheader">In coding as in carpentry, the right tool for the job</h5>
         </hgroup>
         <dl class="tool-list">
-          <dt class="tool-title">Version Control:</dt>
-          <dd class="tool-name"><a href="https://github.com/sprky/sprky_chess">Git &amp; Github</a></dd>
-          <dt class="tool-title">Continuous Integration:</dt>
-          <dd class="tool-name"><a href="https://codeship.com/projects">Codeship</a></dd>
-          <dt class="tool-title">Team Communication:</dt>
-          <dd class="tool-name"><a href="https://slack.com/">Slack</a></dd>
-          <dt class="tool-title">Project Management:</dt>
-          <dd class="tool-name"><a href="https://trello.com/">Trello</a></dd>
-          <dt class="tool-title">Code Analyzer:</dt>
-          <dd class="tool-name"><a href="https://github.com/bbatsov/rubocop">Rubocop</a></dd>
+          <div class="tool-item">
+            <dt class="tool-title">Version Control:</dt>
+            <dd class="tool-logo"><a href="https://github.com/sprky/sprky_chess"><%= image_tag 'github-logo.png' %></a></dd>
+          </div>
+          <div class="tool-item codeship">
+            <dt class="tool-title">Continuous Integration:</dt>
+            <dd class="tool-logo"><a href="https://codeship.com/projects"><%= image_tag 'codeship-logo.png' %></a></dd>
+          </div>
+          <div class="tool-item">
+            <dt class="tool-title">Team Communication:</dt>
+            <dd class="tool-logo"><a href="https://slack.com/"><%= image_tag 'slack-logo.png' %></a></dd>
+          </div>
+          <div class="tool-item">
+            <dt class="tool-title">Project Management:</dt>
+            <dd class="tool-logo"><a href="https://trello.com/"><%= image_tag 'trello-logo.png' %> </a></dd>
+          </div>
+          <div class="tool-item">
+            <dt class="tool-title">Code Analyzer:</dt>
+            <dd class="tool-logo"><a href="https://github.com/bbatsov/rubocop"><%= image_tag 'rubocop-logo.png' %></a></dd>
+          </div>
         </dl>
       </div>
     </div>
