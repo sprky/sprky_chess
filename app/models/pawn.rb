@@ -30,7 +30,6 @@ class Pawn < Piece
   end
 
   def pawn_can_promote?(y)
-    puts "#{y}"
     if y == 7 || y == 0
       return true
     else
@@ -39,7 +38,6 @@ class Pawn < Piece
   end
 
   def pawn_promotion(x, y)
-    puts "a"
     update_attributes(x_position: nil, y_position: nil)
     Queen.create(game_id: game_id, x_position: x, y_position: y)
   end
