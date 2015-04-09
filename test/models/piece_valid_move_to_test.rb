@@ -43,6 +43,7 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
 
     assert_equal 7, piece.x_position
     assert_equal 4, piece.y_position
+    assert_equal 'moved', piece.state
   end
 
   test 'should move to and capture' do
