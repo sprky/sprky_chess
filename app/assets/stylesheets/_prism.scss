@@ -42,7 +42,6 @@ pre[class*="language-"] {
 /* Inline code */
 :not(pre) > code[class*="language-"] {
 	padding: .1em;
-	border-radius: .3em;
 }
 
 .token.comment,
@@ -98,7 +97,7 @@ pre[class*="language-"] {
 }
 
 .token.keyword {
-	color: #66d9ef;
+	color: $primary-color;
 }
 
 .token.regex,

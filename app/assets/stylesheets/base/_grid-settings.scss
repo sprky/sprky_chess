@@ -9,7 +9,7 @@
 // Neat Breakpoints
 $medium-screen: em(640);
 $large-screen: em(860);
-$code-breakpoint: em(1000);
+$code-breakpoint: em(1160);
 
 $medium-screen-up: new-breakpoint(min-width $medium-screen);
 $large-screen-up: new-breakpoint(min-width $large-screen);
