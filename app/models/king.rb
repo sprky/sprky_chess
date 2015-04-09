@@ -59,7 +59,9 @@ class King < Piece
     true
   end
 
-  def move_to(piece, _params)
+  def move_to(piece, params)
+    x = params[:x_position].to_i
+    y = params[:y_position].to_i
     if piece.legal_castle_move?(x, y)
       piece.castle_move  ##  need to find way to also undo the castle move - perhaps castle move returns copy of the rook
     else
