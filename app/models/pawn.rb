@@ -10,6 +10,15 @@ class Pawn < Piece
     proper_length?(y)
   end
 
+  def move_to(piece, params)
+    x = params[:x_position].to_i
+    y = params[:y_position].to_i
+
+    if piece.type == 'Pawn' && piece.pawn_can_promote?(y)
+      piece.pawn_promotion(x, y)
+    end
+  end
+
   def capture_move?(x, y)
     x_diff = (x_position - x).abs
     y_diff = (y_position - y).abs

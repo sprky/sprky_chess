@@ -8,17 +8,112 @@
   <section class="features">
     <div class="feature-container">
       <div class="feature-content">
-        <h3>Handcrafted Web App</h3>
-        <p>For the capstone of <a href="http://thefirehoseproject.com">The Firehose Project</a> we hand-crafted an open source chess application using <a href="http://rubyonrails.org/">Ruby on Rails</a>. We used the following tools to build SPRKY:</p>
+        <h3>Handcrafted App</h3>
+        <p>For the capstone of <a href="http://thefirehoseproject.com">The Firehose Project</a> we hand-crafted an open source chess application using <a href="http://rubyonrails.org/">Ruby on Rails</a>. With Test Driven Development (TDD) as our guide, we crafted every element of the application from the ground up. Committed to sharpening our Ruby chops, we collaborated on pull requests to refactor and refine our code. We kept the red-green-refactor cycle tight, and above all we kept on shipping.</div>
+    </div>
+  </section>
+  <section class="code">
+    <div class="code-container">
+      <hgroup>
+        <h3>CODE</h3>
+        <h5 class="subheader">Some highlights of our craft</h5>
+      </hgroup>
+      <div class="code-box-container">
+        <div class="code-example">
+          <pre><code class="language-ruby">
+        def capture_move?(x, y)
+          captured_piece = game.obstruction(x, y)
+          captured_piece && captured_piece.color != color
+        end
+        
+        def mark_captured
+          update_attributes(
+            x_position: nil,
+            y_position: nil, 
+            state: 'captured')
+        end
+          </code></pre>
+          <div class="arrow"></div>
+        </div>
+        <div class="code-description">
+          <h4>Code Title</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam sint consequuntur inventore atque corrupti temporibus animi qui explicabo natus accusamus eum, nostrum eveniet, unde repudiandae in modi, iure aut tempora.</p>
+        </div>
+      </div>
+      <div class="code-box-container">
+        <div class="code-example four">
+          <pre><code class="language-ruby">
+        def capture_move?(x, y)
+          captured_piece = game.obstruction(x, y)
+          captured_piece && captured_piece.color != color
+        end
+        
+        def mark_captured
+          update_attributes(
+            x_position: nil,
+            y_position: nil, 
+            state: 'captured')
+        end
+          </code></pre>
+          <div class="arrow red"></div>
+        </div>
+        <div class="code-description red three">
+          <h4>Code Title</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam sint consequuntur inventore atque corrupti temporibus animi qui explicabo natus accusamus eum, nostrum eveniet, unde repudiandae in modi, iure aut tempora.</p>
+        </div>
+      </div>
+      <div class="code-box-container">
+        <div class="code-example">
+          <pre><code class="language-ruby">
+        def capture_move?(x, y)
+          captured_piece = game.obstruction(x, y)
+          captured_piece && captured_piece.color != color
+        end
+        
+        def mark_captured
+          update_attributes(
+            x_position: nil,
+            y_position: nil, 
+            state: 'captured')
+        end
+          </code></pre>
+          <div class="arrow"></div>
+        </div>
+        <div class="code-description">
+          <h4>Code Title</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam sint consequuntur inventore atque corrupti temporibus animi qui explicabo natus accusamus eum, nostrum eveniet, unde repudiandae in modi, iure aut tempora.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="tools">
+    <div class="tool-container">
+      <div class="tool-content">
+        <hgroup>
+          <h3>Tools</h3>
+          <h5 class="subheader">In coding as in carpentry, the right tool for the job</h5>
+        </hgroup>
         <dl class="tool-list">
-          <dt class="tool-title">Distributed VCS:</dt>
-          <dd class="tool-name"><a href="https://github.com/sprky/sprky_chess">Git &amp; Github</a></dd>
-          <dt class="tool-title">Continuous Integration:</dt>
-          <dd class="tool-name"><a href="https://codeship.com/projects">Codeship</a></dd>
-          <dt class="tool-title">Team Communication:</dt>
-          <dd class="tool-name"><a href="https://slack.com/">Slack</a></dd>
-          <dt class="tool-title">Project Management:</dt>
-          <dd class="tool-name"><a href="https://trello.com/">Trello</a></dd>
+          <div class="tool-item">
+            <dt class="tool-title">Version Control:</dt>
+            <dd class="tool-logo"><a href="https://github.com/sprky/sprky_chess"><%= image_tag 'github-logo.png' %></a></dd>
+          </div>
+          <div class="tool-item codeship">
+            <dt class="tool-title">Continuous Integration:</dt>
+            <dd class="tool-logo"><a href="https://codeship.com/projects"><%= image_tag 'codeship-logo.png' %></a></dd>
+          </div>
+          <div class="tool-item">
+            <dt class="tool-title">Team Communication:</dt>
+            <dd class="tool-logo"><a href="https://slack.com/"><%= image_tag 'slack-logo.png' %></a></dd>
+          </div>
+          <div class="tool-item">
+            <dt class="tool-title">Project Management:</dt>
+            <dd class="tool-logo"><a href="https://trello.com/"><%= image_tag 'trello-logo.png' %> </a></dd>
+          </div>
+          <div class="tool-item">
+            <dt class="tool-title">Code Analyzer:</dt>
+            <dd class="tool-logo"><a href="https://github.com/bbatsov/rubocop"><%= image_tag 'rubocop-logo.png' %></a></dd>
+          </div>
         </dl>
       </div>
     </div>
@@ -26,7 +121,7 @@
   <section class="team">
     <div class="team-container">
       <div class="team-content">
-        <h3>Our Team</h3>
+        <h3>SPRKY Team</h3>
         <div class="team-member">
           <%= image_tag "aaron-washburn-bw@2x.jpg", size: '200x200' %>
           <div class="clearfix"></div>
