@@ -62,10 +62,11 @@ class Piece < ActiveRecord::Base
       end
       if piece.type == 'King' && piece.legal_castle_move?(x, y)
         piece.castle_move  ##  need to find way to also undo the castle move - perhaps castle move returns copy of the rook
+      elsif piece.type == 'Pawn' && piece.pawn_can_promote?(y)
+        piece.pawn_promotion
       else
         piece.update_attributes(x_position: x, y_position: y, state: 'moved')
       end
-
       switch_players
     end
 
