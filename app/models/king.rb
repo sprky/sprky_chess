@@ -59,7 +59,10 @@ class King < Piece
     true
   end
 
-  def move_to(piece, _params)
+  def move_to(piece, params)
+    x = params[:x_position].to_i
+    y = params[:y_position].to_i
+
     piece.castle_move if piece.legal_castle_move?(x, y)
   end
 
