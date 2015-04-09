@@ -10,26 +10,6 @@ class Piece < ActiveRecord::Base
 
   include Obstructions
 
-  def valid_move?(x, y)
-    # check to make sure move isn't back to same spot
-    return false if nil_move?(x, y)
-
-    return false unless move_on_board?(x, y)
-
-    return false unless moving_own_piece?
-
-    return false unless legal_move?(x, y)
-
-    return false if obstructed_move?(x, y)
-
-    return false if destination_obstructed?(x, y)
-
-    # check that the move doesn't put the king into check
-    # return false if move_causes_check?(x, y) - pull this out of valid_move?
-
-    true
-  end
-
   def capture_move?(x, y)
     captured_piece = game.obstruction(x, y)
     captured_piece && captured_piece.color != color
@@ -47,6 +27,15 @@ class Piece < ActiveRecord::Base
     update_attributes(x_position: nil, y_position: nil, state: 'captured')
   end
 
+  def move_causes_check?(x, y)
+    update_attributes(x_position: x, y_position: y)
+    game.check?(!color)
+  end
+
+  def moving_own_piece?
+    player_id == game.turn
+  end
+
   def move_on_board?(x, y)
     (x <= MAX_BOARD_SIZE && x >= MIN_BOARD_SIZE) &&
       (y <= MAX_BOARD_SIZE && y >= MIN_BOARD_SIZE)
@@ -62,15 +51,8 @@ class Piece < ActiveRecord::Base
         captured.mark_captured
       end
 
-      piece.update_attributes(
-        x_position: x,
-        y_position: y,
-        state: 'moved')
-
-      switch_players
+      piece.update_after_move(x, y)
     end
-
-    game.update_attributes(state: 'check') if game.check?(!color)
   end
 
   def nil_move?(x, y)
@@ -89,13 +71,35 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  def move_causes_check?(x, y)
-    update_attributes(x_position: x, y_position: y)
-    game.check?(!color)
+  def update_after_move(x, y)
+    update_attributes(
+      x_position: x,
+      y_position: y,
+      state: 'moved')
+
+    switch_players
+
+    game.update_attributes(state: 'check') if game.check?(!color)
   end
 
-  def moving_own_piece?
-    player_id == game.turn
+  def valid_move?(x, y)
+    # check to make sure move isn't back to same spot
+    return false if nil_move?(x, y)
+
+    return false unless move_on_board?(x, y)
+
+    return false unless moving_own_piece?
+
+    return false unless legal_move?(x, y)
+
+    return false if obstructed_move?(x, y)
+
+    return false if destination_obstructed?(x, y)
+
+    # check that the move doesn't put the king into check
+    # return false if move_causes_check?(x, y) - pull this out of valid_move?
+
+    true
   end
 
   private
