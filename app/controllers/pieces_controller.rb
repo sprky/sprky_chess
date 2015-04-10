@@ -23,8 +23,7 @@ class PiecesController < ApplicationController
   end
 
   def update_firebase(data)
-    base_uri = 'https://amber-inferno-5356.firebaseio.com/'
-    firebase = Firebase::Client.new(base_uri)
+    firebase = Firebase::Client.new(Rails.application.config.base_uri)
 
     response = firebase.set("game#{@game.id}", data)
     response.success?
