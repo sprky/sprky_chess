@@ -46,7 +46,7 @@ class PieceTest < ActiveSupport::TestCase
   test 'should mark piece as captured' do
     setup_pieces
 
-    @piece.mark_captured
+    @piece.update_piece(nil, nil, 'captured')
     @piece.reload
 
     assert_nil @piece.x_position, 'Should be x_position: nil'

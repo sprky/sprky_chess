@@ -23,10 +23,6 @@ class Piece < ActiveRecord::Base
     fail NotImplementedError 'Pieces must implement #legal_move?'
   end
 
-  def mark_captured
-    update_attributes(x_position: nil, y_position: nil, state: 'captured')
-  end
-
   def move_causes_check?(x, y)
     update_attributes(x_position: x, y_position: y)
     game.check?(!color)
@@ -48,10 +44,12 @@ class Piece < ActiveRecord::Base
     if piece.valid_move?(x, y)
       if capture_move?(x, y)
         captured = game.obstruction(x, y)
-        captured.mark_captured
+        captured.update_piece(nil, nil, 'captured')
       end
 
-      piece.update_after_move(x, y)
+      update_piece(x, y, 'moved')
+      game.switch_players(player_id)
+      game.update_attributes(state: 'check') if game.check?(!color)
     end
   end
 
@@ -63,37 +61,16 @@ class Piece < ActiveRecord::Base
     fail NotImplementedError 'Pieces must implement #obstructed_move?'
   end
 
-  def switch_players
-    if player_id == game.white_player_id
-      game.update_attributes(turn: game.black_player_id)
-    else
-      game.update_attributes(turn: game.white_player_id)
-    end
-  end
-
-  def update_after_move(x, y)
-    update_attributes(
-      x_position: x,
-      y_position: y,
-      state: 'moved')
-
-    switch_players
-
-    game.update_attributes(state: 'check') if game.check?(!color)
+  def update_piece(x, y, state)
+    update_attributes(x_position: x, y_position: y, state: state)
   end
 
   def valid_move?(x, y)
-    # check to make sure move isn't back to same spot
     return false if nil_move?(x, y)
-
     return false unless move_on_board?(x, y)
-
     return false unless moving_own_piece?
-
     return false unless legal_move?(x, y)
-
     return false if obstructed_move?(x, y)
-
     return false if destination_obstructed?(x, y)
 
     # check that the move doesn't put the king into check
