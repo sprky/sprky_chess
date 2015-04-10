@@ -11,7 +11,7 @@ class Game < ActiveRecord::Base
 
   def check?(color)
     king = pieces.find_by(type: 'King', color: color)
-    opponents = pieces.where(
+    opponents = pieces.includes(:game).where(
       "color = ? and state != 'captured'",
       !color).to_a
 
