@@ -12,7 +12,7 @@ class KingTest < ActiveSupport::TestCase
   test 'Should be legal castle move' do
     setup_game_and_king
 
-    assert @king.legal_move?(6, 0)
+    assert @king.legal_castle_move?(6, 0)
   end
 
   test 'Should be illegal moves' do

@@ -43,6 +43,22 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
 
     assert_equal 7, piece.x_position
     assert_equal 4, piece.y_position
+    assert_equal 'moved', piece.state
+  end
+
+  test 'king should move to' do
+    game = FactoryGirl.create(:game)
+    piece = FactoryGirl.create(
+      :king,
+      x_position: 5,
+      y_position: 4,
+      color: true,
+      game_id: game.id)
+    piece.move_to(piece, x_position: 6, y_position: 4)
+
+    assert_equal 6, piece.x_position
+    assert_equal 4, piece.y_position
+    assert_equal 'moved', piece.state
   end
 
   test 'should move to and capture' do
