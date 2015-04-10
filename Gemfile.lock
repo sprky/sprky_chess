@@ -68,7 +68,11 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
+    firebase (0.2.3)
+      httpclient
+      json
     hike (1.2.3)
+    httpclient (2.6.0.1)
     i18n (0.7.0)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
@@ -168,6 +172,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   devise (>= 3.2.4)
   factory_girl_rails (~> 4.0)
+  firebase (~> 0.2.3)
   jbuilder (~> 1.2)
   jquery-rails
   neat

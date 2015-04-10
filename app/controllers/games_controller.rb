@@ -11,11 +11,9 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find(params[:id])
-    @pieces = @game.pieces.to_a
-
+    @game = Game.where(id: params[:id]).last
     if @game.nil?
-      redirect_to root_path
+      redirect_to dashboard_path
     else
       @pieces = @game.pieces
       end

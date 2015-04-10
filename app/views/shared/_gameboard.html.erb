@@ -7,7 +7,7 @@
 		  <button>Invite Player</button> 
 		<% end %>
 	</p>
-	<table id='gameboard' data-game-state='<%= @game.state %>' data-your-turn='<%= your_turn? %>'>
+	<table id='gameboard' data-game-state='<%= @game.state %>' data-your-turn='<%= your_turn? %>' data-game-id='<%= @game.id %>'>
 		<% if current_player.id != @game.white_player_id %>
 			<!-- show board from black player perspective -->
 			<% (0..7).each do |row| %>
