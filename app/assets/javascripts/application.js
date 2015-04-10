@@ -17,9 +17,6 @@
 
 
 $(document).ready(function() {
-  var load_time_stamp = Math.floor(Date.now()/1000);
-  console.log(load_time_stamp);
-
   //this will be triggered by clicking select game
   $('.select-game-link').click( function()  {
     var game_id = $("input[name='game_id']").val();
@@ -111,26 +108,16 @@ $(document).ready(function() {
     });   
   }
 
+  var load_time_stamp = $('body').data('time-stamp');
   var gameID = "game"+ $('#gameboard').data('game-id')
   var fbRef = new Firebase('https://amber-inferno-5356.firebaseio.com/');
   var indexRef = fbRef.child(gameID);
 
-  function updateGame(snap, Id) {
-    if (snap.key() == 'game')
-      console.log('refresh game # ',snap.val() );
-      console.log(snap.val());
-  }
-
   indexRef.on('value', function(snapshot) {
-      data = snapshot.val();
-      updated_time_stamp = data['time_stamp'];
-      console.log(updated_time_stamp, load_time_stamp);
-      if (updated_time_stamp > load_time_stamp) {
-        location.reload();
-      }
-    }, function (errorObject) {
-      console.log("The read failed: " + errorObject.code);  
-  });
-  
- 
+    data = snapshot.val();
+    updated_time_stamp = data['time_stamp'];
+    if (updated_time_stamp > load_time_stamp) {
+      location.reload();
+    }
+  }); 
 });
