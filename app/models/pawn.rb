@@ -14,8 +14,12 @@ class Pawn < Piece
     x = params[:x_position].to_i
     y = params[:y_position].to_i
 
-    piece.pawn_promotion(x, y) if piece.pawn_can_promote?(y)
-    super(piece, params)
+    if piece.pawn_can_promote?(y)
+      piece.pawn_promotion(x, y)
+      switch_players
+    else
+      super(piece, params)
+    end
   end
 
   def capture_move?(x, y)
@@ -46,8 +50,8 @@ class Pawn < Piece
   end
 
   def pawn_promotion(x, y)
-    update_attributes(x_position: nil, y_position: nil)
-    Queen.create(game_id: game_id, x_position: x, y_position: y)
+    update_attributes(x_position: nil, y_position: nil, state: 'captured')
+    Queen.create(game_id: game_id, x_position: x, y_position: y, color: color)
   end
 
   private
