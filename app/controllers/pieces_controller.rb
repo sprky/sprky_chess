@@ -9,7 +9,7 @@ class PiecesController < ApplicationController
     render json: {
       update_url: game_path(@game)
     }
-    update_firebase(update_url: game_path(@game))
+    update_firebase(update_url: game_path(@game), time_stamp: Time.now.to_i)
   end
 
   private
@@ -26,7 +26,7 @@ class PiecesController < ApplicationController
     base_uri = 'https://amber-inferno-5356.firebaseio.com/'
     firebase = Firebase::Client.new(base_uri)
 
-    response = firebase.push("game#{@game.id}", data)
+    response = firebase.set("game#{@game.id}", data)
     response.success?
   end
 end
