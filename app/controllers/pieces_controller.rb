@@ -1,6 +1,4 @@
 class PiecesController < ApplicationController
-  # after_rollback :throw_invalid_move, on: :update
-
   def update
     @piece = Piece.find(params[:id])
     @game = @piece.game
@@ -19,10 +17,6 @@ class PiecesController < ApplicationController
   def piece_params
     @piece_params = params.require(:piece).permit(:x_position, :y_position)
   end
-
-  # def throw_invalid_move
-  #   game.update_attributes(state: "Invalid - you can't move into check")
-  # end
 
   def your_turn?
     @game.turn == current_player.id

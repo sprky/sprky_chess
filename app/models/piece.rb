@@ -14,6 +14,7 @@ class Piece < ActiveRecord::Base
     Piece.transaction do
       move_to(piece, params)
       game = piece.game
+      game.update_attributes(state: nil)
       if game.check?(color)
         fail ActiveRecord::Rollback
       end

@@ -4,6 +4,9 @@ class Game < ActiveRecord::Base
   has_many :players
   has_many :pieces
 
+  after_rollback :throw_invalid_move
+
+
   def assign_pieces
     pieces.where(color: true).each { |p| p.update_attributes(player_id: white_player_id) }
     pieces.where(color: false).each { |p| p.update_attributes(player_id: black_player_id) }
@@ -73,4 +76,11 @@ class Game < ActiveRecord::Base
   def obstruction(x, y)
     pieces.where(x_position: x, y_position: y).last
   end
+
+  private
+
+  def throw_invalid_move
+    update_attributes(state: "Invalid Move - you can't move into check")
+  end
+
 end
