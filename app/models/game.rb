@@ -73,4 +73,12 @@ class Game < ActiveRecord::Base
   def obstruction(x, y)
     pieces.where(x_position: x, y_position: y).last
   end
+
+  def switch_players(player_id)
+    if player_id == white_player_id
+      update_attributes(turn: black_player_id)
+    else
+      update_attributes(turn: white_player_id)
+    end
+  end
 end
