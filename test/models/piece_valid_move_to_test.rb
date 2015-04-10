@@ -107,6 +107,6 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
     black_pawn.attempt_move(black_pawn, x_position: 2, y_position: 3)
     black_pawn.reload
 
-    assert_equal 3, black_pawn.y_position, 'King reverts back to y position 3'
+    assert_equal 3, black_pawn.y_position, 'Pawn moves to y position 3'
   end
 end

@@ -15,7 +15,6 @@ class Piece < ActiveRecord::Base
       move_to(piece, params)
       game = piece.game
       if game.check?(color)
-
         fail ActiveRecord::Rollback
       end
     end
@@ -37,11 +36,6 @@ class Piece < ActiveRecord::Base
   def mark_captured
     update_attributes(x_position: nil, y_position: nil, state: 'captured')
   end
-
-  # def move_causes_check?(x, y)
-  #   update_attributes(x_position: x, y_position: y)
-  #   game.check?(!color)
-  # end
 
   def moving_own_piece?
     player_id == game.turn
