@@ -13,7 +13,7 @@ class Game < ActiveRecord::Base
 
   def check?(color)
     king = pieces.find_by(type: 'King', color: color)
-    opponents = pieces.where(
+    opponents = pieces.includes(:game).where(
       "color = ? and state != 'captured'",
       !color).to_a
 
@@ -74,6 +74,14 @@ class Game < ActiveRecord::Base
   # determind if obstruction occurs at x, y in game
   def obstruction(x, y)
     pieces.where(x_position: x, y_position: y).last
+  end
+
+  def switch_players(player_id)
+    if player_id == white_player_id
+      update_attributes(turn: black_player_id)
+    else
+      update_attributes(turn: white_player_id)
+    end
   end
 
   private
