@@ -4,7 +4,7 @@ class PiecesController < ApplicationController
     @game = @piece.game
     if your_turn?
       # move piece if move is valid
-      @piece.move_to(@piece, piece_params)
+      @piece.attempt_move(@piece, piece_params)
     end
     render json: {
       update_url: game_path(@game)

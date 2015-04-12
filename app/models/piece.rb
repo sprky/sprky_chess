@@ -10,6 +10,17 @@ class Piece < ActiveRecord::Base
 
   include Obstructions
 
+  def attempt_move(piece, params)
+    Piece.transaction do
+      move_to(piece, params)
+      game = piece.game
+      game.update_attributes(state: nil)
+      if game.check?(color)
+        fail ActiveRecord::Rollback
+      end
+    end
+  end
+
   def capture_move?(x, y)
     captured_piece = game.obstruction(x, y)
     captured_piece && captured_piece.color != color
@@ -21,11 +32,6 @@ class Piece < ActiveRecord::Base
 
   def legal_move?(_x, _y)
     fail NotImplementedError 'Pieces must implement #legal_move?'
-  end
-
-  def move_causes_check?(x, y)
-    update_attributes(x_position: x, y_position: y)
-    game.check?(!color)
   end
 
   def moving_own_piece?
