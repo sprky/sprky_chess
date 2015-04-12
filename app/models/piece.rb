@@ -30,6 +30,20 @@ class Piece < ActiveRecord::Base
     color ? 'white' : 'black'
   end
 
+  def can_escape_check?
+    Piece.transaction do
+      game = piece.game
+      game.update_attributes(state: 'check')
+
+      # Somehow loop through all possible moves
+      move_to(self, x_position: _, y_position: _)
+      # If after any of the moves, game is no longer in check
+      return true if !game.check?(color)
+
+      ActiveRecord::Rollback
+    end
+  end
+
   def legal_move?(_x, _y)
     fail NotImplementedError 'Pieces must implement #legal_move?'
   end

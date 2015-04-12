@@ -76,6 +76,16 @@ class PieceTest < ActiveSupport::TestCase
     assert_not @pawn.moving_own_piece?
   end
 
+  test 'should be able to escape check' do
+    player = FactoryGirl.create(:player)
+    game = FactoryGirl.create(:game, turn: player.id)
+
+    # Add pieces such that game is in check, and the piece can escape
+    # checkmate
+
+    assert piece.can_escape_check
+  end
+
   def setup_pieces
     @player = FactoryGirl.create(:player)
     @game = FactoryGirl.create(:game, turn: @player.id)
