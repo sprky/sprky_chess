@@ -7,15 +7,18 @@ class Game < ActiveRecord::Base
   after_rollback :throw_invalid_move
 
   def assign_pieces
-    pieces.where(color: true).each { |p| p.update_attributes(player_id: white_player_id) }
-    pieces.where(color: false).each { |p| p.update_attributes(player_id: black_player_id) }
+    pieces.where(color: true).each do |p|
+      p.update_attributes(player_id: white_player_id)
+    end
+
+    pieces.where(color: false).each do |p|
+      p.update_attributes(player_id: black_player_id)
+    end
   end
 
   def check?(color)
     king = pieces.find_by(type: 'King', color: color)
-    opponents = pieces.includes(:game).where(
-      "color = ? and state != 'captured'",
-      !color).to_a
+    opponents = pieces_remaining(!color)
 
     opponents.each do |piece|
       return true if piece.valid_move?(
@@ -23,6 +26,18 @@ class Game < ActiveRecord::Base
         king.y_position)
     end
     false
+  end
+
+  def checkmate?(color)
+    if check?(color)
+      pieces = pieces_remaining(color)
+
+      pieces.each do |piece|
+        return false if piece.can_escape_check?
+      end
+
+      true
+    end
   end
 
   def initialize_board!
@@ -74,6 +89,12 @@ class Game < ActiveRecord::Base
   # determind if obstruction occurs at x, y in game
   def obstruction(x, y)
     pieces.where(x_position: x, y_position: y).last
+  end
+
+  def pieces_remaining(color)
+    pieces.includes(:game).where(
+      "color = ? and state != 'captured'",
+      color).to_a
   end
 
   def switch_players(player_id)

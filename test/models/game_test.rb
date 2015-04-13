@@ -24,17 +24,74 @@ class GameTest < ActiveSupport::TestCase
   end
 
   test 'Should assign player_id to pieces' do
-    game = FactoryGirl.create(:game, black_player_id: 1, white_player_id: 2)
+    game = FactoryGirl.create(
+      :game,
+      black_player_id: 1,
+      white_player_id: 2)
     game.assign_pieces
 
     assert_equal 16, game.pieces.where(player_id: 1).count
     assert_equal 16, game.pieces.where(player_id: 2).count
   end
 
-  test 'Should note game is in a state of check' do
-    game = FactoryGirl.create(:game, black_player_id: 1, white_player_id: 2, turn: 1)
+  test 'pieces remaining' do
+    game = FactoryGirl.create(
+      :game,
+      black_player_id: 1,
+      white_player_id: 2,
+      turn: 1)
     game.assign_pieces
-    FactoryGirl.create(:knight, player_id: 1, x_position: 5, y_position: 2, game_id: game.id, color: false)
+
+    expected = 16
+    actual = game.pieces_remaining(true).length
+
+    assert_equal expected, actual
+  end
+
+  test 'should be in check' do
+    game = FactoryGirl.create(
+      :game,
+      black_player_id: 1,
+      white_player_id: 2,
+      turn: 1)
+    game.assign_pieces
+    FactoryGirl.create(
+      :knight,
+      player_id: 1,
+      x_position: 5,
+      y_position: 2,
+      game_id: game.id,
+      color: false)
     assert game.check?(true)
+  end
+
+  test 'should be in checkmate' do
+    game = FactoryGirl.create(
+      :game,
+      black_player_id: 1,
+      white_player_id: 2,
+      turn: 1)
+    game.assign_pieces
+
+    FactoryGirl.create(
+      :knight,
+      player_id: 1,
+      x_position: 5,
+      y_position: 2,
+      game_id: game.id,
+      color: false)
+
+    assert game.checkmate?(true)
+  end
+
+  test 'should not be in checkmate' do
+    game = FactoryGirl.create(
+      :game,
+      black_player_id: 1,
+      white_player_id: 2,
+      turn: 1)
+    game.assign_pieces
+
+    assert_not game.checkmate?(true)
   end
 end

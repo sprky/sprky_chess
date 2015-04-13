@@ -6,4 +6,12 @@ class Rook < Piece
   def obstructed_move?(x, y)
     obstructed_rectilinearly?(x, y)
   end
+
+  def x_scope
+    7
+  end
+
+  def y_scope
+    7
+  end
 end

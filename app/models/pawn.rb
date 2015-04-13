@@ -16,7 +16,6 @@ class Pawn < Piece
 
     if piece.pawn_can_promote?(y)
       piece.pawn_promotion(x, y)
-      switch_players
     else
       super(piece, params)
     end
@@ -50,8 +49,16 @@ class Pawn < Piece
   end
 
   def pawn_promotion(x, y)
-    update_attributes(x_position: nil, y_position: nil, state: 'captured')
-    Queen.create(game_id: game_id, x_position: x, y_position: y, color: color)
+    update_attributes(
+      x_position: nil,
+      y_position: nil,
+      state: 'captured')
+    Queen.create(
+      game_id: game_id,
+      x_position: x,
+      y_position: y,
+      color: color)
+    game.switch_players(player_id)
   end
 
   private
@@ -72,5 +79,13 @@ class Pawn < Piece
   def proper_length?(y)
     y_diff = (y - y_position).abs
     first_move?(y) ? (y_diff == 1 || y_diff == 2) : y_diff == 1
+  end
+
+  def x_scope
+    1
+  end
+
+  def y_scope
+    2
   end
 end

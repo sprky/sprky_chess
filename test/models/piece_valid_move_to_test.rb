@@ -41,6 +41,8 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
       game_id: game.id)
     piece.move_to(piece, x_position: 7, y_position: 4)
 
+    puts piece.move_to(piece, x_position: 7, y_position: 4)
+
     assert_equal 7, piece.x_position
     assert_equal 4, piece.y_position
     assert_equal 'moved', piece.state
