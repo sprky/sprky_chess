@@ -8,7 +8,7 @@ class PawnPromotionTest < ActiveSupport::TestCase
       y_position: 7,
       color: true,
       game_id: game.id)
-    assert pawn.pawn_promotion(pawn.x_position, pawn.y_position)
+    assert pawn.promotion(pawn.x_position, pawn.y_position)
     assert_equal nil, pawn.x_position
     assert_equal nil, pawn.y_position
     assert_equal 'Queen', Piece.where(x_position: 1, y_position: 7).last.type
@@ -22,6 +22,6 @@ class PawnPromotionTest < ActiveSupport::TestCase
       y_position: 7,
       color: true,
       game_id: game.id)
-    assert pawn.pawn_can_promote?(pawn.y_position)
+    assert pawn.can_promote?(pawn.y_position)
   end
 end
