@@ -31,19 +31,19 @@ class Piece < ActiveRecord::Base
     color ? 'white' : 'black'
   end
 
-  # check to see if king can escape check by his own move
-  # should this be a king only method?
+  # check to see if piece can escape check by his own move
+  # should this be a piece only method?
   def can_escape_check?
-    Piece.transaction do
-      # iterate x and y position of king through all possible move locations
-      (-x_scope..x_scope).each do |x|
-        (-y_scope..y_scope).each do |y|
+    # iterate x and y position of piece through all possible move locations
+    (-x_scope..x_scope).each do |x|
+      (-y_scope..y_scope).each do |y|
+        Piece.transaction do
           # debugging
           puts "x#{x}"
           puts "y#{y}"
 
           # make sure it's self's turn before trying to move
-          game.update_attributes(turn: id)
+          game.update_attributes(turn: player_id)
 
           # try to move piece into that position.  If it won't move go to
           # next interation - note move_to returns true or false
@@ -56,11 +56,10 @@ class Piece < ActiveRecord::Base
 
           # check to see if this move gets king out of check.
           escapes = !game.check?(color)
+          puts "Escapes?#{escapes}"
 
           # roll back these moves
-          fail ActiveRecord::Rollback
-
-          return true if escapes
+          fail ActiveRecord::Rollback  
         end
       end
     end
