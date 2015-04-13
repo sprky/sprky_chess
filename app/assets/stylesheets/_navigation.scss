@@ -47,7 +47,7 @@ header.navigation {
 
     img {
       max-height: $navigation-height;
-      padding: 0.8em 0;
+      padding: 0.5em 0;
     }
   }
 
@@ -131,6 +131,7 @@ header.navigation {
       display: inline-block;
       font-weight: 400;
       float: left;
+      font-size: 1.2em;
 
       @include media ($horizontal-bar-mode) {
         padding-right: 1em;
