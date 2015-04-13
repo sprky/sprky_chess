@@ -20,9 +20,9 @@ class Piece < ActiveRecord::Base
       if game.check?(color)
         fail ActiveRecord::Rollback
       end
+      # update current state of check, checkmate, etc.
+      game.update_state(color)
     end
-    # update current state of check, checkmate, etc.
-    game.update_state(player_id, color)
   end
 
   def capture_move?(x, y)
@@ -43,8 +43,8 @@ class Piece < ActiveRecord::Base
       (-y_scope..y_scope).each do |y|
         Piece.transaction do
           # debugging
-          puts "x#{x}"
-          puts "y#{y}"
+          # puts "x#{x}"
+          # puts "y#{y}"
 
           # # make sure it's self's turn before trying to move
           # game.update_attributes(turn: player_id)
@@ -56,11 +56,11 @@ class Piece < ActiveRecord::Base
             x_position: (x_position + x),
             y_position: (y_position + y))
 
-          puts "move#{game.turn}"
+          # puts "move#{game.turn}"
 
           # check to see if this move gets king out of check.
           @escaped_by_moving = true unless game.check?(color)
-          puts "Escaped? #{@escaped_by_moving}"
+          # puts "Escaped? #{@escaped_by_moving}"
 
           # roll back these moves
           fail ActiveRecord::Rollback

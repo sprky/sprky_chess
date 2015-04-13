@@ -16,7 +16,12 @@ class Game < ActiveRecord::Base
     end
   end
 
+  # determines if color is in check
   def check?(color)
+    # make sure it's other player's turn
+    switch_players(!color)
+    # puts "Checking #{color}. Turn is #{turn}"
+
     king = pieces.find_by(type: 'King', color: color)
     opponents = pieces_remaining(!color)
 
@@ -29,7 +34,7 @@ class Game < ActiveRecord::Base
   end
 
   # determine if a state of checkmate has occurred
-  def checkmate?(color)
+  def checkmate?(_color)
     # pieces = pieces_remaining(color)
 
     # pieces.each do |piece|
@@ -97,15 +102,18 @@ class Game < ActiveRecord::Base
       color).to_a
   end
 
-  def switch_players(current_player_id)
-    if current_player_id == white_player_id
-      update_attributes(turn: black_player_id)
-    else
+  # switches game turn to color
+  def switch_players(color)
+    # ensure that game is set to correct turn
+    if color
       update_attributes(turn: white_player_id)
+    else
+      update_attributes(turn: black_player_id)
     end
   end
 
-  def update_state(current_player_id, current_player_color)
+  # update turn and game state after successful move
+  def update_state(current_player_color)
     # check if opposite player is in check
     if check?(!current_player_color)
       # if so, game state is check
@@ -114,7 +122,8 @@ class Game < ActiveRecord::Base
       # if not, game state is not check
       update_attributes(state: nil)
     end
-    switch_players(current_player_id)
+    # give turn over to other player
+    switch_players(!current_player_color)
   end
 
   private
