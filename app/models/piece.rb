@@ -12,14 +12,17 @@ class Piece < ActiveRecord::Base
 
   include Obstructions
 
+  # use transactions to attempt a move, fail and rollback if move
+  # puts player into check
   def attempt_move(piece, params)
     Piece.transaction do
       move_to(piece, params)
-      game.update_attributes(state: nil)
       if game.check?(color)
         fail ActiveRecord::Rollback
       end
     end
+    # update current state of check, checkmate, etc.
+    game.update_state(player_id, color)
   end
 
   def capture_move?(x, y)
@@ -34,6 +37,7 @@ class Piece < ActiveRecord::Base
   # check to see if piece can escape check by his own move
   # should this be a piece only method?
   def can_escape_check?
+    @escaped_by_moving = false
     # iterate x and y position of piece through all possible move locations
     (-x_scope..x_scope).each do |x|
       (-y_scope..y_scope).each do |y|
@@ -42,8 +46,8 @@ class Piece < ActiveRecord::Base
           puts "x#{x}"
           puts "y#{y}"
 
-          # make sure it's self's turn before trying to move
-          game.update_attributes(turn: player_id)
+          # # make sure it's self's turn before trying to move
+          # game.update_attributes(turn: player_id)
 
           # try to move piece into that position.  If it won't move go to
           # next interation - note move_to returns true or false
@@ -55,16 +59,15 @@ class Piece < ActiveRecord::Base
           puts "move#{game.turn}"
 
           # check to see if this move gets king out of check.
-          escapes = !game.check?(color)
-          puts "Escapes?#{escapes}"
+          @escaped_by_moving = true unless game.check?(color)
+          puts "Escaped? #{@escaped_by_moving}"
 
           # roll back these moves
-          fail ActiveRecord::Rollback  
+          fail ActiveRecord::Rollback
         end
       end
     end
-
-    false
+    @escaped_by_moving
   end
 
   def legal_move?(_x, _y)
@@ -91,8 +94,6 @@ class Piece < ActiveRecord::Base
       end
 
       update_piece(x, y, 'moved')
-      game.switch_players(player_id)
-      game.update_attributes(state: 'check') if game.check?(!color)
       return true
     end
 

@@ -28,16 +28,16 @@ class Game < ActiveRecord::Base
     false
   end
 
+  # determine if a state of checkmate has occurred
   def checkmate?(color)
-    if check?(color)
-      pieces = pieces_remaining(color)
+    # pieces = pieces_remaining(color)
 
-      pieces.each do |piece|
-        return false if piece.can_escape_check?
-      end
+    # pieces.each do |piece|
+    #   return false if piece.can_escape_check?
+    # end
 
-      true
-    end
+    # true
+    false
   end
 
   def initialize_board!
@@ -97,12 +97,24 @@ class Game < ActiveRecord::Base
       color).to_a
   end
 
-  def switch_players(player_id)
-    if player_id == white_player_id
+  def switch_players(current_player_id)
+    if current_player_id == white_player_id
       update_attributes(turn: black_player_id)
     else
       update_attributes(turn: white_player_id)
     end
+  end
+
+  def update_state(current_player_id, current_player_color)
+    # check if opposite player is in check
+    if check?(!current_player_color)
+      # if so, game state is check
+      update_attributes(state: 'check')
+    else
+      # if not, game state is not check
+      update_attributes(state: nil)
+    end
+    switch_players(current_player_id)
   end
 
   private
