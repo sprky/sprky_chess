@@ -35,12 +35,11 @@ class Piece < ActiveRecord::Base
         (0..y_scope).each do |y|
           move_to(self, x_position: x, y_position: y)
           return false if game.check?(color)
+          ActiveRecord::Rollback
         end
       end
-
-      ActiveRecord::Rollback
     end
-
+    
     true
   end
 
