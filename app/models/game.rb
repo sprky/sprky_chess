@@ -4,7 +4,7 @@ class Game < ActiveRecord::Base
   has_many :players
   has_many :pieces
 
-  after_rollback :throw_invalid_move
+  # after_rollback :throw_invalid_move
 
   def assign_pieces
     pieces.where(color: true).each do |p|
@@ -34,15 +34,16 @@ class Game < ActiveRecord::Base
   end
 
   # determine if a state of checkmate has occurred
-  def checkmate?(_color)
-    # pieces = pieces_remaining(color)
+  def checkmate?(color)
+    pieces = pieces_remaining(color)
 
-    # pieces.each do |piece|
-    #   return false if piece.can_escape_check?
-    # end
+    pieces.each do |piece|
+      puts "**--"*20
+      puts "See if this piece #{piece.inspect} can do it"
+      return false if piece.can_escape_check?
+    end
 
-    # true
-    false
+    true
   end
 
   def initialize_board!
@@ -116,8 +117,16 @@ class Game < ActiveRecord::Base
   def update_state(current_player_color)
     # check if opposite player is in check
     if check?(!current_player_color)
-      # if so, game state is check
-      update_attributes(state: 'check')
+      puts "We're in check. Look for checkmate"
+      if checkmate?(!current_player_color)
+        puts
+        puts "*!&^"*20
+        puts
+        puts "Checkmate"
+      else
+        # if so, game state is check
+        update_attributes(state: 'check')
+      end
     else
       # if not, game state is not check
       update_attributes(state: nil)
@@ -128,7 +137,7 @@ class Game < ActiveRecord::Base
 
   private
 
-  def throw_invalid_move
-    update_attributes(state: "Invalid Move - you can't move into check")
-  end
+  # def throw_invalid_move
+  #   update_attributes(state: "Invalid Move - you can't move into check")
+  # end
 end

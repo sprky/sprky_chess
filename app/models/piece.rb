@@ -34,10 +34,12 @@ class Piece < ActiveRecord::Base
     color ? 'white' : 'black'
   end
 
-  # check to see if piece can escape check by his own move
-  # should this be a piece only method?
+  # check to see if piece move can escape check
   def can_escape_check?
-    @escaped_by_moving = false
+    puts 
+    puts "See if piece #{id} will get out of check"
+    puts "x_position #{x_position} y_position #{y_position}"      
+    escaped_by_moving = false
     # iterate x and y position of piece through all possible move locations
     (-x_scope..x_scope).each do |x|
       (-y_scope..y_scope).each do |y|
@@ -46,9 +48,12 @@ class Piece < ActiveRecord::Base
           # puts "x#{x}"
           # puts "y#{y}"
 
-          # # make sure it's self's turn before trying to move
-          # game.update_attributes(turn: player_id)
-
+          # ensure it's player's turn for testing
+          game.switch_players(color)
+          if x_position.nil?
+            byebug
+          end
+          puts "Try moving to #{x_position} + #{x} and #{y_position} + #{y}"
           # try to move piece into that position.  If it won't move go to
           # next interation - note move_to returns true or false
           next unless move_to(
@@ -56,18 +61,19 @@ class Piece < ActiveRecord::Base
             x_position: (x_position + x),
             y_position: (y_position + y))
 
-          # puts "move#{game.turn}"
-
           # check to see if this move gets king out of check.
-          @escaped_by_moving = true unless game.check?(color)
-          # puts "Escaped? #{@escaped_by_moving}"
+          escaped_by_moving = true unless game.check?(color)
 
           # roll back these moves
           fail ActiveRecord::Rollback
         end
       end
     end
-    @escaped_by_moving
+    puts "Did he escape check? #{@escaped_by_moving}"
+    if escaped_by_moving
+      puts "Escaped using piece# #{id}"
+    end
+    escaped_by_moving
   end
 
   def legal_move?(_x, _y)
@@ -109,6 +115,7 @@ class Piece < ActiveRecord::Base
   end
 
   def update_piece(x, y, state)
+    puts "\nMark this piece captured\n" if state
     update_attributes(x_position: x, y_position: y, state: state)
   end
 
