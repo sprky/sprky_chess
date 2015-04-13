@@ -7,8 +7,13 @@ class Game < ActiveRecord::Base
   after_rollback :throw_invalid_move
 
   def assign_pieces
-    pieces.where(color: true).each { |p| p.update_attributes(player_id: white_player_id) }
-    pieces.where(color: false).each { |p| p.update_attributes(player_id: black_player_id) }
+    pieces.where(color: true).each do |p|
+      p.update_attributes(player_id: white_player_id)
+    end
+
+    pieces.where(color: false).each do |p|
+      p.update_attributes(player_id: black_player_id)
+    end
   end
 
   def check?(color)

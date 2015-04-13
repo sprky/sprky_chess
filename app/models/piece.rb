@@ -13,7 +13,6 @@ class Piece < ActiveRecord::Base
   def attempt_move(piece, params)
     Piece.transaction do
       move_to(piece, params)
-      game = piece.game
       game.update_attributes(state: nil)
       if game.check?(color)
         fail ActiveRecord::Rollback
@@ -32,16 +31,17 @@ class Piece < ActiveRecord::Base
 
   def can_escape_check?
     Piece.transaction do
-      game = piece.game
-      game.update_attributes(state: 'check')
-
-      # Somehow loop through all possible moves
-      move_to(self, x_position: _, y_position: _)
-      # If after any of the moves, game is no longer in check
-      return true if !game.check?(color)
+      (0..x_scope).each do |x|
+        (0..y_scope).each do |y|
+          move_to(self, x_position: x, y_position: y)
+          return false if game.check?(color)
+        end
+      end
 
       ActiveRecord::Rollback
     end
+
+    true
   end
 
   def legal_move?(_x, _y)
@@ -92,10 +92,6 @@ class Piece < ActiveRecord::Base
     return false unless legal_move?(x, y)
     return false if obstructed_move?(x, y)
     return false if destination_obstructed?(x, y)
-
-    # check that the move doesn't put the king into check
-    # return false if move_causes_check?(x, y) - pull this out of valid_move?
-
     true
   end
 

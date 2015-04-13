@@ -8,13 +8,17 @@ class PiecesController < ApplicationController
     render json: {
       update_url: game_path(@game)
     }
-    update_firebase(update_url: game_path(@game), time_stamp: Time.now.to_i)
+    update_firebase(
+      update_url: game_path(@game),
+      time_stamp: Time.now.to_i)
   end
 
   private
 
   def piece_params
-    @piece_params = params.require(:piece).permit(:x_position, :y_position)
+    @piece_params = params.require(:piece).permit(
+      :x_position,
+      :y_position)
   end
 
   def your_turn?

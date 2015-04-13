@@ -72,6 +72,7 @@ class GameTest < ActiveSupport::TestCase
       white_player_id: 2,
       turn: 1)
     game.assign_pieces
+
     FactoryGirl.create(
       :knight,
       player_id: 1,
@@ -79,8 +80,6 @@ class GameTest < ActiveSupport::TestCase
       y_position: 2,
       game_id: game.id,
       color: false)
-
-    # Add pieces such that game is in state of checkmate
 
     assert game.checkmate?(true)
   end

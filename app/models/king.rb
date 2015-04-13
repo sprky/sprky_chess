@@ -86,6 +86,14 @@ class King < Piece
     end
   end
 
+  def x_scope
+    1
+  end
+
+  def y_scope
+    1
+  end
+
   private
 
   def proper_length?(x, y)
