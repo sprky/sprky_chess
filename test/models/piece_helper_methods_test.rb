@@ -81,7 +81,7 @@ class PieceTest < ActiveSupport::TestCase
       :game,
       black_player_id: 1,
       white_player_id: 2,
-      turn: 1)
+      turn: 2)
     game.assign_pieces
     FactoryGirl.create(
       :knight,
