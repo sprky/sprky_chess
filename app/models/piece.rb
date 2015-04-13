@@ -1,3 +1,5 @@
+require 'byebug'
+
 class Piece < ActiveRecord::Base
   MIN_BOARD_SIZE = 0
   MAX_BOARD_SIZE = 7
@@ -33,14 +35,18 @@ class Piece < ActiveRecord::Base
     Piece.transaction do
       (0..x_scope).each do |x|
         (0..y_scope).each do |y|
-          move_to(self, x_position: x, y_position: y)
-          return false if game.check?(color)
+          move_to(
+            self,
+            x_position: (x_position + x),
+            y_position: (y_position + y))
+
+          return true unless game.check?(color)
           ActiveRecord::Rollback
         end
       end
     end
-    
-    true
+
+    false
   end
 
   def legal_move?(_x, _y)

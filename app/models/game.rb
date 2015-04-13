@@ -35,9 +35,9 @@ class Game < ActiveRecord::Base
       pieces.each do |piece|
         return false if piece.can_escape_check?
       end
+
       true
     end
-    false
   end
 
   def initialize_board!

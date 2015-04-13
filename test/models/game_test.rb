@@ -48,7 +48,7 @@ class GameTest < ActiveSupport::TestCase
     assert_equal expected, actual
   end
 
-  test 'check' do
+  test 'should be in check' do
     game = FactoryGirl.create(
       :game,
       black_player_id: 1,
@@ -65,7 +65,7 @@ class GameTest < ActiveSupport::TestCase
     assert game.check?(true)
   end
 
-  test 'checkmate' do
+  test 'should be in checkmate' do
     game = FactoryGirl.create(
       :game,
       black_player_id: 1,
@@ -82,5 +82,16 @@ class GameTest < ActiveSupport::TestCase
       color: false)
 
     assert game.checkmate?(true)
+  end
+
+  test 'should not be in checkmate' do
+    game = FactoryGirl.create(
+      :game,
+      black_player_id: 1,
+      white_player_id: 2,
+      turn: 1)
+    game.assign_pieces
+
+    assert_not game.checkmate?(true)
   end
 end

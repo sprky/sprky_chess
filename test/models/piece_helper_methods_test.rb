@@ -101,11 +101,12 @@ class PieceTest < ActiveSupport::TestCase
     pawn.update_piece(nil, nil, 'captured')
 
     king = game.pieces.where(
+      type: 'King',
       player_id: 2,
-      x_position: 4,
-      y_position: 0,
       game_id: game.id,
       color: true).first
+
+    assert king.valid_move?(4, 1)
 
     assert king.can_escape_check?
   end
