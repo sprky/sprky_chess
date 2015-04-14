@@ -41,6 +41,8 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
       game_id: game.id)
     piece.move_to(piece, x_position: 7, y_position: 4)
 
+    # puts piece.move_to(piece, x_position: 7, y_position: 4)
+
     assert_equal 7, piece.x_position
     assert_equal 4, piece.y_position
     assert_equal 'moved', piece.state
@@ -82,18 +84,6 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
     assert_equal 4, white_pawn.y_position
     black_pawn.reload
     assert_equal 'captured', black_pawn.state, 'captured black pawn'
-  end
-
-  test 'Should revert database on king moved into check' do
-    game = FactoryGirl.create(:game)
-    white_king = game.pieces.find_by(type: 'King', color: true)
-    white_king.update_attributes(x_position: 4, y_position: 3)
-    white_king.reload
-    FactoryGirl.create(:pawn, x_position: 5, y_position: 5, color: false, game_id: game.id)
-    white_king.attempt_move(white_king, x_position: 4, y_position: 4)
-    white_king.reload
-
-    assert_equal 3, white_king.y_position, 'King reverts back to y position 3'
   end
 
   test 'Should allow moved not causing check' do

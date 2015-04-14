@@ -16,7 +16,6 @@ class Pawn < Piece
 
     if piece.pawn_can_promote?(y) && valid_move?(x, y)
       piece.pawn_promotion(x, y)
-      game.switch_players(player_id)
     else
       super(piece, params)
     end
@@ -45,6 +44,7 @@ class Pawn < Piece
     y == 7 && color || y == 0 && !color
   end
 
+  # called on pawn at that has reached last rank
   def pawn_promotion(x, y)
     update_attributes(
       x_position: nil,
@@ -77,5 +77,13 @@ class Pawn < Piece
   def proper_length?(y)
     y_diff = (y - y_position).abs
     first_move?(y) ? (y_diff == 1 || y_diff == 2) : y_diff == 1
+  end
+
+  def x_scope
+    1
+  end
+
+  def y_scope
+    2
   end
 end

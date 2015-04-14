@@ -7,15 +7,23 @@ class Game < ActiveRecord::Base
   after_rollback :throw_invalid_move
 
   def assign_pieces
-    pieces.where(color: true).each { |p| p.update_attributes(player_id: white_player_id) }
-    pieces.where(color: false).each { |p| p.update_attributes(player_id: black_player_id) }
+    pieces.where(color: true).each do |p|
+      p.update_attributes(player_id: white_player_id)
+    end
+
+    pieces.where(color: false).each do |p|
+      p.update_attributes(player_id: black_player_id)
+    end
   end
 
+  # determines if color is in check
   def check?(color)
+    # make sure it's other player's turn
+    switch_players(!color)
+    # puts "Checking #{color}. Turn is #{turn}"
+
     king = pieces.find_by(type: 'King', color: color)
-    opponents = pieces.includes(:game).where(
-      "color = ? and state != 'captured'",
-      !color).to_a
+    opponents = pieces_remaining(!color)
 
     opponents.each do |piece|
       return true if piece.valid_move?(
@@ -23,6 +31,19 @@ class Game < ActiveRecord::Base
         king.y_position)
     end
     false
+  end
+
+  # determine if a state of checkmate has occurred
+  def checkmate?(color)
+    pieces = pieces_remaining(color)
+
+    pieces.each do |piece|
+      puts '**--' * 20
+      puts "See if this piece #{piece.inspect} can do it"
+      return false if piece.can_escape_check?
+    end
+
+    true
   end
 
   def initialize_board!
@@ -76,12 +97,42 @@ class Game < ActiveRecord::Base
     pieces.where(x_position: x, y_position: y).last
   end
 
-  def switch_players(player_id)
-    if player_id == white_player_id
-      update_attributes(turn: black_player_id)
-    else
+  def pieces_remaining(color)
+    pieces.includes(:game).where(
+      "color = ? and state != 'captured'",
+      color).to_a
+  end
+
+  # switches game turn to color
+  def switch_players(color)
+    # ensure that game is set to correct turn
+    if color
       update_attributes(turn: white_player_id)
+    else
+      update_attributes(turn: black_player_id)
     end
+  end
+
+  # update turn and game state after successful move
+  def update_state(current_player_color)
+    # check if opposite player is in check
+    if check?(!current_player_color)
+      puts "We're in check. Look for checkmate"
+      if checkmate?(!current_player_color)
+        puts
+        puts '*!&^' * 20
+        puts
+        puts 'Checkmate'
+      else
+        # if so, game state is check
+        update_attributes(state: 'check')
+      end
+    else
+      # if not, game state is not check
+      update_attributes(state: nil)
+    end
+    # give turn over to other player
+    switch_players(!current_player_color)
   end
 
   private
