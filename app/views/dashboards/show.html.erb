@@ -21,13 +21,13 @@
                   <% if game.black_player_id.present? %> 
                     <%= player_email_from_id(game.black_player_id) %> 
                   <% else %>
-                    <button>Invite Player</button> 
+                    <%= link_to 'Invite Player', new_game_invitations_path(game), class: 'button' %>
                   <% end %>
                   vs.
                   <% if game.white_player_id.present? %> 
                     <%= player_email_from_id(game.white_player_id) %> 
                   <% else %>
-                    <%= button_to 'Invite Player', '#' %> 
+                    <%= link_to 'Invite Player', new_game_invitations_path(@game), class: 'button' %> 
                   <% end %>
                 </p>
               </li>
@@ -48,7 +48,7 @@
                   <% if game.white_player_id.present? %> 
                     <%= player_email_from_id(game.white_player_id) %> 
                   <% else %>
-                    <button>Invite Player</button> 
+                    <%= link_to 'Invite Player', new_game_invitations_path(@game), class: 'button' %>
                   <% end %>
                   vs.
                   <%= simple_form_for game, :method => :put do |f| %>
