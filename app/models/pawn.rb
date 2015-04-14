@@ -42,11 +42,7 @@ class Pawn < Piece
   end
 
   def pawn_can_promote?(y)
-    if y == 7 && color || y == 0 && !color
-      return true
-    else
-      return false
-    end
+    y == 7 && color || y == 0 && !color
   end
 
   def pawn_promotion(x, y)
