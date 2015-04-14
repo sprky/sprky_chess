@@ -36,9 +36,9 @@ class Piece < ActiveRecord::Base
 
   # check to see if piece move can escape check
   def can_escape_check?
-    puts 
+    puts
     puts "See if piece #{id} will get out of check"
-    puts "x_position #{x_position} y_position #{y_position}"      
+    puts "x_position #{x_position} y_position #{y_position}"
     escaped_by_moving = false
     # iterate x and y position of piece through all possible move locations
     (-x_scope..x_scope).each do |x|
@@ -50,9 +50,9 @@ class Piece < ActiveRecord::Base
 
           # ensure it's player's turn for testing
           game.switch_players(color)
-          if x_position.nil?
-            byebug
-          end
+          # if x_position.nil?
+          #   byebug
+          # end
           puts "Try moving to #{x_position} + #{x} and #{y_position} + #{y}"
           # try to move piece into that position.  If it won't move go to
           # next interation - note move_to returns true or false
@@ -94,9 +94,9 @@ class Piece < ActiveRecord::Base
     y = params[:y_position].to_i
 
     if piece.valid_move?(x, y)
-      puts "move is valid"
+      puts 'move is valid'
       if capture_move?(x, y)
-        puts "move is capture move"
+        puts 'move is capture move'
         captured = game.obstruction(x, y)
         captured.update_piece(nil, nil, 'captured')
       end
