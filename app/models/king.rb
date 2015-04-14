@@ -8,10 +8,9 @@ class King < Piece
   # determine if king can move himself out of check
   def can_move_out_of_check?
     success = false
-    ((x_position-1)..(x_position+1)).each do |x|
-      ((y_position-1)..(y_position+1)).each do |y|
+    ((x_position - 1)..(x_position + 1)).each do |x|
+      ((y_position - 1)..(y_position + 1)).each do |y|
         Piece.transaction do
-          puts "trying #{x} and #{y}"
           move_to(self, x_position: x, y_position: y)
 
           # if game.check?(color) comes up false,

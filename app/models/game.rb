@@ -37,7 +37,16 @@ class Game < ActiveRecord::Base
   # determine if a state of checkmate has occurred
   def checkmate?(color)
     checked_king = pieces.find_by(type: 'King', color: color)
+
+    # see if king can get himself out of check
     return false if checked_king.can_move_out_of_check?
+
+    # # see if another piece can block check
+    # return false if piece_can_block_check
+
+    # # see if another piece can capture checking piece
+    # return false if checking_piece_can_be_captured
+
     true
   end
 
