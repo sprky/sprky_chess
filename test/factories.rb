@@ -8,9 +8,6 @@ FactoryGirl.define do
   end
   
   factory :invitation do
-    guest_player_email "myfriend@email.com"
-    game 77
-    player 1
   end
 
   factory :game do
