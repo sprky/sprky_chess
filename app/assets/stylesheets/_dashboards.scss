@@ -26,7 +26,11 @@
     border-radius: $base-border-radius;
     margin-bottom: .5em;
     background-color: $light-gray;
-    a {
+    text-align: center;
+    h5 {
+      margin-bottom: 1em;
+    }
+    a:not(.button) {
       color: $base-font-color;
     }
     button {

@@ -1,0 +1,6 @@
+
+"@url", game_url(@game) %>
+
+Good luck,
+
+SPRKY

@@ -4,7 +4,7 @@
 		<% if @game.black_player_id.present? %> 
 		  <%= player_email_from_id(@game.black_player_id) %> 
 		<% else %>
-		  <button>Invite Player</button> 
+			<%= link_to 'Invite Player', new_game_invitations_path(@game), class: 'button' %>
 		<% end %>
 	</p>
 	<table id='gameboard' data-game-state='<%= @game.state %>' data-your-turn='<%= your_turn? %>' data-game-id='<%= @game.id %>'>
@@ -35,7 +35,7 @@
 		<% if @game.white_player_id.present? %> 
 		  <%= player_email_from_id(@game.white_player_id) %> 
 		<% else %>
-		  <button>Invite Player</button> 
+		  <%= link_to 'Invite Player', new_game_invitations_path(@game), class: 'button' %>
 		<% end %>
   </p>
 <% end %>

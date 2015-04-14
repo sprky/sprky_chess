@@ -4,13 +4,13 @@ class PawnPromotionTest < ActiveSupport::TestCase
   test 'Should show white pawn can promote' do
     setup_game_and_advanced_pawn
 
-    assert @pawn.pawn_can_promote?(7)
+    assert @pawn.can_promote?(7)
   end
 
   test 'Should move white pawn off board from promotion and replace with Queen' do
     setup_game_and_advanced_pawn
 
-    assert @pawn.pawn_promotion(1, 7)
+    assert @pawn.promotion(1, 7)
     assert_equal nil, @pawn.x_position, 'Pawn x position is nil'
     assert_equal nil, @pawn.y_position, 'Pawn y position is nil'
     assert_equal 'Queen', @game.pieces.find_by(x_position: 1, y_position: 7).type

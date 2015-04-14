@@ -3,8 +3,7 @@ class Pawn < Piece
     return false if backwards_move?(y)
 
     unless capture_move?(x, y)
-      return false if horizontal_move?(x) ||
-                      game.obstruction(x, y)
+      return false if horizontal_move?(x) || game.obstruction(x, y)
     end
 
     proper_length?(y)
@@ -14,9 +13,8 @@ class Pawn < Piece
     x = params[:x_position].to_i
     y = params[:y_position].to_i
 
-    if piece.pawn_can_promote?(y) && valid_move?(x, y)
-      piece.pawn_promotion(x, y)
-      game.switch_players(player_id)
+    if can_promote?(y) && valid_move?(x, y)
+      promotion(x, y)
     else
       super(piece, params)
     end
@@ -41,11 +39,11 @@ class Pawn < Piece
     false
   end
 
-  def pawn_can_promote?(y)
+  def can_promote?(y)
     y == 7 && color || y == 0 && !color
   end
 
-  def pawn_promotion(x, y)
+  def promotion(x, y)
     update_attributes(
       x_position: nil,
       y_position: nil,
@@ -56,7 +54,7 @@ class Pawn < Piece
       y_position: y,
       player_id: player_id,
       color: color)
-    game.switch_players(!color)
+    game.switch_players(player_id)
   end
 
   private
