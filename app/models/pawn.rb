@@ -13,7 +13,7 @@ class Pawn < Piece
     x = params[:x_position].to_i
     y = params[:y_position].to_i
 
-    if can_promote?(y)
+    if can_promote?(y) && valid_move?(x, y)
       promotion(x, y)
     else
       super(piece, params)
@@ -54,7 +54,7 @@ class Pawn < Piece
       y_position: y,
       player_id: player_id,
       color: color)
-    game.switch_players(!color)
+    game.switch_players(player_id)
   end
 
   private
