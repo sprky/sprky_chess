@@ -52,8 +52,9 @@ class Pawn < Piece
       game_id: game_id,
       x_position: x,
       y_position: y,
+      player_id: player_id,
       color: color)
-    game.switch_players(player_id)
+    game.switch_players(!color)
   end
 
   private
