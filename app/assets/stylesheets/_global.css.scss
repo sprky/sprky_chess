@@ -10,3 +10,8 @@ body {
   @include span-columns(12);
 }
 
+.button {
+  @extend button;
+  color: #fff;
+}
+

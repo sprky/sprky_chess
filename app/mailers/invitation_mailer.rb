@@ -2,8 +2,7 @@ class InvitationMailer < ActionMailer::Base
   default from: "no-reply@sprky.heroku-app.com"
 
   def send_invitation(invitation)
-    @game = invitation.game_id
-    @url = "http://sprky.heroku-app.com/games/#{@game}"
+    @url = "http://sprky.heroku-app.com/games/#{invitation.game.id}"
     @host_player = invitation.player.email
     @guest_player = invitation.guest_player_email
 
