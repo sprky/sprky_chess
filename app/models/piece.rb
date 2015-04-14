@@ -94,7 +94,9 @@ class Piece < ActiveRecord::Base
     y = params[:y_position].to_i
 
     if piece.valid_move?(x, y)
+      puts "move is valid"
       if capture_move?(x, y)
+        puts "move is capture move"
         captured = game.obstruction(x, y)
         captured.update_piece(nil, nil, 'captured')
       end
@@ -115,7 +117,6 @@ class Piece < ActiveRecord::Base
   end
 
   def update_piece(x, y, state)
-    puts "\nMark this piece captured\n" if state
     update_attributes(x_position: x, y_position: y, state: state)
   end
 

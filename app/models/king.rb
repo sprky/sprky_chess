@@ -20,9 +20,10 @@ class King < Piece
   end
 
   def castle_move
+    puts "in king.rb castle_move"
     # uses instance variables persisted from checking legal_castle_move?
-    update_attributes(x_position: @new_king_x, state: 'castled')
-    @rook_for_castle.update_attributes(x_position: @new_rook_x, state: 'moved')
+    update_piece(@new_king_x, y_position, 'castled')
+    @rook_for_castle.update_piece(@new_rook_x, y_position, 'moved')
   end
 
   # checks for legal castle move to x, y
@@ -60,13 +61,17 @@ class King < Piece
   end
 
   def move_to(piece, params)
+    puts "in king.rb move_to"
     x = params[:x_position].to_i
     y = params[:y_position].to_i
-
-    piece.castle_move if piece.legal_castle_move?(x, y)
+    puts "check for castling"
+    castle_move if valid_move?(x, y) && legal_castle_move?(x, y)
+    puts "now check for regular valid move"
     super(piece, params)
   end
 
+  # return the appropriate rook for castling
+  # takes 'King' or 'Queen' as an argument
   def rook_for_castling(side)
     case side
     when 'King'

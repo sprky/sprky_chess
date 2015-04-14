@@ -14,7 +14,7 @@ class Pawn < Piece
     x = params[:x_position].to_i
     y = params[:y_position].to_i
 
-    if piece.pawn_can_promote?(y)
+    if piece.pawn_can_promote?(y) && valid_move?(x, y)
       piece.pawn_promotion(x, y)
     else
       super(piece, params)
@@ -41,13 +41,10 @@ class Pawn < Piece
   end
 
   def pawn_can_promote?(y)
-    if y == 7 || y == 0
-      return true
-    else
-      return false
-    end
+    y == 7 && color || y == 0 && !color
   end
 
+  # called on pawn at that has reached last rank
   def pawn_promotion(x, y)
     update_attributes(
       x_position: nil,
@@ -57,6 +54,7 @@ class Pawn < Piece
       game_id: game_id,
       x_position: x,
       y_position: y,
+      player_id: player_id,
       color: color)
     game.switch_players(!color)
   end
