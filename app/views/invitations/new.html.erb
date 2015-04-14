@@ -1,0 +1,10 @@
+<div class="form-page-container">
+  <div class="form-page-content">
+    <h3>Invite a Player</h3>
+      <%= simple_form_for @invitation, url: game_invitations_path do |f| %>
+      <%= f.input :guest_player_email %>
+      <%= f.input :player_id, as: :hidden, input_html: { value: current_player.id } %>
+      <br />
+      <%= f.submit 'Create' %>
+    <% end %></div>
+</div>

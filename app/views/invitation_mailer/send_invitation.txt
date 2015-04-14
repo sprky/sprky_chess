@@ -1,4 +1,4 @@
-Click here to join the game: <%= link_to 
+
 "@url", game_url(@game) %>
 
 Good luck,

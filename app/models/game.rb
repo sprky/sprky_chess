@@ -3,6 +3,7 @@ class Game < ActiveRecord::Base
 
   has_many :players
   has_many :pieces
+  has_many :invitations
 
   after_rollback :throw_invalid_move
 
