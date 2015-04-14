@@ -3,7 +3,7 @@ require 'test_helper'
 class PawnPromotionTest < ActiveSupport::TestCase
   test 'Should show white pawn can promote' do
     setup_game_and_advanced_pawn
-    
+
     assert @pawn.pawn_can_promote?(7)
   end
 
