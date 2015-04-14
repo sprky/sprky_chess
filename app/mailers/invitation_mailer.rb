@@ -1,5 +1,5 @@
 class InvitationMailer < ActionMailer::Base
-  default from: "no-reply@sprky.herokuapp.com"
+  default from: 'no-reply@sprky.herokuapp.com'
 
   def send_invitation(invitation)
     @url = "http://sprky.herokuapp.com/games/#{invitation.game.id}"
@@ -8,6 +8,6 @@ class InvitationMailer < ActionMailer::Base
 
     mail(
       to: "#{@guest_player}",
-      subject: "Invitation: Play SPRKY Chess with #{@host_player}") 
+      subject: "Invitation: Play SPRKY Chess with #{@host_player}")
   end
 end
