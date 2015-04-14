@@ -40,7 +40,7 @@ class Pawn < Piece
   end
 
   def can_promote?(y)
-    (y == 7 && color) || (y == 0 && !color)
+    y == 7 && color || y == 0 && !color
   end
 
   def promotion(x, y)
