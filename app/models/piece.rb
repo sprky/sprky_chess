@@ -35,46 +35,46 @@ class Piece < ActiveRecord::Base
   end
 
   # check to see if piece move can escape check
-  def can_escape_check?
-    puts
-    puts "See if piece #{id} will get out of check"
-    puts "x_position #{x_position} y_position #{y_position}"
-    escaped_by_moving = false
-    # iterate x and y position of piece through all possible move locations
-    (-x_scope..x_scope).each do |x|
-      (-y_scope..y_scope).each do |y|
-        Piece.transaction do
-          # debugging
-          # puts "x#{x}"
-          # puts "y#{y}"
+  # def can_escape_check?
+  #   puts
+  #   puts "See if piece #{id} will get out of check"
+  #   puts "x_position #{x_position} y_position #{y_position}"
+  #   escaped_by_moving = false
+  #   # iterate x and y position of piece through all possible move locations
+  #   (-x_scope..x_scope).each do |x|
+  #     (-y_scope..y_scope).each do |y|
+  #       Piece.transaction do
+  #         # debugging
+  #         # puts "x#{x}"
+  #         # puts "y#{y}"
 
-          # ensure it's player's turn for testing
-          game.switch_players(color)
-          # if x_position.nil?
-          #   byebug
-          # end
-          puts "Try moving to #{x_position} + #{x} and #{y_position} + #{y}"
-          # try to move piece into that position.  If it won't move go to
-          # next interation - note move_to returns true or false
-          next unless move_to(
-            self,
-            x_position: (x_position + x),
-            y_position: (y_position + y))
+  #         # ensure it's player's turn for testing
+  #         game.switch_players(color)
+  #         # if x_position.nil?
+  #         #   byebug
+  #         # end
+  #         puts "Try moving to #{x_position} + #{x} and #{y_position} + #{y}"
+  #         # try to move piece into that position.  If it won't move go to
+  #         # next interation - note move_to returns true or false
+  #         move_to(
+  #           self,
+  #           x_position: (x_position + x),
+  #           y_position: (y_position + y))
 
-          # check to see if this move gets king out of check.
-          escaped_by_moving = true unless game.check?(color)
+  #         # check to see if this move gets king out of check.
+  #         escaped_by_moving = true unless game.check?(color)
 
-          # roll back these moves
-          fail ActiveRecord::Rollback
-        end
-      end
-    end
-    puts "Did he escape check? #{@escaped_by_moving}"
-    if escaped_by_moving
-      puts "Escaped using piece# #{id}"
-    end
-    escaped_by_moving
-  end
+  #         # roll back these moves
+  #         fail ActiveRecord::Rollback
+  #       end
+  #     end
+  #   end
+  #   puts "Did he escape check? #{@escaped_by_moving}"
+  #   if escaped_by_moving
+  #     puts "Escaped using piece# #{id}"
+  #   end
+  #   escaped_by_moving
+  # end
 
   def legal_move?(_x, _y)
     fail NotImplementedError 'Pieces must implement #legal_move?'

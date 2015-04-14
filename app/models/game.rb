@@ -36,14 +36,8 @@ class Game < ActiveRecord::Base
 
   # determine if a state of checkmate has occurred
   def checkmate?(color)
-    pieces = pieces_remaining(color)
-
-    pieces.each do |piece|
-      puts '**--' * 20
-      puts "See if this piece #{piece.inspect} can do it"
-      return false if piece.can_escape_check?
-    end
-
+    checked_king = pieces.find_by(type: 'King', color: color)
+    return false if checked_king.can_move_out_of_check?
     true
   end
 
