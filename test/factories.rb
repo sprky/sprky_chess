@@ -6,7 +6,7 @@ FactoryGirl.define do
     password 'ringaroundtherosie'
     password_confirmation 'ringaroundtherosie'
   end
-  
+
   factory :invitation do
   end
 
