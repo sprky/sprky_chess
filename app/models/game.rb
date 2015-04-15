@@ -27,9 +27,10 @@ class Game < ActiveRecord::Base
     opponents = pieces_remaining(!color)
 
     opponents.each do |piece|
-      return true if piece.valid_move?(
-        king.x_position,
-        king.y_position)
+      if piece.valid_move?(king.x_position, king.y_position)
+        #  piece_causing_check = piece
+        return true
+      end
     end
     false
   end
@@ -45,7 +46,7 @@ class Game < ActiveRecord::Base
     # return false if piece_can_block_check
 
     # # see if another piece can capture checking piece
-    # return false if checking_piece_can_be_captured
+    # return false if piece_causing_check.can_capture_piece_causing_check
 
     true
   end

@@ -66,22 +66,28 @@ class GameTest < ActiveSupport::TestCase
   end
 
   # test 'should be in checkmate' do
-  #   game = FactoryGirl.create(
-  #     :game,
-  #     black_player_id: 1,
-  #     white_player_id: 2,
-  #     turn: 1)
-  #   game.assign_pieces
+  #  game = FactoryGirl.create(
+  #    :game,
+  #   black_player_id: 1,
+  #    white_player_id: 2,
+  #   turn: 1)
+  #  game.assign_pieces
 
-  #   FactoryGirl.create(
-  #     :knight,
-  #     player_id: 1,
-  #     x_position: 5,
-  #     y_position: 2,
-  #     game_id: game.id,
-  #     color: false)
-
-  #   assert game.checkmate?(true)
+  #  black_king = game.pieces.find_by(type: 'King', color: false)
+  #  black_king.update_attributes(x_position: 4, y_position: 4, state: 'moved')
+  #  pawn1 = game.pieces.find_by(type: 'Pawn', color: true, x_position: 4)
+  #  pawn1.update_attributes(y_position: 2, state: 'moved')
+  #  rook1 = game.pieces.find_by(type: 'Rook', color: true, x_position: 7)
+  #  rook1.update_attributes(y_position: 3, state: 'moved')
+  #  rook2 = game.pieces.find_by(type: 'Rook', color: true, x_position: 0)
+  #  rook2.update_attributes(y_position: 3, state: 'moved')
+  #  bishop1 = game.pieces.find_by(type: 'Bishop', color: true, x_position: 2)
+  #  bishop1.update_attributes(y_position: 5, state: 'moved')
+  #  bishop2 = game.pieces.find_by(type: 'Bishop', color: true, x_position: 5)
+  #  bishop2.update_attributes(y_position: 5, x_position: 6, state: 'moved')
+  #  black_bishop = game.pieces.find_by(type: 'Bishop', color: false, x_position: 5)
+  #  black_bishop.destroy
+  #  assert game.checkmate?(false)
   # end
 
   test 'should not be in checkmate' do
