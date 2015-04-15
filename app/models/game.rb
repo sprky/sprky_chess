@@ -3,6 +3,7 @@ class Game < ActiveRecord::Base
 
   has_many :players
   has_many :pieces
+  has_many :invitations
 
   after_rollback :throw_invalid_move
 
@@ -35,13 +36,16 @@ class Game < ActiveRecord::Base
 
   # determine if a state of checkmate has occurred
   def checkmate?(color)
-    pieces = pieces_remaining(color)
+    checked_king = pieces.find_by(type: 'King', color: color)
 
-    pieces.each do |piece|
-      puts '**--' * 20
-      puts "See if this piece #{piece.inspect} can do it"
-      return false if piece.can_escape_check?
-    end
+    # see if king can get himself out of check
+    return false if checked_king.can_move_out_of_check?
+
+    # # see if another piece can block check
+    # return false if piece_can_block_check
+
+    # # see if another piece can capture checking piece
+    # return false if checking_piece_can_be_captured
 
     true
   end

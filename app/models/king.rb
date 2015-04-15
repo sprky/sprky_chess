@@ -1,28 +1,32 @@
 class King < Piece
-  def legal_move?(x, y)
-    proper_length?(x, y) || legal_castle_move?(x, y)
-  end
-
-  def obstructed_move?(x, y)
-    x_diff = (x - x_position)
-
-    case x_diff
-    when 2
-      # move is kingside castle
-      obstructed_rectilinearly?(7, y)
-    when -2
-      # move is queenside castle
-      obstructed_rectilinearly?(0, y)
-    else
-      # otherwise king moves one space - can't be obstructed
-      return false
-    end
-  end
-
   def castle_move
     # uses instance variables persisted from checking legal_castle_move?
     update_piece(@new_king_x, y_position, 'castled')
     @rook_for_castle.update_piece(@new_rook_x, y_position, 'moved')
+  end
+
+  # determine if king can move himself out of check
+  def can_move_out_of_check?
+    success = false
+    ((x_position - 1)..(x_position + 1)).each do |x|
+      ((y_position - 1)..(y_position + 1)).each do |y|
+        Piece.transaction do
+          move_to(self, x_position: x, y_position: y)
+
+          # if game.check?(color) comes up false,
+          # even once, assign  true
+          success = true unless game.check?(color)
+
+          # reset any attempted moves
+          fail ActiveRecord::Rollback
+        end
+      end
+    end
+    success
+  end
+
+  def legal_move?(x, y)
+    proper_length?(x, y) || legal_castle_move?(x, y)
   end
 
   # checks for legal castle move to x, y
@@ -66,6 +70,22 @@ class King < Piece
       castle_move
     else
       super(piece, params)
+    end
+  end
+
+  def obstructed_move?(x, y)
+    x_diff = (x - x_position)
+
+    case x_diff
+    when 2
+      # move is kingside castle
+      obstructed_rectilinearly?(7, y)
+    when -2
+      # move is queenside castle
+      obstructed_rectilinearly?(0, y)
+    else
+      # otherwise king moves one space - can't be obstructed
+      return false
     end
   end
 

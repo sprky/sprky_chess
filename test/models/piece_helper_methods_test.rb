@@ -108,7 +108,7 @@ class PieceTest < ActiveSupport::TestCase
 
     assert king.valid_move?(4, 1)
 
-    assert king.can_escape_check?
+    assert king.can_move_out_of_check?
   end
 
   test 'should not be able to escape check' do
@@ -133,7 +133,7 @@ class PieceTest < ActiveSupport::TestCase
       game_id: game.id,
       color: true).first
 
-    assert_not king.can_escape_check?
+    assert_not king.can_move_out_of_check?
   end
 
   def setup_pieces

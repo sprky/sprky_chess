@@ -12,26 +12,56 @@
             <h4>My games</h4>
           <% end %>
           <ul class='game-list'>
-            <% @my_games.each do |game| %>
-              <li class='game-list-item'>
-                <h5>
-                  <%= link_to game.name, game_path(game) %>
-                </h5>
-                <p>
-                  <% if game.black_player_id.present? %> 
-                    <%= player_email_from_id(game.black_player_id) %> 
-                  <% else %>
-                    <button>Invite Player</button> 
-                  <% end %>
-                  vs.
-                  <% if game.white_player_id.present? %> 
-                    <%= player_email_from_id(game.white_player_id) %> 
-                  <% else %>
-                    <%= button_to 'Invite Player', '#' %> 
-                  <% end %>
-                </p>
-              </li>
+            <% if @my_games.present? %>
+              <h4>My turn</h4>
             <% end %>
+            <% @my_games.each do |game| %>
+              <% if game.turn==current_player.id %>
+                <li class='game-list-item'>
+                  <h5>
+                    <%= link_to game.name, game_path(game) %>
+                  </h5>
+                  <p>
+                    <% if game.black_player_id.present? %> 
+                      <%= player_email_from_id(game.black_player_id) %> 
+                    <% else %>
+                      <%= link_to 'Invite Player', new_game_invitations_path(game), class: 'button' %> 
+                    <% end %>
+                    vs.
+                    <% if game.white_player_id.present? %> 
+                      <%= player_email_from_id(game.white_player_id) %> 
+                    <% else %>
+                      <%= link_to 'Invite Player', new_game_invitations_path(game), class: 'button' %> 
+                    <% end %>
+                  </p>
+                </li>
+              <% end %>
+            <% end %>
+            <% if @my_games.present? %>
+              <h4>My opponents turn</h4>
+            <% end %>
+            <% @my_games.each do |game| %>
+              <% if game.turn!=current_player.id && game.turn !=nil %>
+                <li class='game-list-item'>
+                  <h5>
+                    <%= link_to game.name, game_path(game) %>
+                  </h5>
+                  <p>
+                    <% if game.black_player_id.present? %> 
+                      <%= player_email_from_id(game.black_player_id) %> 
+                    <% else %>
+                      <button>Invite Player</button> 
+                    <% end %>
+                    vs.
+                    <% if game.white_player_id.present? %> 
+                      <%= player_email_from_id(game.white_player_id) %> 
+                    <% else %>
+                      <%= button_to 'Invite Player', '#' %> 
+                    <% end %>
+                  </p>
+                </li>
+              <% end %>
+            <% end %>  
           </ul>
         </section>
         <section class='open-games'>
@@ -48,7 +78,7 @@
                   <% if game.white_player_id.present? %> 
                     <%= player_email_from_id(game.white_player_id) %> 
                   <% else %>
-                    <button>Invite Player</button> 
+                    <%= link_to 'Invite Player', new_game_invitations_path(@game), class: 'button' %>
                   <% end %>
                   vs.
                   <%= simple_form_for game, :method => :put do |f| %>

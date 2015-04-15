@@ -54,9 +54,30 @@ class KingTest < ActiveSupport::TestCase
     assert_equal 'moved', @king.state, 'King is marked moved'
   end
 
+  test 'Should move himself out of check' do
+    setup_check
+
+    @game.pieces.find_by(x_position: 4, y_position: 1).destroy
+
+    assert @king.can_move_out_of_check?
+  end
+
+  test 'Should not be able to move himself out of check' do
+    setup_check
+
+    assert_not @king.can_move_out_of_check?
+  end
+
   # setup new game and find white king
   def setup_game_and_king
     @game = FactoryGirl.create(:game)
-    @king = @game.pieces.find_by(type: 'King', x_position: 4, y_position: 0)
+    @king = @game.pieces.find_by(type: 'King', color: true)
+  end
+
+  def setup_check
+    setup_game_and_king
+    @black_queen = @game.pieces.find_by(type: 'Queen', color: false)
+    @black_queen.update_attributes(x_position: 7, y_position: 3)
+    @game.pieces.find_by(x_position: 5, y_position: 1).destroy
   end
 end
