@@ -100,16 +100,30 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
     assert_equal 3, black_pawn.y_position, 'Pawn moves to y position 3'
   end
 
-  #  test 'Should allow capture of piece causing check' do
-  #   game = FactoryGirl.create(:game)
-  #   black_queen = game.pieces.find_by(type: 'Queen', color: false)
-  #   black_queen.update_attributes(x_position: 7, y_position: 3)
-  #   game.pieces.find_by(x_position: 5, y_position: 1).destroy
-  #   rook = game.pieces.find_by(type: 'Rook', color: true, x_position: 7)
-  #   rook.update_attributes(x_position: 4, y_position: 3)
-  #   black_queen.reload
-  #   rook.reload
+  test 'Should allow capture of piece causing check' do
+    game = FactoryGirl.create(:game)
+    black_queen = game.pieces.find_by(type: 'Queen', color: false)
+    black_queen.update_attributes(x_position: 7, y_position: 3)
+    pawn = game.pieces.find_by(x_position: 5, y_position: 1)
+    pawn.update_attributes(state: 'captured')
+    rook = game.pieces.find_by(type: 'Rook', color: true, x_position: 7)
+    rook.update_attributes(x_position: 4, y_position: 3)
+    black_queen.reload
+    rook.reload
+    pawn.reload
 
-  #  assert black_queen.can_capture_piece_causing_check
-  #  end
+    assert rook.capture_move?(7, 3), 'capture'
+    assert rook.valid_move?(7, 3), 'valid'
+    assert black_queen.can_be_captured?, 'valid and capture'
+  end
+
+  test 'Piece cannot be captured by another piece' do
+    game = FactoryGirl.create(:game)
+    black_queen = game.pieces.find_by(type: 'Queen', color: false)
+    black_queen.update_attributes(x_position: 7, y_position: 3)
+    game.pieces.find_by(x_position: 5, y_position: 1).destroy
+    black_queen.reload
+
+    assert_equal false, black_queen.can_be_captured?
+  end
 end

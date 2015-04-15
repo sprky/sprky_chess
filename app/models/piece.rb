@@ -25,15 +25,15 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  # def can_capture_piece_causing_check
-  #  opponents = Piece.where(color: !color, state: !'captured').to_a
-  #  opponents.each do |piece|
-  #    if piece.capture_move?(x_position: x_position, y_position: y_position)
-  #      return true
-  #    end
-  #  end
-  #  false
-  # end
+  def can_be_captured?
+    opponents = Piece.where("color = ? and state != 'captured'", !color).to_a
+    opponents.each do |opposing_piece|
+      if opposing_piece.valid_move?(x_position, y_position) && opposing_piece.capture_move?(x_position, y_position)
+        return true
+      end
+    end
+    false
+  end
 
   def capture_move?(x, y)
     captured_piece = game.obstruction(x, y)
