@@ -90,7 +90,7 @@ class Piece < ActiveRecord::Base
   def valid_move?(x, y)
     return false if nil_move?(x, y)
     return false unless move_on_board?(x, y)
-    return false unless moving_own_piece?
+    # return false unless moving_own_piece?
     return false unless legal_move?(x, y)
     return false if obstructed_move?(x, y)
     return false if destination_obstructed?(x, y)
