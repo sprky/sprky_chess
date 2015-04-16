@@ -28,11 +28,12 @@ class Piece < ActiveRecord::Base
   def can_be_blocked?(king)
     pos_x = x_position
     pos_y = y_position
+    puts type
     if type = 'Knight' 
       return false
-    elsif type = 'Pawn'
+    elsif type == 'Pawn'
       return false
-    elsif type = 'Rook'
+    elsif type == 'Rook'
       if king.y_position == pos_y # move is in x direction
       # determine increment value
         horizontal_increment = king.x_position > pos_x ? 1 : -1
@@ -42,7 +43,7 @@ class Piece < ActiveRecord::Base
         vertical_increment = king.y_position > pos_y ? 1 : -1
         horizontal_increment = 0
       end
-    elsif type = 'Bishop'
+    elsif type == 'Bishop'
       horizontal_increment = king.x_position > pos_x ? 1 : -1
       vertical_increment = king.y_position > pos_y ? 1 : -1
     elsif type == 'Queen'
