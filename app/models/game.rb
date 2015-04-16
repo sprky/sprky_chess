@@ -28,7 +28,7 @@ class Game < ActiveRecord::Base
 
     opponents.each do |piece|
       if piece.valid_move?(king.x_position, king.y_position)
-        # piece_causing_check = piece
+        @piece_causing_check = piece
         return true
       end
     end
@@ -39,14 +39,17 @@ class Game < ActiveRecord::Base
   def checkmate?(color)
     checked_king = pieces.find_by(type: 'King', color: color)
 
+    # make sure color is in check and get @piece_causing_check
+    return false unless check?(color)
+
     # see if king can get himself out of check
     return false if checked_king.can_move_out_of_check?
 
     # # see if another piece can block check
     # return false if piece_can_block_check
 
-    # # see if another piece can capture checking piece
-    # return false if piece_causing_check.can_be_captured?
+    # see if another piece can capture checking piece
+    return false if @piece_causing_check.can_be_captured?
 
     true
   end
@@ -122,12 +125,8 @@ class Game < ActiveRecord::Base
   def update_state(current_player_color)
     # check if opposite player is in check
     if check?(!current_player_color)
-      puts "We're in check. Look for checkmate"
       if checkmate?(!current_player_color)
-        puts
-        puts '*!&^' * 20
-        puts
-        puts 'Checkmate'
+        update_attributes(state: 'checkmate')
       else
         # if so, game state is check
         update_attributes(state: 'check')

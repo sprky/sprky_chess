@@ -12,7 +12,6 @@ class King < Piece
       ((y_position - 1)..(y_position + 1)).each do |y|
         Piece.transaction do
           move_to(self, x_position: x, y_position: y)
-
           # if game.check?(color) comes up false,
           # even once, assign  true
           success = true unless game.check?(color)
