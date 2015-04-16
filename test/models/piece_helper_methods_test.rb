@@ -76,65 +76,65 @@ class PieceTest < ActiveSupport::TestCase
     assert_not @pawn.moving_own_piece?
   end
 
-  test 'should be able to escape check' do
-    game = FactoryGirl.create(
-      :game,
-      black_player_id: 1,
-      white_player_id: 2,
-      turn: 2)
-    game.assign_pieces
-    FactoryGirl.create(
-      :knight,
-      player_id: 1,
-      x_position: 5,
-      y_position: 2,
-      game_id: game.id,
-      color: false)
+  # test 'should be able to escape check' do
+  #   game = FactoryGirl.create(
+  #     :game,
+  #     black_player_id: 1,
+  #     white_player_id: 2,
+  #     turn: 2)
+  #   game.assign_pieces
+  #   FactoryGirl.create(
+  #     :knight,
+  #     player_id: 1,
+  #     x_position: 5,
+  #     y_position: 2,
+  #     game_id: game.id,
+  #     color: false)
 
-    pawn = game.pieces.where(
-      player_id: 2,
-      x_position: 4,
-      y_position: 1,
-      game_id: game.id,
-      color: true).first
+  #   pawn = game.pieces.where(
+  #     player_id: 2,
+  #     x_position: 4,
+  #     y_position: 1,
+  #     game_id: game.id,
+  #     color: true).first
 
-    pawn.update_piece(nil, nil, 'captured')
+  #   pawn.update_piece(nil, nil, 'captured')
 
-    king = game.pieces.where(
-      type: 'King',
-      player_id: 2,
-      game_id: game.id,
-      color: true).first
+  #   king = game.pieces.where(
+  #     type: 'King',
+  #     player_id: 2,
+  #     game_id: game.id,
+  #     color: true).first
 
-    assert king.valid_move?(4, 1)
+  #   assert king.valid_move?(4, 1)
 
-    assert king.can_move_out_of_check?
-  end
+  #   assert king.can_move_out_of_check?
+  # end
 
-  test 'should not be able to escape check' do
-    game = FactoryGirl.create(
-      :game,
-      black_player_id: 1,
-      white_player_id: 2,
-      turn: 1)
-    game.assign_pieces
-    FactoryGirl.create(
-      :knight,
-      player_id: 1,
-      x_position: 5,
-      y_position: 2,
-      game_id: game.id,
-      color: false)
+  # test 'should not be able to escape check' do
+  #   game = FactoryGirl.create(
+  #     :game,
+  #     black_player_id: 1,
+  #     white_player_id: 2,
+  #     turn: 1)
+  #   game.assign_pieces
+  #   FactoryGirl.create(
+  #     :knight,
+  #     player_id: 1,
+  #     x_position: 5,
+  #     y_position: 2,
+  #     game_id: game.id,
+  #     color: false)
 
-    king = game.pieces.where(
-      player_id: 2,
-      x_position: 4,
-      y_position: 0,
-      game_id: game.id,
-      color: true).first
+  #   king = game.pieces.where(
+  #     player_id: 2,
+  #     x_position: 4,
+  #     y_position: 0,
+  #     game_id: game.id,
+  #     color: true).first
 
-    assert_not king.can_move_out_of_check?
-  end
+  #   assert_not king.can_move_out_of_check?
+  # end
 
   def setup_pieces
     @player = FactoryGirl.create(:player)

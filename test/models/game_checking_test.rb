@@ -24,8 +24,8 @@ class GameCheckingTest < ActiveSupport::TestCase
     @game.reload
 
     assert @game.check? true
-    # assert @white_king.can_move_out_of_check?
-    # assert_not @game.checkmate?(true)
+    assert @white_king.can_move_out_of_check?
+    assert_not @game.checkmate?(true)
   end
 
   test 'Should not be in checkmate, queen can be captured' do
@@ -33,10 +33,11 @@ class GameCheckingTest < ActiveSupport::TestCase
 
     @white_rook = @game.pieces.find_by(x_position: 0, y_position: 0)
     @white_rook.update_piece(0, 3, 'moved')
+    @white_rook.reload
 
     assert @game.check? true
-    # assert @black_queen.can_be_captured?
-    # assert_not @game.checkmate?(true)
+    assert @black_queen.can_be_captured?
+    assert_not @game.checkmate?(true)
   end
 
   def setup_check

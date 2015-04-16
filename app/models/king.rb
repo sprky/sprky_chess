@@ -7,6 +7,7 @@ class King < Piece
 
   # determine if king can move himself out of check
   def can_move_out_of_check?
+    game.switch_players(color)
     success = false
     ((x_position - 1)..(x_position + 1)).each do |x|
       ((y_position - 1)..(y_position + 1)).each do |y|

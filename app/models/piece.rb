@@ -26,9 +26,10 @@ class Piece < ActiveRecord::Base
   end
 
   def can_be_captured?
+    game.switch_players(!color)
     opponents = game.pieces.where("color = ? and state != 'captured'", !color).to_a
     opponents.each do |opposing_piece|
-      if opposing_piece.valid_move?(x_position, y_position) && opposing_piece.capture_move?(x_position, y_position)
+      if opposing_piece.valid_move?(x_position, y_position)
         return true
       end
     end
