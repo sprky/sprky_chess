@@ -49,7 +49,7 @@ class Game < ActiveRecord::Base
     return false if @piece_causing_check.can_be_captured?
 
     # # see if another piece can block check
-    # return false if piece_can_block_check
+    return false if @piece_causing_check.can_be_blocked?(checked_king)
 
     true
   end

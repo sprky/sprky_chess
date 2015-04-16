@@ -25,6 +25,59 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  def can_be_blocked?(king)
+    pos_x = x_position
+    pos_y = y_position
+    if type = 'Knight' 
+      return false
+    elsif type = 'Pawn'
+      return false
+    elsif type = 'Rook'
+      if king.y_position == pos_y # move is in x direction
+      # determine increment value
+        horizontal_increment = king.x_position > pos_x ? 1 : -1
+        vertical_increment = 0
+      else
+      # determine increment value
+        vertical_increment = king.y_position > pos_y ? 1 : -1
+        horizontal_increment = 0
+      end
+    elsif type = 'Bishop'
+      horizontal_increment = king.x_position > pos_x ? 1 : -1
+      vertical_increment = king.y_position > pos_y ? 1 : -1
+    elsif type == 'Queen'
+      puts king.inspect
+      if king.y_position == pos_y # move is in x direction
+      # determine increment value
+        horizontal_increment = king.x_position > pos_x ? 1 : -1
+        vertical_increment = 0
+      elsif king.x_position == pos_x # move is in y direction
+      # determine increment value
+        vertical_increment = king.y_position > pos_y ? 1 : -1
+        horizontal_increment = 0
+      else
+        horizontal_increment = king.x_position > pos_x ? 1 : -1
+        vertical_increment = king.y_position > pos_y ? 1 : -1
+      end 
+    end
+
+    # increment once to move off of starting square
+    pos_x += horizontal_increment
+    pos_y += vertical_increment
+    blockers = game.pieces.where("color = ? and state != 'captured'", !color).to_a
+    puts blockers.inspect
+    blockers.each do |blocker|
+    # loop through all values stopping before x, y
+      while (king.x_position - pos_x).abs > 0 || (king.y_position - pos_y).abs > 0
+      # return true if we find an obstruction
+        return true if blocker.valid_move?(pos_x, pos_y)
+        pos_x += horizontal_increment
+        pos_y += vertical_increment
+      end
+      false
+    end
+  end   
+
   def can_be_captured?
     game.switch_players(!color)
     opponents = game.pieces.where("color = ? and state != 'captured'", !color).to_a
@@ -90,7 +143,7 @@ class Piece < ActiveRecord::Base
   def valid_move?(x, y)
     return false if nil_move?(x, y)
     return false unless move_on_board?(x, y)
-    return false unless moving_own_piece?
+   # return false unless moving_own_piece?
     return false unless legal_move?(x, y)
     return false if obstructed_move?(x, y)
     return false if destination_obstructed?(x, y)
