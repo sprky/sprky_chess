@@ -12,7 +12,7 @@ class Piece < ActiveRecord::Base
 
   def attempt_move(piece, params)
     Piece.transaction do
-      move_to(piece, params)
+      move_to(piece, params) if moving_own_piece?
       game = piece.game
       game.update_attributes(state: nil)
       if game.check?(color)
@@ -47,7 +47,7 @@ class Piece < ActiveRecord::Base
     x = params[:x_position].to_i
     y = params[:y_position].to_i
 
-    if piece.valid_move?(x, y) && moving_own_piece?
+    if piece.valid_move?(x, y)
       if capture_move?(x, y)
         captured = game.obstruction(x, y)
         captured.update_piece(nil, nil, 'captured')
