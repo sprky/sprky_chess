@@ -19,10 +19,6 @@ class Game < ActiveRecord::Base
 
   # determines if color is in check
   def check?(color)
-    # make sure it's other player's turn
-    switch_players(!color)
-    # puts "Checking #{color}. Turn is #{turn}"
-
     king = pieces.find_by(type: 'King', color: color)
     opponents = pieces_remaining(!color)
 

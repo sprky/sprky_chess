@@ -16,7 +16,7 @@ class Piece < ActiveRecord::Base
   # puts player into check
   def attempt_move(piece, params)
     Piece.transaction do
-      move_to(piece, params)
+      move_to(piece, params) if moving_own_piece?
       if game.check?(color)
         fail ActiveRecord::Rollback
       end
@@ -26,7 +26,6 @@ class Piece < ActiveRecord::Base
   end
 
   def can_be_captured?
-    game.switch_players(!color)
     opponents = game.pieces.where("color = ? and state != 'captured'", !color).to_a
     opponents.each do |opposing_piece|
       if opposing_piece.valid_move?(x_position, y_position)
@@ -90,7 +89,6 @@ class Piece < ActiveRecord::Base
   def valid_move?(x, y)
     return false if nil_move?(x, y)
     return false unless move_on_board?(x, y)
-    # return false unless moving_own_piece?
     return false unless legal_move?(x, y)
     return false if obstructed_move?(x, y)
     return false if destination_obstructed?(x, y)
