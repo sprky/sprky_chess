@@ -12,11 +12,10 @@ class King < Piece
     ((x_position - 1)..(x_position + 1)).each do |x|
       ((y_position - 1)..(y_position + 1)).each do |y|
         Piece.transaction do
-          move_to(self, x_position: x, y_position: y)
+          move_to(self, x_position: x, y_position: y) if valid_move?(x, y)
           # if game.check?(color) comes up false,
           # even once, assign  true
           success = true unless game.check?(color)
-
           # reset any attempted moves
           fail ActiveRecord::Rollback
         end
