@@ -24,17 +24,27 @@ class GameTest < ActiveSupport::TestCase
   end
 
   test 'Should assign player_id to pieces' do
-    game = FactoryGirl.create(:game, black_player_id: 1, white_player_id: 2)
-    game.assign_pieces
+    setup_game
 
-    assert_equal 16, game.pieces.where(player_id: 1).count
-    assert_equal 16, game.pieces.where(player_id: 2).count
+    assert_equal 16, @game.pieces.where(player_id: 1).count
+    assert_equal 16, @game.pieces.where(player_id: 2).count
   end
 
-  test 'Should note game is in a state of check' do
-    game = FactoryGirl.create(:game, black_player_id: 1, white_player_id: 2, turn: 1)
-    game.assign_pieces
-    FactoryGirl.create(:knight, player_id: 1, x_position: 5, y_position: 2, game_id: game.id, color: false)
-    assert game.check?(true)
+  test 'pieces remaining' do
+    setup_game
+
+    expected = 16
+    actual = @game.pieces_remaining(true).length
+
+    assert_equal expected, actual
+  end
+
+  def setup_game
+    @game = FactoryGirl.create(
+      :game,
+      black_player_id: 1,
+      white_player_id: 2,
+      turn: 1)
+    @game.assign_pieces
   end
 end

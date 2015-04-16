@@ -2,20 +2,23 @@ class PiecesController < ApplicationController
   def update
     @piece = Piece.find(params[:id])
     @game = @piece.game
-    if your_turn?
-      # move piece if move is valid
-      @piece.attempt_move(@piece, piece_params)
-    end
+    # attempt to move piece
+    @piece.attempt_move(@piece, piece_params) if your_turn?
+
     render json: {
       update_url: game_path(@game)
     }
-    update_firebase(update_url: game_path(@game), time_stamp: Time.now.to_i)
+    update_firebase(
+      update_url: game_path(@game),
+      time_stamp: Time.now.to_i)
   end
 
   private
 
   def piece_params
-    @piece_params = params.require(:piece).permit(:x_position, :y_position)
+    @piece_params = params.require(:piece).permit(
+      :x_position,
+      :y_position)
   end
 
   def your_turn?

@@ -1,3 +1,5 @@
+require 'byebug'
+
 class Piece < ActiveRecord::Base
   MIN_BOARD_SIZE = 0
   MAX_BOARD_SIZE = 7
@@ -10,15 +12,28 @@ class Piece < ActiveRecord::Base
 
   include Obstructions
 
+  # use transactions to attempt a move, fail and rollback if move
+  # puts player into check
   def attempt_move(piece, params)
     Piece.transaction do
       move_to(piece, params)
-      game = piece.game
-      game.update_attributes(state: nil)
       if game.check?(color)
         fail ActiveRecord::Rollback
       end
+      # update current state of check, checkmate, etc.
+      game.update_state(color)
     end
+  end
+
+  def can_be_captured?
+    game.switch_players(!color)
+    opponents = game.pieces.where("color = ? and state != 'captured'", !color).to_a
+    opponents.each do |opposing_piece|
+      if opposing_piece.valid_move?(x_position, y_position)
+        return true
+      end
+    end
+    false
   end
 
   def capture_move?(x, y)
@@ -54,9 +69,10 @@ class Piece < ActiveRecord::Base
       end
 
       update_piece(x, y, 'moved')
-      game.switch_players(player_id)
-      game.update_attributes(state: 'check') if game.check?(!color)
+      return true
     end
+
+    false
   end
 
   def nil_move?(x, y)
@@ -74,14 +90,10 @@ class Piece < ActiveRecord::Base
   def valid_move?(x, y)
     return false if nil_move?(x, y)
     return false unless move_on_board?(x, y)
-    return false unless moving_own_piece?
+    # return false unless moving_own_piece?
     return false unless legal_move?(x, y)
     return false if obstructed_move?(x, y)
     return false if destination_obstructed?(x, y)
-
-    # check that the move doesn't put the king into check
-    # return false if move_causes_check?(x, y) - pull this out of valid_move?
-
     true
   end
 

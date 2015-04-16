@@ -6,4 +6,12 @@ class Bishop < Piece
   def obstructed_move?(x, y)
     obstructed_diagonally?(x, y)
   end
+
+  def x_scope
+    7
+  end
+
+  def y_scope
+    7
+  end
 end

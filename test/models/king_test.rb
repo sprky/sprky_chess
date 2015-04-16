@@ -41,67 +41,43 @@ class KingTest < ActiveSupport::TestCase
     assert @king.obstructed_move?(6, 0)
   end
 
-  test 'Should castle kingside' do
+  test 'Should allow king normal move' do
     setup_game_and_king
-    setup_castling
 
-    assert @king.legal_castle_move?(6, 0)
+    # remove piece in front of white king
+    @game.pieces.find_by(x_position: 4, y_position: 1).destroy
 
-    @king.castle_move
+    @king.move_to(@king, x_position: 4, y_position: 1)
     @king.reload
-    @kings_rook.reload
 
-    assert_equal 6, @king.x_position, 'King moves to castle position'
-    assert_equal 'castled', @king.state, 'King is marked castled'
-    assert_equal 5, @kings_rook.x_position, 'Rook moves to castle position'
-    assert_equal 'moved', @kings_rook.state, 'Rook is marked moved'
+    assert_equal 1, @king.y_position, 'King moved'
+    assert_equal 'moved', @king.state, 'King is marked moved'
   end
 
-  test 'Should castle queenside' do
-    setup_game_and_king
-    setup_castling
+  test 'Should move himself out of check' do
+    setup_check
 
-    assert @king.legal_castle_move?(2, 0)
+    @game.pieces.find_by(x_position: 4, y_position: 1).destroy
 
-    @king.castle_move
-    @king.reload
-    @queens_rook.reload
-
-    assert_equal 2, @king.x_position, 'King moves to castle position'
-    assert_equal 3, @queens_rook.x_position, 'Rook moves to castle position'
+    assert @king.can_move_out_of_check?
   end
 
-  test 'Should return kingside rook' do
-    setup_game_and_king
-    setup_castling
+  test 'Should not be able to move himself out of check' do
+    setup_check
 
-    assert_equal @kings_rook, @king.rook_for_castling('King')
-  end
-
-  test 'Should return queenside rook' do
-    setup_game_and_king
-    setup_castling
-
-    assert_equal @queens_rook, @king.rook_for_castling('Queen')
-  end
-
-  test 'Should return nil for no rook' do
-    setup_game_and_king
-    setup_castling
-
-    @kings_rook.destroy
-    assert_equal nil, @king.rook_for_castling('King')
+    assert_not @king.can_move_out_of_check?
   end
 
   # setup new game and find white king
   def setup_game_and_king
     @game = FactoryGirl.create(:game)
-    @king = @game.pieces.find_by(type: 'King', x_position: 4, y_position: 0)
+    @king = @game.pieces.find_by(type: 'King', color: true)
   end
 
-  # define kingside rook and queenside rook
-  def setup_castling
-    @kings_rook = @game.pieces.find_by(type: 'Rook', x_position: 7, y_position: 0)
-    @queens_rook = @game.pieces.find_by(type: 'Rook', x_position: 0, y_position: 0)
+  def setup_check
+    setup_game_and_king
+    @black_queen = @game.pieces.find_by(type: 'Queen', color: false)
+    @black_queen.update_attributes(x_position: 7, y_position: 3)
+    @game.pieces.find_by(x_position: 5, y_position: 1).destroy
   end
 end

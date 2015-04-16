@@ -76,4 +76,12 @@ class Pawn < Piece
     y_diff = (y - y_position).abs
     first_move?(y) ? (y_diff == 1 || y_diff == 2) : y_diff == 1
   end
+
+  def x_scope
+    1
+  end
+
+  def y_scope
+    2
+  end
 end
