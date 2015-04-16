@@ -28,18 +28,18 @@ class Piece < ActiveRecord::Base
   def can_be_blocked?(king)
     pos_x = x_position
     pos_y = y_position
-    puts type
-    if type = 'Knight' 
+
+    if type == 'Knight'
       return false
     elsif type == 'Pawn'
       return false
     elsif type == 'Rook'
       if king.y_position == pos_y # move is in x direction
-      # determine increment value
+        # determine increment value
         horizontal_increment = king.x_position > pos_x ? 1 : -1
         vertical_increment = 0
       else
-      # determine increment value
+        # determine increment value
         vertical_increment = king.y_position > pos_y ? 1 : -1
         horizontal_increment = 0
       end
@@ -47,13 +47,12 @@ class Piece < ActiveRecord::Base
       horizontal_increment = king.x_position > pos_x ? 1 : -1
       vertical_increment = king.y_position > pos_y ? 1 : -1
     elsif type == 'Queen'
-      puts king.inspect
       if king.y_position == pos_y # move is in x direction
-      # determine increment value
+        # determine increment value
         horizontal_increment = king.x_position > pos_x ? 1 : -1
         vertical_increment = 0
       elsif king.x_position == pos_x # move is in y direction
-      # determine increment value
+        # determine increment value
         vertical_increment = king.y_position > pos_y ? 1 : -1
         horizontal_increment = 0
       else
@@ -65,19 +64,18 @@ class Piece < ActiveRecord::Base
     # increment once to move off of starting square
     pos_x += horizontal_increment
     pos_y += vertical_increment
-    blockers = game.pieces.where("color = ? and state != 'captured'", !color).to_a
-    puts blockers.inspect
-    blockers.each do |blocker|
-    # loop through all values stopping before x, y
-      while (king.x_position - pos_x).abs > 0 || (king.y_position - pos_y).abs > 0
-      # return true if we find an obstruction
+    blockers = game.pieces_remaining(!color)
+    while (king.x_position - pos_x).abs > 0 || (king.y_position - pos_y).abs > 0
+      # loop through all values stopping before x, y
+      blockers.each do |blocker|
+        # return true if we find an obstruction
         return true if blocker.valid_move?(pos_x, pos_y)
-        pos_x += horizontal_increment
-        pos_y += vertical_increment
       end
-      false
+      pos_x += horizontal_increment
+      pos_y += vertical_increment
     end
-  end   
+    false
+  end
 
   def can_be_captured?
     opponents = game.pieces.where("color = ? and state != 'captured'", !color).to_a

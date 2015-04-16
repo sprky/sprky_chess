@@ -45,8 +45,8 @@ class GameCheckingTest < ActiveSupport::TestCase
 
     assert @game.check? true
     assert pawn.valid_move?(6, 2)
-    assert_equal 'Queen', @black_queen.type, 
-    # assert @black_queen.can_be_blocked?(@white_king)
+    assert_equal 'Queen', @black_queen.type
+    assert @black_queen.can_be_blocked?(@white_king)
     assert_not @game.checkmate?(true)
   end
 
