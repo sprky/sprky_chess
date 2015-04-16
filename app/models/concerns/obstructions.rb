@@ -5,14 +5,17 @@ module Obstructions
     destination_obstruction && destination_obstruction.color == color
   end
 
-  def obstructed_diagonally?(x, y)
+  def diagonal_obstruction_array(x, y)
     # store piece x & y positions in local variables
     pos_x = x_position
     pos_y = y_position
 
+    #create return array of [ [x1,y1], [x2, y2], ... ]
+    obstruction_array = []
+
     # check for moves that aren't diagonal
-    return false if x == pos_x
-    return false if y == pos_y
+    return [] if x == pos_x
+    return [] if y == pos_y
 
     # determine horizontal and vertical increment values
     horizontal_increment = x > pos_x ? 1 : -1
@@ -24,20 +27,36 @@ module Obstructions
 
     # loop through all values stopping before x, y
     while (x - pos_x).abs > 0 && (y - pos_y).abs > 0
-      # return true if we find an obstruction
-      return true if game.obstruction(pos_x, pos_y)
+      # push each coordinate pair to the array
+      obstruction_array << [pos_x, pos_y]
       pos_x += horizontal_increment
       pos_y += vertical_increment
+    end
+    # return array
+    obstruction_array
+  end
+
+  def obstructed_diagonally?(x, y)
+    obstruction_array = diagonal_obstruction_array(x, y)
+
+    return false if obstruction_array.empty?
+
+    obstruction_array.each do |square|
+      # return true if we find an obstruction
+      return true if game.obstruction(square[0], square[1])
     end
 
     # default to false
     false
   end
 
-  def obstructed_rectilinearly?(x, y)
+  def rectilinear_obstruction_array(x, y)
     # store piece x & y positions in local variables
     pos_x = x_position
     pos_y = y_position
+
+    #create return array of [ [x1,y1], [x2, y2], ... ]
+    obstruction_array = []
 
     if y == pos_y # move is in x direction
       # determine horizontal increment value
@@ -49,7 +68,7 @@ module Obstructions
       # loop through all values stopping before x
       while (x - pos_x).abs > 0
         # return true if we find an obstruction
-        return true if game.obstruction(pos_x, pos_y)
+        obstruction_array << [pos_x, pos_y]
         pos_x += horizontal_increment
       end
     elsif x == pos_x # move is in y direction
@@ -62,9 +81,22 @@ module Obstructions
       # loop through all values stopping before x
       while (y - pos_y).abs > 0
         # return true if we find an obstruction
-        return true if game.obstruction(pos_x, pos_y)
+        obstruction_array << [pos_x, pos_y]
         pos_y += vertical_increment
       end
+    end
+    # default to false
+    obstruction_array
+  end
+
+  def obstructed_rectilinearly?(x, y)
+    obstruction_array = rectilinear_obstruction_array(x, y)
+
+    return false if obstruction_array.empty?
+
+    obstruction_array.each do |square|
+      # return true if we find an obstruction
+      return true if game.obstruction(square[0], square[1])
     end
 
     # default to false
