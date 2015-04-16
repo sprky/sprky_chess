@@ -47,7 +47,7 @@ class Piece < ActiveRecord::Base
     x = params[:x_position].to_i
     y = params[:y_position].to_i
 
-    if piece.valid_move?(x, y)
+    if piece.valid_move?(x, y) && moving_own_piece?
       if capture_move?(x, y)
         captured = game.obstruction(x, y)
         captured.update_piece(nil, nil, 'captured')
@@ -74,7 +74,6 @@ class Piece < ActiveRecord::Base
   def valid_move?(x, y)
     return false if nil_move?(x, y)
     return false unless move_on_board?(x, y)
-    return false unless moving_own_piece?
     return false unless legal_move?(x, y)
     return false if obstructed_move?(x, y)
     return false if destination_obstructed?(x, y)
