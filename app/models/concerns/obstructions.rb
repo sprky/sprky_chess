@@ -10,7 +10,7 @@ module Obstructions
     pos_x = x_position
     pos_y = y_position
 
-    #create return array of [ [x1,y1], [x2, y2], ... ]
+    # create return array of [ [x1,y1], [x2, y2], ... ]
     obstruction_array = []
 
     # check for moves that aren't diagonal
@@ -36,26 +36,12 @@ module Obstructions
     obstruction_array
   end
 
-  def obstructed_diagonally?(x, y)
-    obstruction_array = diagonal_obstruction_array(x, y)
-
-    return false if obstruction_array.empty?
-
-    obstruction_array.each do |square|
-      # return true if we find an obstruction
-      return true if game.obstruction(square[0], square[1])
-    end
-
-    # default to false
-    false
-  end
-
   def rectilinear_obstruction_array(x, y)
     # store piece x & y positions in local variables
     pos_x = x_position
     pos_y = y_position
 
-    #create return array of [ [x1,y1], [x2, y2], ... ]
+    # create return array of [ [x1,y1], [x2, y2], ... ]
     obstruction_array = []
 
     if y == pos_y # move is in x direction
@@ -87,19 +73,5 @@ module Obstructions
     end
     # default to false
     obstruction_array
-  end
-
-  def obstructed_rectilinearly?(x, y)
-    obstruction_array = rectilinear_obstruction_array(x, y)
-
-    return false if obstruction_array.empty?
-
-    obstruction_array.each do |square|
-      # return true if we find an obstruction
-      return true if game.obstruction(square[0], square[1])
-    end
-
-    # default to false
-    false
   end
 end

@@ -3,8 +3,8 @@ class Rook < Piece
     x_position == x || y_position == y
   end
 
-  def obstructed_move?(x, y)
-    obstructed_rectilinearly?(x, y)
+  def obstructed_squares(x, y)
+    rectilinear_obstruction_array(x, y)
   end
 
   def x_scope

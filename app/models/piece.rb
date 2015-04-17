@@ -26,53 +26,14 @@ class Piece < ActiveRecord::Base
   end
 
   def can_be_blocked?(king)
-    pos_x = x_position
-    pos_y = y_position
+    obstruction_array = obstructed_squares(king.x_position, king.y_position)
 
-    if type == 'Knight'
-      return false
-    elsif type == 'Pawn'
-      return false
-    elsif type == 'Rook'
-      if king.y_position == pos_y # move is in x direction
-        # determine increment value
-        horizontal_increment = king.x_position > pos_x ? 1 : -1
-        vertical_increment = 0
-      else
-        # determine increment value
-        vertical_increment = king.y_position > pos_y ? 1 : -1
-        horizontal_increment = 0
-      end
-    elsif type == 'Bishop'
-      horizontal_increment = king.x_position > pos_x ? 1 : -1
-      vertical_increment = king.y_position > pos_y ? 1 : -1
-    elsif type == 'Queen'
-      if king.y_position == pos_y # move is in x direction
-        # determine increment value
-        horizontal_increment = king.x_position > pos_x ? 1 : -1
-        vertical_increment = 0
-      elsif king.x_position == pos_x # move is in y direction
-        # determine increment value
-        vertical_increment = king.y_position > pos_y ? 1 : -1
-        horizontal_increment = 0
-      else
-        horizontal_increment = king.x_position > pos_x ? 1 : -1
-        vertical_increment = king.y_position > pos_y ? 1 : -1
-      end 
-    end
-
-    # increment once to move off of starting square
-    pos_x += horizontal_increment
-    pos_y += vertical_increment
     blockers = game.pieces_remaining(!color)
-    while (king.x_position - pos_x).abs > 0 || (king.y_position - pos_y).abs > 0
-      # loop through all values stopping before x, y
-      blockers.each do |blocker|
+    blockers.each do |blocker|
+      obstruction_array.each do |square|
         # return true if we find an obstruction
-        return true if blocker.valid_move?(pos_x, pos_y)
+        return true if blocker.valid_move?(square[0], square[1])
       end
-      pos_x += horizontal_increment
-      pos_y += vertical_increment
     end
     false
   end
@@ -130,12 +91,26 @@ class Piece < ActiveRecord::Base
     x_position == x && y_position == y
   end
 
-  def obstructed_move?(_x, _y)
-    fail NotImplementedError 'Pieces must implement #obstructed_move?'
+  def obstructed_move?(x, y)
+    obstruction_array = obstructed_squares(x, y)
+
+    return false if obstruction_array.empty?
+
+    obstruction_array.each do |square|
+      # return true if we find an obstruction
+      return true if game.obstruction(square[0], square[1])
+    end
+
+    # default to false
+    false
   end
 
   def update_piece(x, y, state)
     update_attributes(x_position: x, y_position: y, state: state)
+  end
+
+  def obstructed_squares(_x, _y)
+    fail NotImplementedError 'Pieces must implement #obstructed_squares'
   end
 
   def valid_move?(x, y)

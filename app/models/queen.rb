@@ -4,8 +4,8 @@ class Queen < Piece
       (x_position - x).abs == (y_position - y).abs
   end
 
-  def obstructed_move?(x, y)
-    obstructed_diagonally?(x, y) || obstructed_rectilinearly?(x, y)
+  def obstructed_squares(x, y)
+    diagonal_obstruction_array(x, y).concat rectilinear_obstruction_array(x, y)
   end
 
   def x_scope
