@@ -1,7 +1,7 @@
 require 'test_helper'
 
 # Tests specific to legal_move? Pawn logic
-class PawnLegalMoveTest < ActiveSupport::TestCase
+class PawnEnPassantTest < ActiveSupport::TestCase
   test 'Should update piece state to en passant for one turn' do
     setup_game_and_pawns
 
