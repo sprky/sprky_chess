@@ -18,15 +18,6 @@ class PawnLegalMoveTest < ActiveSupport::TestCase
     assert @white_pawn.legal_move?(1, 3)
   end
 
-  test 'Should update piece state to en passant' do
-    setup_game_and_white_pawn
-
-    @white_pawn.move_to(@white_pawn, {x_position: 1, y_position: 3})
-    @white_pawn.reload
-
-    assert_equal 'en_passant', @white_pawn.state, 'Pawn is en passant'
-  end
-
   test 'legal white regular moves' do
     setup_game_and_white_pawn
     @white_pawn.update_piece(2, 3, 'moved')
@@ -64,7 +55,7 @@ class PawnLegalMoveTest < ActiveSupport::TestCase
       y_position: 2,
       color: false,
       game_id: @game.id)
-    
+
     FactoryGirl.create(
       :pawn,
       x_position: 1,

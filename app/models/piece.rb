@@ -82,7 +82,7 @@ class Piece < ActiveRecord::Base
 
       # clear any previous en passant states
       game.clear_en_passant(color)
-      
+
       if type == 'Pawn' && en_passant?(y)
         update_piece(x, y, 'en_passant')
       else

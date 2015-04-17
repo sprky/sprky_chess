@@ -10,8 +10,10 @@ class Pawn < Piece
 
     return false if captured_piece.blank?
     return false if captured_piece.color == color
-
-    captured_piece ? (x_diff == 1) && (y_diff == 1) : false
+    # test diagonal capture here because it works even if captured piece is en passant
+    return true if x_diff == 1 && y_diff == 1
+    return x_diff == 1 && y_diff == 0 if captured_piece.state == 'en_passant'
+    false
   end
 
   def en_passant?(y)
@@ -30,8 +32,6 @@ class Pawn < Piece
   end
 
   def move_to(piece, params)
-    p piece
-    p params
     x = params[:x_position].to_i
     y = params[:y_position].to_i
 
