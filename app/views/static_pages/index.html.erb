@@ -2,7 +2,7 @@
   <section class="top">
     <hgroup class="welcome vertical">
       <h1>THIS IS SPRKY</h1>
-      <h4 class="subheader">Online Chess&mdash;Ruby on Rails Style.</h4>
+      <h4 class="subheader">Online Chess&amp;mdash;Ruby on Rails Style.</h4>
     </hgroup>
   </section>
   <section class="features">
@@ -23,7 +23,7 @@
           <pre><code class="language-ruby">
         def capture_move?(x, y)
           captured_piece = game.obstruction(x, y)
-          captured_piece && captured_piece.color != color
+          captured_piece &amp;&amp; captured_piece.color != color
         end
         
         def mark_captured
@@ -99,7 +99,7 @@
 
               var isYourTurn = $('#gameboard').data('your-turn');
               // can only select a square if it's your turn and there's a piece on the square  
-              if (isYourTurn && ( pieceId != "" )) {
+              if (isYourTurn &amp;&amp; ( pieceId != "" )) {
                 $(piece).addClass('piece-selected');
                 piece_selected = true; 
                 piece_x_position = $(piece).data("x-position");
@@ -189,13 +189,13 @@
         <div class="team-member">
           <%= image_tag "hilary-sinkoff-bw@2x.jpg", size: '200x200' %>
           <div class="clearfix"></div>
-          <caption><a href="mailto:hsinkoff@hotmail.com" target="_blank">Hilary Sinkoff</a></caption>
+          <caption><a href="mailto:hsinkoff@hotmail.com">Hilary Sinkoff</a></caption>
 
         </div>
         <div class="team-member">
           <%= image_tag "michael-warren-bw@2x.jpg", size: '200x200' %>
           <div class="clearfix"></div>
-          <caption><a href="mailto:me@mchlwrrn.com" target="_blank">Michael Warren</a></caption>
+          <caption><a href="mailto:me@mchlwrrn.com">Michael Warren</a></caption>
         </div>
       </div>
     </div>
