@@ -50,6 +50,14 @@ class Game < ActiveRecord::Base
     true
   end
 
+  # en passant only exists for 1 turn.  Clear out previous
+  # en passant moves
+  def clear_en_passant(color)
+    pieces.where(
+      "color = ? and state = 'en_passant'",
+      color).update_all(state: 'moved')
+  end
+
   def initialize_board!
     # White Pieces
     (0..7).each do |i|
