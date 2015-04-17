@@ -31,12 +31,13 @@ class Pawn < Piece
     captured_piece ? (x_diff == 1) && (y_diff == 1) : false
   end
 
-  def obstructed_move?(x, y)
+  def obstructed_squares(x, y)
     # check if a white 2 square move with obstruction
-    return true if y_position == 1 && y == 3 && game.obstruction(x, 2)
+    return [[x, 2]] if y_position == 1 && y == 3
     # check if a black 2 square move with obstruction
-    return true if y_position == 6 && y == 4 && game.obstruction(x, 5)
-    false
+    return [[x, 5]] if y_position == 6 && y == 4
+
+    []
   end
 
   def can_promote?(y)

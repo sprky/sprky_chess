@@ -5,9 +5,9 @@ class Knight < Piece
     proper_length?(x, y)
   end
 
-  def obstructed_move?(_x, _y)
-    # knight jumps over pieces - can't be obstructed
-    false
+  def obstructed_squares(_x, _y)
+    # knight jumps over pieces - can't be obstructed - return empty
+    []
   end
 
   private

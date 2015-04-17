@@ -71,19 +71,19 @@ class King < Piece
     end
   end
 
-  def obstructed_move?(x, y)
+  def obstructed_squares(x, y)
     x_diff = (x - x_position)
 
     case x_diff
     when 2
       # move is kingside castle
-      obstructed_rectilinearly?(7, y)
+      rectilinear_obstruction_array(7, y)
     when -2
       # move is queenside castle
-      obstructed_rectilinearly?(0, y)
+      rectilinear_obstruction_array?(0, y)
     else
-      # otherwise king moves one space - can't be obstructed
-      return false
+      # otherwise king moves one space - can't be obstructed - return empty
+      return []
     end
   end
 
