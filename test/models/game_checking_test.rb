@@ -13,6 +13,7 @@ class GameCheckingTest < ActiveSupport::TestCase
 
     pawn2 = @game.pieces.find_by(type: 'Pawn', color: true, x_position: 6)
     pawn2.update_attributes(y_position: 3, state: 'moved')
+    pawn2.reload
 
     assert @game.checkmate?(true)
   end
@@ -35,6 +36,17 @@ class GameCheckingTest < ActiveSupport::TestCase
     @white_rook.reload
 
     assert @black_queen.can_be_captured?
+    assert_not @game.checkmate?(true)
+  end
+
+  test 'Should not be in checkmate, queen can be blocked' do
+    setup_check
+    pawn = Piece.find_by(color: true, x_position: 6)
+
+    assert @game.check? true
+    assert pawn.valid_move?(6, 2)
+    assert_equal 'Queen', @black_queen.type
+    assert @black_queen.can_be_blocked?(@white_king)
     assert_not @game.checkmate?(true)
   end
 

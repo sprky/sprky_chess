@@ -25,6 +25,19 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  def can_be_blocked?(king)
+    obstruction_array = obstructed_squares(king.x_position, king.y_position)
+
+    blockers = game.pieces_remaining(!color)
+    blockers.each do |blocker|
+      obstruction_array.each do |square|
+        # return true if we find an obstruction
+        return true if blocker.valid_move?(square[0], square[1])
+      end
+    end
+    false
+  end
+
   def can_be_captured?
     opponents = game.pieces.where("color = ? and state != 'captured'", !color).to_a
     opponents.each do |opposing_piece|
@@ -78,12 +91,26 @@ class Piece < ActiveRecord::Base
     x_position == x && y_position == y
   end
 
-  def obstructed_move?(_x, _y)
-    fail NotImplementedError 'Pieces must implement #obstructed_move?'
+  def obstructed_move?(x, y)
+    obstruction_array = obstructed_squares(x, y)
+
+    return false if obstruction_array.empty?
+
+    obstruction_array.each do |square|
+      # return true if we find an obstruction
+      return true if game.obstruction(square[0], square[1])
+    end
+
+    # default to false
+    false
   end
 
   def update_piece(x, y, state)
     update_attributes(x_position: x, y_position: y, state: state)
+  end
+
+  def obstructed_squares(_x, _y)
+    fail NotImplementedError 'Pieces must implement #obstructed_squares'
   end
 
   def valid_move?(x, y)
