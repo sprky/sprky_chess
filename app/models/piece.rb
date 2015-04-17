@@ -58,7 +58,7 @@ class Piece < ActiveRecord::Base
       else
         horizontal_increment = king.x_position > pos_x ? 1 : -1
         vertical_increment = king.y_position > pos_y ? 1 : -1
-      end 
+      end
     end
 
     # increment once to move off of starting square
