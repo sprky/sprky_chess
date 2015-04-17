@@ -1,10 +1,13 @@
 module Obstructions
+  # determines if a particular x, y coordinate is already occupied by a piece of the same color
   def destination_obstructed?(x, y)
     destination_obstruction = game.obstruction(x, y) # is there something at the destination
     # if it's the same color as piece it's a destination_obstruction
     destination_obstruction && destination_obstruction.color == color
   end
 
+  # create an array of location tuples [x,y] to be checked later for obstruction
+  # this method checks diagonally for queen and bishop
   def diagonal_obstruction_array(x, y)
     # store piece x & y positions in local variables
     pos_x = x_position
@@ -36,6 +39,8 @@ module Obstructions
     obstruction_array
   end
 
+  # create an array of location tuples [x,y] to be checked later for obstruction
+  # this method checks rectilinearly for queen, rook and king on castling moves
   def rectilinear_obstruction_array(x, y)
     # store piece x & y positions in local variables
     pos_x = x_position
@@ -53,7 +58,6 @@ module Obstructions
 
       # loop through all values stopping before x
       while (x - pos_x).abs > 0
-        # return true if we find an obstruction
         obstruction_array << [pos_x, pos_y]
         pos_x += horizontal_increment
       end
@@ -66,12 +70,11 @@ module Obstructions
 
       # loop through all values stopping before x
       while (y - pos_y).abs > 0
-        # return true if we find an obstruction
         obstruction_array << [pos_x, pos_y]
         pos_y += vertical_increment
       end
     end
-    # default to false
+    # return array
     obstruction_array
   end
 end
