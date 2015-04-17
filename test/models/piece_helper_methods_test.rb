@@ -46,12 +46,12 @@ class PieceTest < ActiveSupport::TestCase
   test 'should mark piece as captured' do
     setup_pieces
 
-    @piece.update_piece(nil, nil, 'captured')
+    @piece.update_piece(nil, nil, 'off-board')
     @piece.reload
 
     assert_nil @piece.x_position, 'Should be x_position: nil'
     assert_nil @piece.y_position, 'Should be y_position: nil'
-    assert_equal 'captured', @piece.state
+    assert_equal 'off-board', @piece.state
   end
 
   test 'should not be a move' do
@@ -98,7 +98,7 @@ class PieceTest < ActiveSupport::TestCase
   #     game_id: game.id,
   #     color: true).first
 
-  #   pawn.update_piece(nil, nil, 'captured')
+  #   pawn.update_piece(nil, nil, 'off-board')
 
   #   king = game.pieces.where(
   #     type: 'King',

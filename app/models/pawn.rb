@@ -48,7 +48,7 @@ class Pawn < Piece
     update_attributes(
       x_position: nil,
       y_position: nil,
-      state: 'captured')
+      state: 'off-board')
     Queen.create(
       game_id: game_id,
       x_position: x,
