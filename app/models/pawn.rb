@@ -18,7 +18,7 @@ class Pawn < Piece
 
   def en_passant?(y)
     y_diff = (y - y_position).abs
-    first_move?(y) ? (y_diff == 1 || y_diff == 2) : y_diff == 1
+    first_move?(y) ? (y_diff == 1 || y_diff == 2) : false
   end
 
   def legal_move?(x, y)
