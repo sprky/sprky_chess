@@ -90,7 +90,7 @@ class Piece < ActiveRecord::Base
     if piece.valid_move?(x, y)
       if capture_move?(x, y)
         captured = game.obstruction(x, y)
-        captured.update_piece(nil, nil, 'captured')
+        captured.update_piece(nil, nil, 'off-board')
       end
 
       update_piece(x, y, 'moved')
