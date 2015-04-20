@@ -17,10 +17,10 @@ class Piece < ActiveRecord::Base
   # puts player into check
   def attempt_move(piece, params)
     Piece.transaction do
-      move_to(piece, params) if moving_own_piece?
-      if game.check?(color)
-        fail ActiveRecord::Rollback
-      end
+      return false unless moving_own_piece?
+      fail ActiveRecord::Rollback unless move_to(piece, params)
+      fail ActiveRecord::Rollback if game.check?(color)
+
       # update current state of check, checkmate, etc.
       game.update_state(color)
     end
