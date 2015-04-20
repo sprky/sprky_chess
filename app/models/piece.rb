@@ -93,7 +93,15 @@ class Piece < ActiveRecord::Base
         captured.update_piece(nil, nil, 'off-board')
       end
 
-      update_piece(x, y, 'moved')
+      # clear any previous en passant states
+      game.clear_en_passant(color)
+
+      if type == 'Pawn' && en_passant?(y)
+        update_piece(x, y, 'en_passant')
+      else
+        update_piece(x, y, 'moved')
+      end
+
       return true
     end
 
