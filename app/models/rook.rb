@@ -6,12 +6,4 @@ class Rook < Piece
   def obstructed_squares(x, y)
     rectilinear_obstruction_array(x, y)
   end
-
-  def x_scope
-    7
-  end
-
-  def y_scope
-    7
-  end
 end

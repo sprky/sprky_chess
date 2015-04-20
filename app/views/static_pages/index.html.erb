@@ -2,7 +2,7 @@
   <section class="top">
     <hgroup class="welcome vertical">
       <h1>THIS IS SPRKY</h1>
-      <h4 class="subheader">Online Chess&mdash;Ruby on Rails Style.</h4>
+      <h4 class="subheader">Online Chess&amp;mdash;Ruby on Rails Style.</h4>
     </hgroup>
   </section>
   <section class="features">
@@ -23,47 +23,112 @@
           <pre><code class="language-ruby">
         def capture_move?(x, y)
           captured_piece = game.obstruction(x, y)
-          captured_piece && captured_piece.color != color
+          captured_piece &amp;&amp; captured_piece.color != color
         end
         
         def mark_captured
           update_attributes(
             x_position: nil,
             y_position: nil, 
-            state: 'captured')
+            state: 'off-board')
         end
           </code></pre>
           <div class="arrow"></div>
         </div>
         <div class="code-description">
-          <h4>Code Title</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam sint consequuntur inventore atque corrupti temporibus animi qui explicabo natus accusamus eum, nostrum eveniet, unde repudiandae in modi, iure aut tempora.</p>
+          <h4>Capture Move</h4>
+          <p>While a piece of either color on any square along a move path could cause an obstruction, the destination needed to be treated differently. We did this with a capture_move? method which returned a boolean.  To do this we checked the destination with game.obstruction(x, y) which returns either nil or a reference to the obstructing piece.  A simple check that the piece exists and is of opposite color gives us our result. Next, the mark_captured method will be called to move the piece off the board and mark it as captured.</p>
         </div>
       </div>
       <div class="code-box-container">
         <div class="code-example four">
           <pre><code class="language-ruby">
-        def capture_move?(x, y)
-          captured_piece = game.obstruction(x, y)
-          captured_piece && captured_piece.color != color
-        end
-        
-        def mark_captured
-          update_attributes(
-            x_position: nil,
-            y_position: nil, 
-            state: 'captured')
-        end
+            # determines if color( white(true) or black(false) ) is in check
+            def check?(color)
+              king = pieces.find_by(type: 'King', color: color)
+              opponents = pieces_remaining(!color)
+
+              opponents.each do |piece|
+                if piece.valid_move?(king.x_position, king.y_position)
+                  @piece_causing_check = piece
+                  return true
+                end
+              end
+              false
+            end
+
+            # determine if a state of checkmate has occurred for color( white(true) or black(false) )
+            def checkmate?(color)
+              checked_king = pieces.find_by(type: 'King', color: color)
+
+              # make sure color is in check and get @piece_causing_check
+              return false unless check?(color)
+
+              # see if king can get himself out of check
+              return false if checked_king.can_move_out_of_check?
+
+              # see if another piece can capture checking piece
+              return false if @piece_causing_check.can_be_captured?
+
+              # # see if another piece can block check
+              return false if @piece_causing_check.can_be_blocked?(checked_king)
+
+              true
+            end
           </code></pre>
           <div class="arrow red"></div>
         </div>
         <div class="code-description red three">
-          <h4>Code Title</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam sint consequuntur inventore atque corrupti temporibus animi qui explicabo natus accusamus eum, nostrum eveniet, unde repudiandae in modi, iure aut tempora.</p>
+          <h4>Check and Checkmate</h4>
+          <p>An integral part of the chess game, check and checkmate gave us our biggest logic challenge. Through several iterations and a number of refactors we eventually landed on two elegant and simple methods.</p>
+          <h5>Check</h5>
+          <p>Check is determined both before a move transaction is completed to ensure a player doesn't move into check and after to see if the opponent is in check. A simple iteration through all opponents to see if any of them can make a valid move to the king's position determines a state of check</p>
+          <h5>Checkmate</h5>
+          <p>Once a player is in check we determined that there are three ways to get out. If any of those are present the game is not in a state of checkmate. ActiveRecord transactions were set up to allow 2 levels of moves to be examined (moving a piece then seeing if a state of check exists) without altering the database.</p>
+          <p>A king can move himself out of check. This was the simplest method to implement by trying each of the possible king moves.</p>
+          <p>The piece causing check can be captured. This is accomplished by seeing if any opposing piece can capture the piece causing check.</p>
+          <p>Lastly, the move can be blocked. We resused code from our move obstruction method to get an array of possible squares that could be used for the block. Each opposing piece was checked to see if it could move into one of the blocking squares.</p>
         </div>
       </div>
       <div class="code-box-container">
         <div class="code-example">
+<<<<<<< HEAD
+          <pre><code class="language-js">
+            function selectPiece( piece ) {
+              var pieceId = $(piece).data("piece-id");
+              // can't select a square that doesn't have a piece
+
+              var isYourTurn = $('#gameboard').data('your-turn');
+              // can only select a square if it's your turn and there's a piece on the square  
+              if (isYourTurn &amp;&amp; ( pieceId != "" )) {
+                $(piece).addClass('piece-selected');
+                piece_selected = true; 
+                piece_x_position = $(piece).data("x-position");
+                piece_y_position = $(piece).data("y-position");
+                piecePathUrl = '/pieces/' + pieceId;
+              }
+            }
+
+            function sendMove( destination ) {
+              // source and destination are selected, send ajax call
+              destination_x_position = $(destination).data("x-position");
+              destination_y_position = $(destination).data("y-position");
+
+              $.ajax({
+                type: 'PUT',
+                url: piecePathUrl,
+                dataType: 'json',
+                data: { piece: { 
+                        x_position: destination_x_position,
+                        y_position: destination_y_position 
+                        }
+                      },
+                success: function(data) {
+                  $(location).attr('href', data.update_url);
+                }
+              });   
+            }
+=======
           <pre><code class="language-ruby">
         def capture_move?(x, y)
           captured_piece = game.obstruction(x, y)
@@ -74,14 +139,18 @@
           update_attributes(
             x_position: nil,
             y_position: nil, 
-            state: 'captured')
+            state: 'off-board')
         end
+>>>>>>> master
           </code></pre>
           <div class="arrow"></div>
         </div>
         <div class="code-description">
-          <h4>Code Title</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam sint consequuntur inventore atque corrupti temporibus animi qui explicabo natus accusamus eum, nostrum eveniet, unde repudiandae in modi, iure aut tempora.</p>
+          <h4>Javascript</h4>
+          <p>To reduce the number of http requests we implemented a number of checks on the front end which made extensive use of data attributes assigned to the html in our gameboard.html.erb function. These data attributes included data-game-id, data-your-turn, data-game-message as well as informatin within each square such as data-x-position, data-y-position and data-piece-id. This allowed our front-end to work seemlessly with our server-side logic.</p>
+          <p>In order to select a piece to move the code checks that there is a piece assigned to the square and that it's currently your turn.  Another javacript function determines a destination and triggers sendMove.</p>
+          <p>The sendMove function sends an AJAX call to our PiecesController with an updated x and y position. Upon success the controller returns with the correct URL for an updated game board (games/:id) and the page is reloaded.</p>
+          <p>Our goal is to modify this to update the gameboard partial rather than trigger a full page reload.</p>
         </div>
       </div>
     </div>
@@ -125,12 +194,12 @@
         <div class="team-member">
           <%= image_tag "aaron-washburn-bw@2x.jpg", size: '200x200' %>
           <div class="clearfix"></div>
-          <caption><a href="mailto:aaron@it-kutch.com">Aaron Washburn</a></caption>
+          <caption><a href="https://www.linkedin.com/in/washburnad" target="_blank">Aaron Washburn</a></caption>
         </div>
         <div class="team-member">
           <%= image_tag "john-ellison-bw@2x.jpg", size: '200x200' %>
           <div class="clearfix"></div>
-          <caption><a href="http://john-ellison.com">John Ellison</a></caption>
+          <caption><a href="http://john-ellison.com" target="_blank">John Ellison</a></caption>
         </div>
         <div class="team-member">
           <%= image_tag "hilary-sinkoff-bw@2x.jpg", size: '200x200' %>

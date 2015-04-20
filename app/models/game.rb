@@ -111,7 +111,7 @@ class Game < ActiveRecord::Base
 
   def pieces_remaining(color)
     pieces.includes(:game).where(
-      "color = ? and state != 'captured'",
+      "color = ? and state != 'off-board'",
       color).to_a
   end
 
