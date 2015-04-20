@@ -15,12 +15,4 @@ class Knight < Piece
   def proper_length?(x, y)
     (x_position - x).abs + (y_position - y).abs == 3
   end
-
-  def x_scope
-    3
-  end
-
-  def y_scope
-    3
-  end
 end

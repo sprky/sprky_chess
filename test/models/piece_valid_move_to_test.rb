@@ -83,7 +83,7 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
     assert_equal 2, white_pawn.x_position
     assert_equal 4, white_pawn.y_position
     black_pawn.reload
-    assert_equal 'captured', black_pawn.state, 'captured black pawn'
+    assert_equal 'off-board', black_pawn.state, 'captured black pawn'
   end
 
   test 'Should allow moved not causing check' do
@@ -105,7 +105,7 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
     black_queen = game.pieces.find_by(type: 'Queen', color: false)
     black_queen.update_attributes(x_position: 7, y_position: 3)
     pawn = game.pieces.find_by(x_position: 5, y_position: 1)
-    pawn.update_attributes(state: 'captured')
+    pawn.update_attributes(state: 'off-board')
     rook = game.pieces.find_by(type: 'Rook', color: true, x_position: 7)
     rook.update_attributes(x_position: 4, y_position: 3)
     black_queen.reload
