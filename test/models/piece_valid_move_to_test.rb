@@ -39,7 +39,7 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
       y_position: 4,
       color: true,
       game_id: game.id)
-    piece.move_to(piece, x_position: 7, y_position: 4)
+    piece.move_to(7, 4)
 
     # puts piece.move_to(piece, x_position: 7, y_position: 4)
 
@@ -56,7 +56,7 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
       y_position: 4,
       color: true,
       game_id: game.id)
-    piece.move_to(piece, x_position: 6, y_position: 4)
+    piece.move_to(6, 4)
 
     assert_equal 6, piece.x_position
     assert_equal 4, piece.y_position
@@ -78,7 +78,7 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
       color: false,
       game_id: game.id)
     assert white_pawn.capture_move?(2, 4), 'capture move'
-    white_pawn.move_to(white_pawn, x_position: 2, y_position: 4)
+    white_pawn.move_to(2, 4)
     white_pawn.reload
     assert_equal 2, white_pawn.x_position
     assert_equal 4, white_pawn.y_position
@@ -94,7 +94,7 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
       y_position: 4,
       color: false,
       game_id: game.id)
-    black_pawn.attempt_move(black_pawn, x_position: 2, y_position: 3)
+    black_pawn.attempt_move(x_position: 2, y_position: 3)
     black_pawn.reload
 
     assert_equal 3, black_pawn.y_position, 'Pawn moves to y position 3'

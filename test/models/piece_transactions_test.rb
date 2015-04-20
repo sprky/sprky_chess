@@ -6,7 +6,7 @@ class PieceTransactionsTest < ActiveSupport::TestCase
     setup_game_and_pieces
     @white_king.update_attributes(x_position: 4, y_position: 3)
     @white_king.reload
-    @white_king.attempt_move(@white_king, x_position: 4, y_position: 4)
+    @white_king.attempt_move(x_position: 4, y_position: 4)
     @white_king.reload
 
     assert_equal 3, @white_king.y_position, 'King reverts back to y position 3'
@@ -15,7 +15,7 @@ class PieceTransactionsTest < ActiveSupport::TestCase
 
   test 'Should revert database on castling move' do
     setup_game_and_pieces
-    @white_king.attempt_move(@white_king, x_position: 6, y_position: 0)
+    @white_king.attempt_move(x_position: 6, y_position: 0)
     @white_king.reload
     @white_kings_rook.reload
 

@@ -15,10 +15,13 @@ class Piece < ActiveRecord::Base
 
   # use transactions to attempt a move, fail and rollback if move
   # puts player into check
-  def attempt_move(piece, params)
+  def attempt_move(params)
     Piece.transaction do
+      x = params[:x_position].to_i
+      y = params[:y_position].to_i
+
       return false unless moving_own_piece?
-      fail ActiveRecord::Rollback unless move_to(piece, params)
+      fail ActiveRecord::Rollback unless move_to(x, y)
       fail ActiveRecord::Rollback if game.check?(color)
 
       # update current state of check, checkmate, etc.
@@ -83,11 +86,8 @@ class Piece < ActiveRecord::Base
 
   # this method carries out the movement of a piece and determines if there is also a
   # capture involved. Both king and pawn override this method to carry out special moves
-  def move_to(piece, params)
-    x = params[:x_position].to_i
-    y = params[:y_position].to_i
-
-    if piece.valid_move?(x, y)
+  def move_to(x, y)
+    if valid_move?(x, y)
       if capture_move?(x, y)
         captured = game.obstruction(x, y)
         captured.update_piece(nil, nil, 'off-board')

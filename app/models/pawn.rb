@@ -9,14 +9,11 @@ class Pawn < Piece
     proper_length?(y)
   end
 
-  def move_to(piece, params)
-    x = params[:x_position].to_i
-    y = params[:y_position].to_i
-
+  def move_to(x, y)
     if can_promote?(y) && valid_move?(x, y)
       promotion(x, y)
     else
-      super(piece, params)
+      super(x, y)
     end
   end
 

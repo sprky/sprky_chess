@@ -47,7 +47,7 @@ class KingTest < ActiveSupport::TestCase
     # remove piece in front of white king
     @game.pieces.find_by(x_position: 4, y_position: 1).destroy
 
-    @king.move_to(@king, x_position: 4, y_position: 1)
+    @king.move_to(4, 1)
     @king.reload
 
     assert_equal 1, @king.y_position, 'King moved'
