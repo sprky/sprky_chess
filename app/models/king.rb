@@ -11,7 +11,7 @@ class King < Piece
     ((x_position - 1)..(x_position + 1)).each do |x|
       ((y_position - 1)..(y_position + 1)).each do |y|
         Piece.transaction do
-          move_to(self, x_position: x, y_position: y) if valid_move?(x, y)
+          move_to(x, y) if valid_move?(x, y)
           # if game.check?(color) comes up false,
           # even once, assign  true
           success = true unless game.check?(color)
@@ -61,13 +61,11 @@ class King < Piece
     true
   end
 
-  def move_to(piece, params)
-    x = params[:x_position].to_i
-    y = params[:y_position].to_i
+  def move_to(x, y)
     if valid_move?(x, y) && legal_castle_move?(x, y)
       castle_move
     else
-      super(piece, params)
+      super(x, y)
     end
   end
 
