@@ -20,10 +20,10 @@ class Piece < ActiveRecord::Base
       x = params[:x_position].to_i
       y = params[:y_position].to_i
 
-      move_to(x, y) if moving_own_piece?
-      if game.check?(color)
-        fail ActiveRecord::Rollback
-      end
+      return false unless moving_own_piece?
+      fail ActiveRecord::Rollback unless move_to(x, y)
+      fail ActiveRecord::Rollback if game.check?(color)
+
       # update current state of check, checkmate, etc.
       game.update_state(color)
     end
