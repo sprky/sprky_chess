@@ -9,14 +9,11 @@ class Pawn < Piece
     proper_length?(y)
   end
 
-  def move_to(piece, params)
-    x = params[:x_position].to_i
-    y = params[:y_position].to_i
-
+  def move_to(x, y)
     if can_promote?(y) && valid_move?(x, y)
       promotion(x, y)
     else
-      super(piece, params)
+      super(x, y)
     end
   end
 
@@ -48,7 +45,7 @@ class Pawn < Piece
     update_attributes(
       x_position: nil,
       y_position: nil,
-      state: 'captured')
+      state: 'off-board')
     Queen.create(
       game_id: game_id,
       x_position: x,
@@ -75,13 +72,5 @@ class Pawn < Piece
   def proper_length?(y)
     y_diff = (y - y_position).abs
     first_move?(y) ? (y_diff == 1 || y_diff == 2) : y_diff == 1
-  end
-
-  def x_scope
-    1
-  end
-
-  def y_scope
-    2
   end
 end

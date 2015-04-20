@@ -30,7 +30,7 @@
           update_attributes(
             x_position: nil,
             y_position: nil, 
-            state: 'captured')
+            state: 'off-board')
         end
           </code></pre>
           <div class="arrow"></div>
@@ -92,6 +92,7 @@
       </div>
       <div class="code-box-container">
         <div class="code-example">
+<<<<<<< HEAD
           <pre><code class="language-js">
             function selectPiece( piece ) {
               var pieceId = $(piece).data("piece-id");
@@ -127,6 +128,20 @@
                 }
               });   
             }
+=======
+          <pre><code class="language-ruby">
+        def capture_move?(x, y)
+          captured_piece = game.obstruction(x, y)
+          captured_piece && captured_piece.color != color
+        end
+        
+        def mark_captured
+          update_attributes(
+            x_position: nil,
+            y_position: nil, 
+            state: 'off-board')
+        end
+>>>>>>> master
           </code></pre>
           <div class="arrow"></div>
         </div>

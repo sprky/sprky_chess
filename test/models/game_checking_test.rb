@@ -18,33 +18,20 @@ class GameCheckingTest < ActiveSupport::TestCase
     assert @game.checkmate?(true)
   end
 
-  test 'knight cannot be blocked to get out of check' do
-    @game = FactoryGirl.create(
-      :game,
-      black_player_id: 1,
-      white_player_id: 2,
-      turn: 1)
-    @game.assign_pieces
+  test 'knight can not be blocked to get out of check' do
+    setup_game_and_king
 
-    @white_king = @game.pieces.find_by(type: 'King', color: true)
     black_knight = @game.pieces.find_by(type: 'Knight', color: false, x_position: 1)
     black_knight.update_attributes(x_position: 5, y_position: 2)
     black_knight.reload
 
-    assert @game.check? true
     assert_not black_knight.can_be_blocked?(@white_king)
     assert_not @game.checkmate?(true) # not in checkmate because white_pawns can capture knight
   end
 
-  test 'pawn cannot be blocked to get out of check' do
-    @game = FactoryGirl.create(
-      :game,
-      black_player_id: 1,
-      white_player_id: 2,
-      turn: 1)
-    @game.assign_pieces
+  test 'pawn can not be blocked to get out of check' do
+    setup_game_and_king
 
-    @white_king = @game.pieces.find_by(type: 'King', color: true)
     white_pawn = @game.pieces.find_by(type: 'Pawn', color: true, x_position: 3)
     white_pawn.update_attributes(y_position: 4)
     white_pawn.reload
@@ -52,7 +39,6 @@ class GameCheckingTest < ActiveSupport::TestCase
     black_pawn.update_attributes(y_position: 1)
     black_pawn.reload
 
-    assert @game.check? true
     assert_not black_pawn.can_be_blocked?(@white_king)
     assert_not @game.checkmate?(true) # not in checkmate because white_queen can capture pawn
   end
@@ -116,7 +102,7 @@ class GameCheckingTest < ActiveSupport::TestCase
     assert_not @game.checkmate?(true)
   end
 
-  def setup_check
+  def setup_game_and_king
     @game = FactoryGirl.create(
       :game,
       black_player_id: 1,
@@ -125,6 +111,10 @@ class GameCheckingTest < ActiveSupport::TestCase
     @game.assign_pieces
 
     @white_king = @game.pieces.find_by(type: 'King', color: true)
+  end
+
+  def setup_check
+    setup_game_and_king
     @pawn1 = @game.pieces.find_by(type: 'Pawn', color: true, x_position: 5)
     @pawn1.update_attributes(y_position: 2, state: 'moved')
     @pawn1.reload

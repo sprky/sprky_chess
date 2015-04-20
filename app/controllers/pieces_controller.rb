@@ -3,7 +3,7 @@ class PiecesController < ApplicationController
     @piece = Piece.find(params[:id])
     @game = @piece.game
     # attempt to move piece
-    @piece.attempt_move(@piece, piece_params) if your_turn?
+    @piece.attempt_move(piece_params) if your_turn?
 
     render json: {
       update_url: game_path(@game)
