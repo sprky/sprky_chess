@@ -19,7 +19,7 @@ class PawnPromotionTest < ActiveSupport::TestCase
   test 'Should allow pawn promotion move' do
     setup_game_and_advanced_pawn
 
-    @pawn.move_to(@pawn, x_position: 1, y_position: 7)
+    @pawn.move_to(1, 7)
     @pawn.reload
 
     assert_equal nil, @pawn.x_position, 'Pawn x position is nil'
@@ -30,7 +30,7 @@ class PawnPromotionTest < ActiveSupport::TestCase
   test 'Should prevent pawn promotion move' do
     setup_game_and_advanced_pawn
     # pawn is blocked by a white pawn at 2, 7
-    @pawn.move_to(@pawn, x_position: 2, y_position: 7)
+    @pawn.move_to(2, 7)
     @pawn.reload
 
     refute_equal nil, @pawn.x_position, 'Pawn x position is not nil'
@@ -41,7 +41,7 @@ class PawnPromotionTest < ActiveSupport::TestCase
   test 'Should prevent backward move to promote' do
     setup_game_and_advanced_pawn
 
-    @pawn_to_move_backward.move_to(@pawn, x_position: 0, y_position: 0)
+    @pawn_to_move_backward.move_to(0, 0)
     @pawn.reload
 
     refute_equal nil, @pawn_to_move_backward.x_position, 'Pawn x position is not nil'
