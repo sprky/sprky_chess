@@ -62,11 +62,12 @@ $(document).ready(function() {
   // boolean and variables
   function selectPiece( piece ) {
     var pieceId = $(piece).data("piece-id");
+    console.log(pieceId);
     // can't select a square that doesn't have a piece
 
-    var isYourTurn = $('#gameboard').data('your-turn');
     // can only select a square if it's your turn and there's a piece on the square  
-    if (isYourTurn && ( pieceId != "" )) {
+    if (pieceId != "") {
+      console.log('piece selected');
 
       $(piece).addClass('piece-selected');
       piece_selected = true; 
@@ -77,6 +78,7 @@ $(document).ready(function() {
   }
 
   function sendMove( destination ) {
+    console.log('send move' + destination);
     // source and destination are selected, send ajax call
     var destination_x = $(destination).data("x-position");
     var destination_y = $(destination).data("y-position");
@@ -92,6 +94,7 @@ $(document).ready(function() {
             },
       success: function(data) {
         $(location).attr('href', data.update_url);
+        console.log('sent ajax call to ' + piecePathUrl);
       }
     });   
   }
