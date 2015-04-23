@@ -16,14 +16,14 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test 'Should return correct gameboard td for empty square' do
-    expected = "<td class='x-position-1'' data-x-position='1' data-y-position='6' data-piece-id=''></td>"
+    expected = "<td class='x-position-1'' data-x-position='1' data-y-position='6' data-piece-id='' data-piece-type=''></td>"
 
     assert_equal expected, gameboard_td(nil, 1, 6)
   end
 
   test 'Should return correct gameboard td for occupied square' do
     knight = FactoryGirl.create(:knight, color: false)
-    expected = "<td class='x-position-6'' data-x-position='6' data-y-position='7' data-piece-id='#{knight.id}'><img alt=\"Black knight\" src=\"/images/black-knight.svg\" /></td>"
+    expected = "<td class='x-position-6'' data-x-position='6' data-y-position='7' data-piece-id='#{knight.id}' data-piece-type='#{knight.type}'><img alt=\"Black knight\" src=\"/images/black-knight.svg\" /></td>"
 
     assert_equal expected, gameboard_td(knight, 6, 7)
   end
