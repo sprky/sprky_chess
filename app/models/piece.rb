@@ -1,5 +1,3 @@
-require 'byebug'
-
 class Piece < ActiveRecord::Base
   MIN_BOARD_SIZE = 0
   MAX_BOARD_SIZE = 7
