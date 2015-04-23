@@ -3,19 +3,19 @@ class PiecesController < ApplicationController
     @piece = Piece.find(params[:id])
     @game = @piece.game
 
-    unless your_turn?(current_player)
+    if !your_turn?(current_player)
       render text: 'It must be your turn',
              status: :unauthorized
-      else
-        @piece.attempt_move(piece_params)
+    else
+      @piece.attempt_move(piece_params)
 
-        render json: {
-          update_url: game_path(@game)
-        }
+      render json: {
+        update_url: game_path(@game)
+      }
 
-        update_firebase(
-          update_url: game_path(@game),
-          time_stamp: Time.now.to_i)
+      update_firebase(
+        update_url: game_path(@game),
+        time_stamp: Time.now.to_i)
     end
   end
 

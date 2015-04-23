@@ -20,7 +20,7 @@ class PiecesControllerTest < ActionController::TestCase
   end
 
   test 'should ensure correct player\'s turn' do
-    white_player = FactoryGirl.create(:player, id: 1)
+    FactoryGirl.create(:player, id: 1)
     black_player = FactoryGirl.create(:player, id: 2)
     sign_in black_player
 

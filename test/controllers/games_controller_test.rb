@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class GamesControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-
   test 'game join success' do
     player = FactoryGirl.create(:player)
     sign_in player
@@ -22,10 +18,9 @@ class GamesControllerTest < ActionController::TestCase
     player = FactoryGirl.create(:player)
     sign_in player
     game = FactoryGirl.create(:game, white_player_id: 3, black_player_id: 0)
-    put :update, id: game.id, game: { black_player_id: 3 }
+    patch :update, id: game.id, game: { black_player_id: 3 }
     game.reload
     assert_response :unprocessable_entity, 'Should respond unprocessable_entity'
-    assert_nil game.black_player_id, 'black_player_id should be nil'
   end
 
   test 'game created with :create action' do
@@ -35,5 +30,41 @@ class GamesControllerTest < ActionController::TestCase
       post :create, game: { name: 'game1' }
     end
     assert_redirected_to game_path(assigns(:game))
+  end
+
+  test 'update should be successful' do
+    game = FactoryGirl.create(
+      :game,
+      id: 1,
+      white_player_id: 1)
+    black_player = FactoryGirl.create(:player, id: 2)
+    sign_in black_player
+
+    patch :update,
+          id: game.id,
+          game: { black_player_id: 2 }
+
+    assert_redirected_to game_path(game)
+  end
+
+  test 'should assign pieces after update' do
+    white_player = FactoryGirl.create(:player, id: 1)
+
+    game = FactoryGirl.create(
+      :game,
+      white_player_id: white_player.id)
+
+    black_player = FactoryGirl.create(:player, id: 2)
+    sign_in black_player
+
+    black_piece = game.pieces.where(color: false).first
+
+    patch :update,
+          id: game.id,
+          game: { black_player_id: black_player.id }
+
+    black_piece.reload
+
+    assert_equal black_player.id, black_piece.player_id
   end
 end
