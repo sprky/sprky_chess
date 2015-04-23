@@ -78,7 +78,6 @@ $(document).ready(function() {
   }
 
   function sendMove( destination ) {
-    console.log('send move' + destination);
     // source and destination are selected, send ajax call
     var destination_x = $(destination).data("x-position");
     var destination_y = $(destination).data("y-position");
@@ -87,16 +86,24 @@ $(document).ready(function() {
       type: 'PUT',
       url: piecePathUrl,
       dataType: 'json',
-      data: { piece: { 
-              x_position: destination_x,
-              y_position: destination_y 
-              }
-            },
+      data: { 
+        piece: { 
+          x_position: destination_x,
+          y_position: destination_y 
+        }
+      },
       success: function(data) {
         $(location).attr('href', data.update_url);
-        console.log('sent ajax call to ' + piecePathUrl);
       }
     });   
+  }
+
+  function isPawn( piece ) {
+    if ($(piece).data('piece-type') == 'Pawn') {
+      return true
+    } else {
+      return false
+    }
   }
 
   var load_time_stamp = $('body').data('time-stamp');
