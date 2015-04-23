@@ -32,12 +32,7 @@
 	</table>
 	<p>
 		White Player: 
-		<% if @game.white_player_id.present? %> 
-		  <%= player_email_from_id(@game.white_player_id) %> 
-		<% else %>
-		  <%= link_to 'Invite Player', new_game_invitations_path(@game), class: 'button' %>
-		<% end %>
+	  <%= player_email_from_id(@game.white_player_id) %> 
   </p>
 <% end %>
-
 

@@ -17,15 +17,6 @@
 
 
 $(document).ready(function() {
-  //this will be triggered by clicking select game
-  $('.select-game-link').click( function()  {
-    var game_id = $("input[name='game_id']").val();
-    if (game_id) {
-      var url = '/games/'+game_id;
-      $(location).attr('href', url);
-    }
-  });
-
   // Navigation
   var menuToggle = $('#js-mobile-menu').unbind();
   $('#js-navigation-menu').removeClass("show");
@@ -42,11 +33,7 @@ $(document).ready(function() {
   // boolean to determine if a piece has been selected
   var piece_selected = false;
   // set up variables for ajax call
-  var piece_x_position,
-      piece_y_position,
-      destination_x_position,
-      destination_y_position,
-      piecePathUrl;
+  var piecePathUrl;
   
   // set up click listener for all tds on gameboard
   $('#gameboard td').click( function() {
@@ -82,24 +69,24 @@ $(document).ready(function() {
     if (isYourTurn && ( pieceId != "" )) {
       $(piece).addClass('piece-selected');
       piece_selected = true; 
-      piece_x_position = $(piece).data("x-position");
-      piece_y_position = $(piece).data("y-position");
+      var piece_x_position = $(piece).data("x-position");
+      var piece_y_position = $(piece).data("y-position");
       piecePathUrl = '/pieces/' + pieceId;
     }
   }
 
   function sendMove( destination ) {
     // source and destination are selected, send ajax call
-    destination_x_position = $(destination).data("x-position");
-    destination_y_position = $(destination).data("y-position");
+    var destination_x = $(destination).data("x-position");
+    var destination_y = $(destination).data("y-position");
 
     $.ajax({
       type: 'PUT',
       url: piecePathUrl,
       dataType: 'json',
       data: { piece: { 
-              x_position: destination_x_position,
-              y_position: destination_y_position 
+              x_position: destination_x,
+              y_position: destination_y 
               }
             },
       success: function(data) {

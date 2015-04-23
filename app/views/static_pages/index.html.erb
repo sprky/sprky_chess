@@ -2,7 +2,7 @@
   <section class="top">
     <hgroup class="welcome vertical">
       <h1>THIS IS SPRKY</h1>
-      <h4 class="subheader">Online Chess&amp;mdash;Ruby on Rails Style.</h4>
+      <h4 class="subheader">Online Chess&mdash;Ruby on Rails Style.</h4>
     </hgroup>
   </section>
   <section class="features">
@@ -43,7 +43,6 @@
       <div class="code-box-container">
         <div class="code-example four">
           <pre><code class="language-ruby">
-            # determines if color( white(true) or black(false) ) is in check
             def check?(color)
               king = pieces.find_by(type: 'King', color: color)
               opponents = pieces_remaining(!color)
@@ -57,20 +56,12 @@
               false
             end
 
-            # determine if a state of checkmate has occurred for color( white(true) or black(false) )
             def checkmate?(color)
               checked_king = pieces.find_by(type: 'King', color: color)
 
-              # make sure color is in check and get @piece_causing_check
               return false unless check?(color)
-
-              # see if king can get himself out of check
               return false if checked_king.can_move_out_of_check?
-
-              # see if another piece can capture checking piece
               return false if @piece_causing_check.can_be_captured?
-
-              # # see if another piece can block check
               return false if @piece_causing_check.can_be_blocked?(checked_king)
 
               true
@@ -95,10 +86,8 @@
           <pre><code class="language-js">
             function selectPiece( piece ) {
               var pieceId = $(piece).data("piece-id");
-              // can't select a square that doesn't have a piece
 
               var isYourTurn = $('#gameboard').data('your-turn');
-              // can only select a square if it's your turn and there's a piece on the square  
               if (isYourTurn &amp;&amp; ( pieceId != "" )) {
                 $(piece).addClass('piece-selected');
                 piece_selected = true; 
@@ -109,7 +98,6 @@
             }
 
             function sendMove( destination ) {
-              // source and destination are selected, send ajax call
               destination_x_position = $(destination).data("x-position");
               destination_y_position = $(destination).data("y-position");
 
