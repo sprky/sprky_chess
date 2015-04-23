@@ -4,9 +4,10 @@ class InvitationMailer < ActionMailer::Base
   def send_invitation(invitation)
     @url = "http://sprky.herokuapp.com/games/#{invitation.game.id}"
     @guest_player = invitation.guest_player_email
+    @host_player = invitation.player.email
 
     mail(
       to: "#{@guest_player}",
-      subject: "Invitation: Play SPRKY Chess")
+      subject: "Invitation: Play SPRKY Chess with #{@host_player}")
   end
 end
