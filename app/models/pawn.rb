@@ -49,15 +49,11 @@ class Pawn < Piece
 
   def promotion(x, y)
     update_attributes(
-      x_position: nil,
-      y_position: nil,
-      state: 'off-board')
-    Queen.create(
-      game_id: game_id,
       x_position: x,
       y_position: y,
-      player_id: player_id,
-      color: color)
+      state: 'awaiting-promotion-assignment')
+    game.update_attributes(
+      state: 'awaiting-promotion-assignment')
   end
 
   private

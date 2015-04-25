@@ -10,6 +10,8 @@ Sprky::Application.routes.draw do
   end
 
   resources :pieces, only: :update
+
+  get '/games/:game_id/promotion' => 'games#promotion', as: :promotion
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -15,4 +15,8 @@ module ApplicationHelper
     end
     @gameboard_td += '</td>'
   end
+
+  def your_turn?
+    @game.turn == current_player.id
+  end
 end

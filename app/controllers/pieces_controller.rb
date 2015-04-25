@@ -3,19 +3,23 @@ class PiecesController < ApplicationController
     @piece = Piece.find(params[:id])
     @game = @piece.game
 
-    if !your_turn?(current_player)
+    if !your_turn?
       render text: 'It must be your turn',
              status: :unauthorized
     else
       @piece.attempt_move(piece_params)
 
-      render json: {
-        update_url: game_path(@game)
-      }
+      if @game.state == 'awaiting-promotion-assignment'
+        redirect_to promotion_path(@game)
+      else
+        render json: {
+          update_url: game_path(@game)
+        }
 
-      update_firebase(
-        update_url: game_path(@game),
-        time_stamp: Time.now.to_i)
+        update_firebase(
+          update_url: game_path(@game),
+          time_stamp: Time.now.to_i)
+      end
     end
   end
 
@@ -27,7 +31,7 @@ class PiecesController < ApplicationController
       :y_position)
   end
 
-  def your_turn?(current_player)
+  def your_turn?
     @game.turn == current_player.id
   end
 

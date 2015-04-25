@@ -65,8 +65,9 @@ $(document).ready(function() {
     console.log(pieceId);
     // can't select a square that doesn't have a piece
 
+    var isYourTurn = $('#gameboard').data('your-turn');
     // can only select a square if it's your turn and there's a piece on the square  
-    if (pieceId != "") {
+    if (isYourTurn && ( pieceId != "" )) {
       console.log('piece selected');
 
       $(piece).addClass('piece-selected');

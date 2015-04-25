@@ -99,10 +99,8 @@ class Piece < ActiveRecord::Base
       else
         update_piece(x, y, 'moved')
       end
-
       return true
     end
-
     false
   end
 
