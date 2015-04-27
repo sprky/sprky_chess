@@ -82,6 +82,11 @@ $(document).ready(function() {
     // source and destination are selected, send ajax call
     var destination_x = $(destination).data("x-position");
     var destination_y = $(destination).data("y-position");
+    var pieceTD = $('#gameboard td.piece-selected');
+
+    if ( isPawn(pieceTD) ) {
+      console.log('We got a pawn!');
+    }
 
     $.ajax({
       type: 'PUT',
