@@ -87,7 +87,6 @@ class Game < ActiveRecord::Base
   # update turn and game state after successful move
   def update_state(current_player_color)
     # check if opposite player is in check
-    return if state == 'awaiting-promotion-assignment'
     if check?(!current_player_color)
       if checkmate?(!current_player_color)
         update_attributes(state: 'checkmate')

@@ -10,7 +10,7 @@ class Pawn < Piece
 
   def move_to(x, y)
     if can_promote?(y) && valid_move?(x, y)
-      promotion(x, y)
+      promotion(x, y, @type)
     else
       super(x, y)
     end
@@ -47,13 +47,19 @@ class Pawn < Piece
     y == 7 && color || y == 0 && !color
   end
 
-  def promotion(x, y)
+  def promotion(x, y, type)
     update_attributes(
+      x_position: nil,
+      y_position: nil,
+      state: 'off-board')
+    game.pieces.create(
       x_position: x,
       y_position: y,
-      state: 'awaiting-promotion-assignment')
-    game.update_attributes(
-      state: 'awaiting-promotion-assignment')
+      type: type,
+      state: 'moved',
+      color: color,
+      player_id: player_id
+      )
   end
 
   private

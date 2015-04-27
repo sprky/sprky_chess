@@ -17,6 +17,7 @@ class Piece < ActiveRecord::Base
     Piece.transaction do
       x = params[:x_position].to_i
       y = params[:y_position].to_i
+      @type = params[:type]
 
       return false unless moving_own_piece?
       fail ActiveRecord::Rollback unless move_to(x, y)

@@ -31,11 +31,6 @@ class GamesController < ApplicationController
     end
   end
 
-  def promotion
-    @game = Game.find(params[:game_id])
-    @piece = @game.pieces.find_by(state: 'awaiting-pawn-promotion')
-  end
-
   private
 
   def game_params

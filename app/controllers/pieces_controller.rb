@@ -9,17 +9,13 @@ class PiecesController < ApplicationController
     else
       @piece.attempt_move(piece_params)
 
-      if @game.state == 'awaiting-promotion-assignment'
-        redirect_to promotion_path(@game)
-      else
-        render json: {
-          update_url: game_path(@game)
-        }
+      render json: {
+        update_url: game_path(@game)
+      }
 
-        update_firebase(
-          update_url: game_path(@game),
-          time_stamp: Time.now.to_i)
-      end
+      update_firebase(
+        update_url: game_path(@game),
+        time_stamp: Time.now.to_i)
     end
   end
 
@@ -28,7 +24,8 @@ class PiecesController < ApplicationController
   def piece_params
     @piece_params = params.require(:piece).permit(
       :x_position,
-      :y_position)
+      :y_position,
+      :type)
   end
 
   def your_turn?

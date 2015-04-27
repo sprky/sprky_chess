@@ -62,7 +62,6 @@ $(document).ready(function() {
   // boolean and variables
   function selectPiece( piece ) {
     var pieceId = $(piece).data("piece-id");
-    console.log(pieceId);
     // can't select a square that doesn't have a piece
 
     var isYourTurn = $('#gameboard').data('your-turn');
@@ -82,10 +81,12 @@ $(document).ready(function() {
     // source and destination are selected, send ajax call
     var destination_x = $(destination).data("x-position");
     var destination_y = $(destination).data("y-position");
-    var pieceTD = $('#gameboard td.piece-selected');
+    var piece_td = $('#gameboard td.piece-selected');
+    var type = piece_td.data('piece-type');
 
-    if ( isPawn(pieceTD) ) {
-      console.log('We got a pawn!');
+    if ( isPawn( piece_td ) && isMovingToLastRank( destination_y )) {
+      type = prompt("Pawn promotion! Please choose a piece to promote to: \n 'Queen' or 'Knight' ");
+      console.log( type );
     }
 
     $.ajax({
@@ -95,7 +96,8 @@ $(document).ready(function() {
       data: { 
         piece: { 
           x_position: destination_x,
-          y_position: destination_y 
+          y_position: destination_y,
+          type: type
         }
       },
       success: function(data) {
@@ -104,12 +106,21 @@ $(document).ready(function() {
     });   
   }
 
-  function isPawn( piece ) {
-    if ($(piece).data('piece-type') == 'Pawn') {
+  function isPawn( piece_td ) {
+    if ( piece_td.data('piece-type') == 'Pawn') {
       return true
     } else {
       return false
     }
+  }
+
+  function isMovingToLastRank( destination_y ) {
+    if ( ( destination_y == 0 )  || ( destination_y == 7 ) ) {
+      return true
+    } else {
+      return false
+    }
+
   }
 
   var load_time_stamp = $('body').data('time-stamp');
