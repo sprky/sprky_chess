@@ -16,9 +16,13 @@ class InvitationMailerTest < ActionMailer::TestCase
     assert_not ActionMailer::Base.deliveries.empty?
 
     subject = 'Invitation: Play SPRKY Chess with ' + "#{player.email}"
+    expected_body = '<p>Click here to join the game: '
+    expected_body += 'http://sprky.herokuapp.com/games/77/invitations'
+    expected_body += '</p><p>Good luck,</p><p>SPRKY</p>'
 
     assert_equal ['no-reply@sprky.herokuapp.com'], email.from
     assert_equal ['myfriend@email.com'], email.to
     assert_equal subject, email.subject
+    assert_equal expected_body, email.body.raw_source
   end
 end

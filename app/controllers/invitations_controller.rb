@@ -22,4 +22,9 @@ class InvitationsController < ApplicationController
       :guest_player_email,
       :player_id)
   end
+
+  helper_method :current_invitation
+  def current_invitation
+    @invitation = @game.invitations.last
+  end
 end
