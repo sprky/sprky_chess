@@ -5,7 +5,7 @@ class Player < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :game
   has_many :pieces
-  
+
   def color_name
     color ? 'white' : 'black'
   end

@@ -8,11 +8,14 @@ class Pawn < Piece
     proper_length?(y) || en_passant?(y)
   end
 
-  def move_to(x, y)
+  def move_to(params)
+    x = params[:x_position].to_i
+    y = params[:y_position].to_i
+
     if can_promote?(y) && valid_move?(x, y)
-      promotion(x, y, @type)
+      promotion(params)
     else
-      super(x, y)
+      super(params)
     end
   end
 
@@ -47,7 +50,11 @@ class Pawn < Piece
     y == 7 && color || y == 0 && !color
   end
 
-  def promotion(x, y, type)
+  def promotion(params)
+    x = params[:x_position].to_i
+    y = params[:y_position].to_i
+    type = params[:type]
+
     update_attributes(
       x_position: nil,
       y_position: nil,
