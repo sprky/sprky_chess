@@ -83,8 +83,17 @@ $(document).ready(function() {
     var type = piece_td.data('piece-type');
 
     if ( isPawn( piece_td ) && isMovingToLastRank( destination_y )) {
-      type = prompt("Pawn promotion! Please choose a piece to promote to: \n 'Queen' or 'Knight' ");
-      console.log( type );
+      // type = prompt("Pawn promotion! Please choose a piece to promote to: \n 'Queen' or 'Knight' ");
+      // console.log( type );
+      openModal('#promo-modal');
+
+      $(".modal-fade-screen, .modal-close").on("click", function() {
+        $(".modal-state:checked").prop("checked", false).change();
+      });
+
+      $(".modal-inner").on("click", function(e) {
+        e.stopPropagation();
+      });
     }
 
     $.ajax({
@@ -133,4 +142,34 @@ $(document).ready(function() {
       location.reload();
     }
   }); 
+
+  function openModal ( modalId ) {
+    var $modal = $(modalId);
+
+    $modal.prop("checked", true);
+
+    if ($modalState.is(":checked")) {
+      $("body").addClass("modal-open");
+    } else {
+      $("body").removeClass("modal-open");
+    }
+  }
+
+  $(function() {
+    $("#modal-1").on("change", function() {
+      if ($(this).is(":checked")) {
+        $("body").addClass("modal-open");
+      } else {
+        $("body").removeClass("modal-open");
+      }
+    });
+
+    $(".modal-fade-screen, .modal-close").on("click", function() {
+      $(".modal-state:checked").prop("checked", false).change();
+    });
+
+    $(".modal-inner").on("click", function(e) {
+      e.stopPropagation();
+    });
+  });
 });

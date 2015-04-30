@@ -1,6 +1,7 @@
 class Game < ActiveRecord::Base
   after_create :initialize_board!
   after_create :set_default_turn
+  after_create :set_default_color
   after_create :assign_pieces
 
   has_many :players
@@ -152,6 +153,12 @@ class Game < ActiveRecord::Base
 
   def set_default_turn
     update_attributes(turn: white_player_id)
+  end
+
+  def set_default_color
+    byebug
+    white_player = Player.find(white_player_id)
+    white_player.update_attributes(color: true)
   end
 
   def throw_invalid_move
