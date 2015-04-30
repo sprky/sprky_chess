@@ -95,6 +95,7 @@
     padding: $modal-padding / 2;
     position: relative;
     width: 95%;
+    text-align: center;
 
     @include media($medium-screen) {
       max-height: 70%;
@@ -106,39 +107,8 @@
       width: 50%;
     }
 
-    h1 {
-      color: $base-font-color;
-      margin-bottom: 0 0 0.6em 0;
-      text-align: left;
-      text-transform: capitalize;
-    }
-
-    p {
-      color: $base-font-color;
-      line-height: $base-line-height;
-    }
-
-    .modal-intro {
-      font-weight: 800;
-    }
-
-    .modal-content {
-      color: $base-font-color;
-
-      @include media($medium-screen) {
-        @include columns(2 8em);
-      }
-    }
-
-    a.cta {
-      color: white;
-      display: inline-block;
-      margin-right: 0.5em;
-      margin-top: 1em;
-
-      &:last-child {
-        padding: 0 2em;
-      }
+    hgroup {
+      margin-bottom: 2em; 
     }
   }
 
@@ -159,9 +129,6 @@
 .promo-selection-container {
   @include row;
   text-align: center;
-  hgroup {
-    margin-bottom: 2em; 
-  }
 
   input[type="submit"] {
     margin-top: 2em;
@@ -175,4 +142,9 @@
     margin-top: -.5em;
     margin-bottom: .5em;
   }
+}
+
+.promo-selection-submit {
+  @include row;
+  margin-top: 2em;
 }

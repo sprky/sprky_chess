@@ -13,35 +13,38 @@
   <div class="modal-fade-screen">
     <div class="modal-inner">
       <div class="modal-close" for="promo-modal"></div>
-      <div class="promo-selection-container">
         <hgroup>
           <h4>Pawn Promotion</h4>
           <h6>Choose Your Piece:</h6>
         </hgroup>
         <form action="#">
-          <div class="promo-selection-choice">
-            <%= image_tag "#{current_player.color_name}-queen.svg" %>
-            <label for="">Queen</label>
-            <input type="radio">
-          </div>
+          <div class="promo-selection-container">
+            <div class="promo-selection-choice">
+              <%= image_tag "#{current_player.color_name}-queen.svg" %>
+              <label for="queen">Queen</label>
+              <input type="radio" name="piece-type" value="queen" id="queen">
+            </div>
 
-          <div class="promo-selection-choice">
-            <%= image_tag "#{current_player.color_name}-rook.svg" %>
-            <label for="">Rook</label>
-            <input type="radio">
-          </div>
+            <div class="promo-selection-choice">
+              <%= image_tag "#{current_player.color_name}-rook.svg" %>
+              <label for="rook">Rook</label>
+              <input type="radio" name="piece-type" value="rook" id="rook">
+            </div>
 
-          <div class="promo-selection-choice">
-            <%= image_tag "#{current_player.color_name}-bishop.svg" %>
-            <label for="">Bishop</label>
-            <input type="radio">
-          </div>
+            <div class="promo-selection-choice">
+              <%= image_tag "#{current_player.color_name}-bishop.svg" %>
+              <label for="bishop">Bishop</label>
+              <input type="radio" name="piece-type" value="bishop" id="bishop">
+            </div>
 
-          <div class="promo-selection-choice">
-            <%= image_tag "#{current_player.color_name}-knight.svg" %>
-            <label for="">Knight</label>
-            <input type="radio">
-          </div>
+            <div class="promo-selection-choice">
+              <%= image_tag "#{current_player.color_name}-knight.svg" %>
+              <label for="bishop">Knight</label>
+              <input type="radio" name="piece-type" value="knight" id="knight">
+            </div>
+        </div>
+        <div class="promo-selection-submit">
+          
         </div>
       </form>
     </div>

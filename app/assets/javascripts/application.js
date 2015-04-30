@@ -97,7 +97,7 @@ $(document).ready(function() {
     }
 
     $.ajax({
-      type: 'PUT',
+      type: 'PATCH',
       url: piecePathUrl,
       dataType: 'json',
       data: { 
