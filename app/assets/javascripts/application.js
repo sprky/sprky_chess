@@ -71,8 +71,6 @@ $(document).ready(function() {
 
       $(piece).addClass('piece-selected');
       piece_selected = true; 
-      var piece_x_position = $(piece).data("x-position");
-      var piece_y_position = $(piece).data("y-position");
       piecePathUrl = '/pieces/' + pieceId;
     }
   }
