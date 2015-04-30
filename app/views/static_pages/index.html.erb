@@ -21,23 +21,22 @@
       <div class="code-box-container">
         <div class="code-example">
           <pre><code class="language-ruby">
-        def capture_move?(x, y)
-          captured_piece = game.obstruction(x, y)
-          captured_piece &amp;&amp; captured_piece.color != color
-        end
-        
-        def mark_captured
-          update_attributes(
-            x_position: nil,
-            y_position: nil, 
-            state: 'off-board')
+        def attempt_move(params)
+          Piece.transaction do
+            return false unless moving_own_piece?
+            fail ActiveRecord::Rollback unless move_to(params)
+            fail ActiveRecord::Rollback if game.check?(color)
+
+            # update current state of check, checkmate, etc.
+            game.update_state(color)
+          end
         end
           </code></pre>
           <div class="arrow"></div>
         </div>
         <div class="code-description">
-          <h4>Capture Move</h4>
-          <p>While a piece of either color on any square along a move path could cause an obstruction, the destination needed to be treated differently. We did this with a capture_move? method which returned a boolean.  To do this we checked the destination with game.obstruction(x, y) which returns either nil or a reference to the obstructing piece.  A simple check that the piece exists and is of opposite color gives us our result. Next, the mark_captured method will be called to move the piece off the board and mark it as captured.</p>
+          <h4>Attempting a Move</h4>
+          <p>While many illegal moves are caught before writing to the database, some are not detected until after - a player moving into check for example. For cases such as these, Activerecord transactions were used to ensure that all database updates would rollback to the previous move.</p>
         </div>
       </div>
       <div class="code-box-container">
@@ -57,7 +56,8 @@
               false
             end
 
-            # determine if a state of checkmate has occurred for color( white(true) or black(false) )
+            # determine if a state of checkmate has occurred 
+            # for color( white(true) or black(false) )
             def checkmate?(color)
               checked_king = pieces.find_by(type: 'King', color: color)
 
@@ -98,7 +98,8 @@
               // can't select a square that doesn't have a piece
 
               var isYourTurn = $('#gameboard').data('your-turn');
-              // can only select a square if it's your turn and there's a piece on the square  
+              // can only select a square if it's your turn 
+              // and there's a piece on the square  
               if (isYourTurn &amp;&amp; ( pieceId != "" )) {
                 $(piece).addClass('piece-selected');
                 piece_selected = true; 
