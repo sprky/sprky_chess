@@ -1,7 +1,7 @@
-<div class='game-turn-message'><%= message(@game) %></div>
+<div class='game-turn-message'><%= message game %></div>
 <div class='game-container'>
 	<div class="game-content">
-    <h1><%= @game.name %></h1>
+    <h1><%= game.name %></h1>
     <%= render 'shared/gameboard' %>
   </div>
 </div>
@@ -19,32 +19,15 @@
         </hgroup>
         <form action="#" class="promotion-choice">
           <div class="promo-selection-container">
-            <div class="promo-selection-choice">
-              
-              <label for="queen">
-                <%= image_tag "#{current_player.color_name}-queen.svg" %>
-                Queen
-              </label>
-              <input type="radio" name="piece-type" value="Queen" id="queen">
-            </div>
-
-            <div class="promo-selection-choice">
-              <%= image_tag "#{current_player.color_name}-rook.svg" %>
-              <label for="rook">Rook</label>
-              <input type="radio" name="piece-type" value="Rook" id="rook">
-            </div>
-
-            <div class="promo-selection-choice">
-              <%= image_tag "#{current_player.color_name}-bishop.svg" %>
-              <label for="bishop">Bishop</label>
-              <input type="radio" name="piece-type" value="Bishop" id="bishop">
-            </div>
-
-            <div class="promo-selection-choice">
-              <%= image_tag "#{current_player.color_name}-knight.svg" %>
-              <label for="bishop">Knight</label>
-              <input type="radio" name="piece-type" value="Knight" id="knight">
-            </div>
+            <% ['Queen', 'Bishop', 'Rook', 'Knight'].each do |name| %>
+              <div class="promo-selection-choice">              
+                <label for="#{name.downcase}">
+                  <%= piece_image game, current_player, name.downcase %>
+                  <%= name %>
+                </label>
+                <input type="radio" name="piece-type" value="#{name}" id="#{name.downcase}">
+              </div>
+            <% end %>
         </div>
         <div class="promo-selection-submit">
           <input type="submit">

@@ -22,6 +22,6 @@ module ApplicationHelper
   end
 
   def your_turn?
-    @game.turn == current_player.id
+    game.turn == current_player.id
   end
 end
