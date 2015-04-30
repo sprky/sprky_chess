@@ -67,8 +67,6 @@ $(document).ready(function() {
     var isYourTurn = $('#gameboard').data('your-turn');
     // can only select a square if it's your turn and there's a piece on the square  
     if (isYourTurn && ( pieceId != "" )) {
-      console.log('piece selected');
-
       $(piece).addClass('piece-selected');
       piece_selected = true; 
       piecePathUrl = '/pieces/' + pieceId;
@@ -94,23 +92,46 @@ $(document).ready(function() {
       $(".modal-inner").on("click", function(e) {
         e.stopPropagation();
       });
-    }
 
-    $.ajax({
-      type: 'PUT',
-      url: piecePathUrl,
-      dataType: 'json',
-      data: { 
-        piece: { 
-          x_position: destination_x,
-          y_position: destination_y,
-          type: type
+      $('.promo-selection-choice input').on('change', function() {
+        var $this = $(this);
+        var type = $this.val();
+        console.log(type);
+      });
+
+      $('.promo-selection-submit input').on('click', function() {
+        $.ajax({
+          type: 'PATCH',
+          url: piecePathUrl,
+          dataType: 'json',
+          data: { 
+            piece: { 
+              x_position: destination_x,
+              y_position: destination_y,
+              type: type
+            }
+          },
+          success: function(data) {
+            $(location).attr('href', data.update_url);
+          }
+        });
+      });
+    } else {
+      $.ajax({
+        type: 'PATCH',
+        url: piecePathUrl,
+        dataType: 'json',
+        data: { 
+          piece: { 
+            x_position: destination_x,
+            y_position: destination_y
+          }
+        },
+        success: function(data) {
+          $(location).attr('href', data.update_url);
         }
-      },
-      success: function(data) {
-        $(location).attr('href', data.update_url);
-      }
-    });   
+      });
+    }
   }
 
   function isPawn( piece_td ) {
@@ -127,7 +148,6 @@ $(document).ready(function() {
     } else {
       return false
     }
-
   }
 
   var load_time_stamp = $('body').data('time-stamp');
@@ -148,7 +168,7 @@ $(document).ready(function() {
 
     $modal.prop("checked", true);
 
-    if ($modalState.is(":checked")) {
+    if ($modal.is(":checked")) {
       $("body").addClass("modal-open");
     } else {
       $("body").removeClass("modal-open");
