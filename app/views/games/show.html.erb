@@ -17,30 +17,33 @@
           <h4>Pawn Promotion</h4>
           <h6>Choose Your Piece:</h6>
         </hgroup>
-        <form action="#">
+        <form action="#" class="promotion-choice">
           <div class="promo-selection-container">
             <div class="promo-selection-choice">
-              <%= image_tag "#{current_player.color_name}-queen.svg" %>
-              <label for="queen">Queen</label>
-              <input type="radio" name="piece-type" value="queen" id="queen">
+              
+              <label for="queen">
+                <%= image_tag "#{current_player.color_name}-queen.svg" %>
+                Queen
+              </label>
+              <input type="radio" name="piece-type" value="Queen" id="queen">
             </div>
 
             <div class="promo-selection-choice">
               <%= image_tag "#{current_player.color_name}-rook.svg" %>
               <label for="rook">Rook</label>
-              <input type="radio" name="piece-type" value="rook" id="rook">
+              <input type="radio" name="piece-type" value="Rook" id="rook">
             </div>
 
             <div class="promo-selection-choice">
               <%= image_tag "#{current_player.color_name}-bishop.svg" %>
               <label for="bishop">Bishop</label>
-              <input type="radio" name="piece-type" value="bishop" id="bishop">
+              <input type="radio" name="piece-type" value="Bishop" id="bishop">
             </div>
 
             <div class="promo-selection-choice">
               <%= image_tag "#{current_player.color_name}-knight.svg" %>
               <label for="bishop">Knight</label>
-              <input type="radio" name="piece-type" value="knight" id="knight">
+              <input type="radio" name="piece-type" value="Knight" id="knight">
             </div>
         </div>
         <div class="promo-selection-submit">
