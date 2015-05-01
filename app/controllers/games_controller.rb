@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_player!
+  helper_method :game
 
   def new
     @game = Game.new
@@ -11,27 +12,27 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.where(id: params[:id]).last
-    if @game.nil?
-      redirect_to dashboard_path
-    else
-      @pieces = @game.pieces
-      end
+  end
+
+  def index
+    redirect_to dashboard_path
   end
 
   def update
-    @game = Game.find(params[:id])
-
-    if @game.valid? && unique_players?
-      @game.update_attributes(game_params)
-      @game.assign_pieces
-      redirect_to game_path(@game)
-    else
-      render :new, status: :unprocessable_entity
+    if game.valid? && unique_players?
+      game.update_attributes game_params
+      game.assign_pieces
+      return redirect_to game_path game
     end
+
+    render :new, status: :unprocessable_entity
   end
 
   private
+
+  def game
+    @game ||= Game.find params[:id]
+  end
 
   def game_params
     params.require(:game).permit(

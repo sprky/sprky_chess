@@ -80,10 +80,6 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def unique_players?
-    white_player_id != black_player_id
-  end
-
   # update turn and game state after successful move
   def update_state(current_player_color)
     # check if opposite player is in check
