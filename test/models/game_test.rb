@@ -39,11 +39,6 @@ class GameTest < ActiveSupport::TestCase
     assert_equal expected, actual
   end
 
-  test 'should be unique players' do
-    setup_game
-    assert @game.unique_players?
-  end
-
   def setup_game
     player_creating_game = FactoryGirl.create(:player, id: 2)
     @game = FactoryGirl.create(

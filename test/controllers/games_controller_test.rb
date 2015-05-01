@@ -14,10 +14,10 @@ class GamesControllerTest < ActionController::TestCase
     assert game.white_player_id == 37 ||  game.black_player_id == 37
   end
 
-  test 'game join fail due to identical@player_id' do
+  test 'game join fail due to identical player_id' do
     player = FactoryGirl.create(:player)
     sign_in player
-    game = FactoryGirl.create(:game, white_player_id: 3, black_player_id: 0)
+    game = FactoryGirl.create(:game, white_player_id: 3)
     patch :update, id: game.id, game: { black_player_id: 3 }
     game.reload
     assert_response :unprocessable_entity, 'Should respond unprocessable_entity'

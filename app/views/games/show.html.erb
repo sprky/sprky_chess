@@ -1,4 +1,4 @@
-<div class='game-turn-message'><%= message game %></div>
+<div class='game-turn-message'><%= game_message game %></div>
 <div class='game-container'>
 	<div class="game-content">
     <h1><%= game.name %></h1>
@@ -19,7 +19,7 @@
             <% ['Queen', 'Bishop', 'Rook', 'Knight'].each do |name| %>
               <div class="promo-selection-choice">              
                 <label for="#{name.downcase}">
-                  <%= piece_image game, current_player, name.downcase %>
+                  <%= piece_image game, current_player, name %>
                   <%= name %>
                 </label>
                 <input type="radio" name="piece-type" value="#{name}" id="#{name.downcase}">

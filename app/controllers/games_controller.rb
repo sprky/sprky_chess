@@ -19,9 +19,8 @@ class GamesController < ApplicationController
   end
 
   def update
-    game.update_attributes game_params
-
-    if game.valid? && game.unique_players?
+    if game.valid? && unique_players?
+      game.update_attributes game_params
       game.assign_pieces
       return redirect_to game_path game
     end
@@ -30,6 +29,10 @@ class GamesController < ApplicationController
   end
 
   private
+
+  def unique_players?
+    game.white_player_id != game_params[:black_player_id].to_i
+  end
 
   def game
     @game ||= Game.find params[:id]
