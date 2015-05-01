@@ -30,10 +30,6 @@ class GamesController < ApplicationController
 
   private
 
-  def unique_players?
-    game.white_player_id != game_params[:black_player_id].to_i
-  end
-
   def game
     @game ||= Game.find params[:id]
   end
@@ -43,5 +39,9 @@ class GamesController < ApplicationController
       :name,
       :white_player_id,
       :black_player_id)
+  end
+
+  def unique_players?
+    @game.white_player_id != game_params[:black_player_id].to_i
   end
 end

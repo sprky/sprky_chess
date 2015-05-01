@@ -11,11 +11,21 @@ class InvitationsController < ApplicationController
     redirect_to game_path(@game)
   end
 
+  def show
+    before_action :authenticate_user!
+    @game = Game.find(params[:game_id])
+  end
+
   private
 
   def invitation_params
     params.require(:invitation).permit(
       :guest_player_email,
       :player_id)
+  end
+
+  helper_method :current_invitation
+  def current_invitation
+    @invitation = @game.invitations.last
   end
 end

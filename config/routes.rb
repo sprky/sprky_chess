@@ -6,7 +6,7 @@ Sprky::Application.routes.draw do
   resource :dashboard, only: :show
 
   resources :games, except: :destroy do
-    resource :invitations, only: [:new, :create]
+    resource :invitations, only: [:new, :create, :show]
   end
 
   resources :pieces, only: :update
