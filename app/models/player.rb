@@ -5,4 +5,5 @@ class Player < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :game
   has_many :pieces
+  has_many :invitations
 end

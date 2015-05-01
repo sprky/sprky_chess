@@ -1,31 +1,13 @@
 require 'test_helper'
 
 class GamesControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-
-  test 'game join success' do
+  test 'game join fail due to identical player_id\'s' do
     player = FactoryGirl.create(:player)
     sign_in player
-    game = FactoryGirl.create(:game, white_player_id: player.id)
-    patch :update, id: game.id, game: { black_player_id: 37 }
-    game.reload
-    assert_response :found
-    assert_redirected_to game_path(assigns(:game))
-    # method exists to randomize which player is white and which is black
-    # for this reason either color may end up being player 37
-    assert game.white_player_id == 37 ||  game.black_player_id == 37
-  end
-
-  test 'game join fail due to identical@player_id' do
-    player = FactoryGirl.create(:player)
-    sign_in player
-    game = FactoryGirl.create(:game, white_player_id: 3, black_player_id: 0)
-    put :update, id: game.id, game: { black_player_id: 3 }
+    game = FactoryGirl.create(:game, white_player_id: 3)
+    patch :update, id: game.id, game: { black_player_id: 3 }
     game.reload
     assert_response :unprocessable_entity, 'Should respond unprocessable_entity'
-    assert_nil game.black_player_id, 'black_player_id should be nil'
   end
 
   test 'game created with :create action' do
@@ -35,5 +17,21 @@ class GamesControllerTest < ActionController::TestCase
       post :create, game: { name: 'game1' }
     end
     assert_redirected_to game_path(assigns(:game))
+  end
+
+  test 'guest can join game' do
+    host = FactoryGirl.create(:player, id: 1)
+    guest = FactoryGirl.create(:player, id: 2)
+    sign_in guest
+
+    game = FactoryGirl.create(:game, white_player_id: host.id)
+
+    patch :update, id: game.id, game: { black_player_id: guest.id }
+    game.reload
+
+    assert_response :found
+    assert_redirected_to game_path(game)
+    assert_equal guest.id, game.black_player_id
+    assert_equal host.id, game.white_player_id
   end
 end

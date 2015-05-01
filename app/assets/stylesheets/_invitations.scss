@@ -1,0 +1,14 @@
+.invitation-container {
+  @include row;
+}
+
+.invitation-content {
+ @extend .form-page-content;
+  text-align: center; 
+  h1 {
+    @extend h4;
+  }
+  input[type='submit'] {
+    float: none;
+  }
+}

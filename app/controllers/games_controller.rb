@@ -21,11 +21,8 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
-    @game.update_attributes(game_params)
-    if @game.valid? && ensure_unique_players
-      randomize_players
-      @game.assign_pieces
-      @game.update_attributes(turn: @game.white_player_id)
+    if @game.valid? && unique_players?
+      @game.update_attributes(game_params)
       redirect_to game_path(@game)
     else
       render :new, status: :unprocessable_entity
@@ -38,20 +35,7 @@ class GamesController < ApplicationController
     params.require(:game).permit(:name, :white_player_id, :black_player_id)
   end
 
-  def ensure_unique_players
-    if @game.white_player_id == @game.black_player_id
-      @game.update_attributes(black_player_id: nil)
-      return false
-    else
-      return true
-    end
-  end
-
-  def randomize_players
-    if rand(0..1) == 1
-      temp_id = @game.white_player_id
-      @game.update_attributes(white_player_id: @game.black_player_id)
-      @game.update_attributes(black_player_id: temp_id)
-    end
+  def unique_players?
+    @game.white_player_id != game_params[:black_player_id].to_i
   end
 end
