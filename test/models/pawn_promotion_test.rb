@@ -16,16 +16,27 @@ class PawnPromotionTest < ActiveSupport::TestCase
     assert_equal 'Queen', @game.pieces.find_by(x_position: 1, y_position: 7).type
   end
 
-  # test 'Should allow pawn promotion move' do
-  #   setup_game_and_advanced_pawn
+  test 'Should allow pawn promotion move' do
+    setup_game_and_advanced_pawn
 
-  #   @pawn.move_to([x_position: 1, y_position: 7, type: 'Queen'])
-  #   @pawn.reload
+    @pawn.move_to(x_position: 1, y_position: 7, type: 'Queen')
+    @pawn.reload
 
-  #   assert_equal nil, @pawn.x_position, 'Pawn x position is nil'
-  #   assert_equal nil, @pawn.y_position, 'Pawn y position is nil'
-  #   assert_equal 'Queen', @game.pieces.find_by(x_position: 1, y_position: 7).type
-  # end
+    assert_equal nil, @pawn.x_position, 'Pawn x position is nil'
+    assert_equal nil, @pawn.y_position, 'Pawn y position is nil'
+    assert_equal 'Queen', @game.pieces.find_by(x_position: 1, y_position: 7).type
+  end
+
+  test 'Should allow pawn promotion move to Knight' do
+    setup_game_and_advanced_pawn
+
+    @pawn.move_to(x_position: 1, y_position: 7, type: 'Knight')
+    @pawn.reload
+
+    assert_equal nil, @pawn.x_position, 'Pawn x position is nil'
+    assert_equal nil, @pawn.y_position, 'Pawn y position is nil'
+    assert_equal 'Knight', @game.pieces.find_by(x_position: 1, y_position: 7).type
+  end
 
   test 'Should prevent pawn promotion move' do
     setup_game_and_advanced_pawn
