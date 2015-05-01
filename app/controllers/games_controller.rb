@@ -25,7 +25,7 @@ class GamesController < ApplicationController
       game.assign_pieces
       return redirect_to game_path game
     end
-       
+
     render :new, status: :unprocessable_entity
   end
 
