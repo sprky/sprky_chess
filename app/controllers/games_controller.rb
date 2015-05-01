@@ -21,10 +21,8 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
-    @game.update_attributes(game_params)
-
-    if @game.valid? && @game.unique_players?
-      @game.assign_pieces
+    if @game.valid? && unique_players?
+      @game.update_attributes(game_params)
       redirect_to game_path(@game)
     else
       render :new, status: :unprocessable_entity
@@ -38,5 +36,9 @@ class GamesController < ApplicationController
       :name,
       :white_player_id,
       :black_player_id)
+  end
+
+  def unique_players?
+    @game.white_player_id != game_params[:black_player_id].to_i
   end
 end
