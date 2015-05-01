@@ -5,3 +5,51 @@
     <%= render 'shared/gameboard' %>
   </div>
 </div>
+<div class="modal">
+  <label for="promo-modal">
+    <div class="modal-trigger">Click for Modal</div>
+  </label>
+  <input class="modal-state" id="promo-modal" type="checkbox" />
+  <div class="modal-fade-screen">
+    <div class="modal-inner">
+      <div class="modal-close" for="promo-modal"></div>
+        <hgroup>
+          <h4>Pawn Promotion</h4>
+          <h6>Choose Your Piece:</h6>
+        </hgroup>
+        <form action="#" class="promotion-choice">
+          <div class="promo-selection-container">
+            <div class="promo-selection-choice">
+              
+              <label for="queen">
+                <%= image_tag "#{current_player.color_name}-queen.svg" %>
+                Queen
+              </label>
+              <input type="radio" name="piece-type" value="Queen" id="queen">
+            </div>
+
+            <div class="promo-selection-choice">
+              <%= image_tag "#{current_player.color_name}-rook.svg" %>
+              <label for="rook">Rook</label>
+              <input type="radio" name="piece-type" value="Rook" id="rook">
+            </div>
+
+            <div class="promo-selection-choice">
+              <%= image_tag "#{current_player.color_name}-bishop.svg" %>
+              <label for="bishop">Bishop</label>
+              <input type="radio" name="piece-type" value="Bishop" id="bishop">
+            </div>
+
+            <div class="promo-selection-choice">
+              <%= image_tag "#{current_player.color_name}-knight.svg" %>
+              <label for="bishop">Knight</label>
+              <input type="radio" name="piece-type" value="Knight" id="knight">
+            </div>
+        </div>
+        <div class="promo-selection-submit">
+          <input type="submit">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

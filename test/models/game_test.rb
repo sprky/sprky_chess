@@ -39,12 +39,24 @@ class GameTest < ActiveSupport::TestCase
     assert_equal expected, actual
   end
 
+  test 'should be unique players' do
+    setup_game
+    assert @game.unique_players?
+  end
+
+  # test 'player who created game should be assigned white color' do
+  #   setup_game
+  #   @game.reload
+
+  #   white_player = Player.find(@game.white_player_id)
+  #   assert white_player.color
+  # end
+
   def setup_game
+    player_creating_game = FactoryGirl.create(:player, id: 2)
     @game = FactoryGirl.create(
       :game,
       black_player_id: 1,
-      white_player_id: 2,
-      turn: 1)
-    @game.assign_pieces
+      white_player_id: player_creating_game.id)
   end
 end

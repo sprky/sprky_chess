@@ -106,9 +106,7 @@ class GameCheckingTest < ActiveSupport::TestCase
     @game = FactoryGirl.create(
       :game,
       black_player_id: 1,
-      white_player_id: 2,
-      turn: 1)
-    @game.assign_pieces
+      white_player_id: 2)
 
     @white_king = @game.pieces.find_by(type: 'King', color: true)
   end
