@@ -17,15 +17,6 @@
 
 
 $(document).ready(function() {
-  //this will be triggered by clicking select game
-  $('.select-game-link').click( function()  {
-    var game_id = $("input[name='game_id']").val();
-    if (game_id) {
-      var url = '/games/'+game_id;
-      $(location).attr('href', url);
-    }
-  });
-
   // Navigation
   var menuToggle = $('#js-mobile-menu').unbind();
   $('#js-navigation-menu').removeClass("show");
@@ -42,11 +33,7 @@ $(document).ready(function() {
   // boolean to determine if a piece has been selected
   var piece_selected = false;
   // set up variables for ajax call
-  var piece_x_position,
-      piece_y_position,
-      destination_x_position,
-      destination_y_position,
-      piecePathUrl;
+  var piecePathUrl;
   
   // set up click listener for all tds on gameboard
   $('#gameboard td').click( function() {
@@ -82,30 +69,85 @@ $(document).ready(function() {
     if (isYourTurn && ( pieceId != "" )) {
       $(piece).addClass('piece-selected');
       piece_selected = true; 
-      piece_x_position = $(piece).data("x-position");
-      piece_y_position = $(piece).data("y-position");
       piecePathUrl = '/pieces/' + pieceId;
     }
   }
 
   function sendMove( destination ) {
     // source and destination are selected, send ajax call
-    destination_x_position = $(destination).data("x-position");
-    destination_y_position = $(destination).data("y-position");
+    var destination_x = $(destination).data("x-position");
+    var destination_y = $(destination).data("y-position");
+    var piece_td = $('#gameboard td.piece-selected');
+    var type = piece_td.data('piece-type');
 
-    $.ajax({
-      type: 'PUT',
-      url: piecePathUrl,
-      dataType: 'json',
-      data: { piece: { 
-              x_position: destination_x_position,
-              y_position: destination_y_position 
-              }
-            },
-      success: function(data) {
-        $(location).attr('href', data.update_url);
-      }
-    });   
+    if ( isPawn( piece_td ) && isMovingToLastRank( destination_y )) {
+      // type = prompt("Pawn promotion! Please choose a piece to promote to: \n 'Queen' or 'Knight' ");
+      // console.log( type );
+      openModal('#promo-modal');
+
+      $(".modal-fade-screen, .modal-close").on("click", function() {
+        $(".modal-state:checked").prop("checked", false).change();
+      });
+
+      $(".modal-inner").on("click", function(e) {
+        e.stopPropagation();
+      });
+
+      $('.promo-selection-choice input').on('change', function() {
+        var $this = $(this);
+        var type = $this.val();
+        console.log(type);
+      });
+
+      $('.promo-selection-submit input').on('click', function() {
+        $.ajax({
+          type: 'PATCH',
+          url: piecePathUrl,
+          dataType: 'json',
+          data: { 
+            piece: { 
+              x_position: destination_x,
+              y_position: destination_y,
+              type: type
+            }
+          },
+          success: function(data) {
+            $(location).attr('href', data.update_url);
+          }
+        });
+      });
+    } else {
+      $.ajax({
+        type: 'PATCH',
+        url: piecePathUrl,
+        dataType: 'json',
+        data: { 
+          piece: { 
+            x_position: destination_x,
+            y_position: destination_y
+          }
+        },
+        success: function(data) {
+          $(location).attr('href', data.update_url);
+        }
+      });
+    }
+  }
+
+  function isPawn( piece_td ) {
+    if ( piece_td.data('piece-type') == 'Pawn') {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  function isMovingToLastRank( destination_y ) {
+    if ( ( destination_y == 0 )  || ( destination_y == 7 ) ) {
+      return true
+    } else {
+      return false
+    }
   }
 
   var load_time_stamp = $('body').data('time-stamp');
@@ -120,4 +162,34 @@ $(document).ready(function() {
       location.reload();
     }
   }); 
+
+  function openModal ( modalId ) {
+    var $modal = $(modalId);
+
+    $modal.prop("checked", true);
+
+    if ($modal.is(":checked")) {
+      $("body").addClass("modal-open");
+    } else {
+      $("body").removeClass("modal-open");
+    }
+  }
+
+  $(function() {
+    $("#modal-1").on("change", function() {
+      if ($(this).is(":checked")) {
+        $("body").addClass("modal-open");
+      } else {
+        $("body").removeClass("modal-open");
+      }
+    });
+
+    $(".modal-fade-screen, .modal-close").on("click", function() {
+      $(".modal-state:checked").prop("checked", false).change();
+    });
+
+    $(".modal-inner").on("click", function(e) {
+      e.stopPropagation();
+    });
+  });
 });

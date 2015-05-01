@@ -21,8 +21,10 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
+
     if @game.valid? && unique_players?
       @game.update_attributes(game_params)
+      @game.assign_pieces
       redirect_to game_path(@game)
     else
       render :new, status: :unprocessable_entity
@@ -32,7 +34,10 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :white_player_id, :black_player_id)
+    params.require(:game).permit(
+      :name,
+      :white_player_id,
+      :black_player_id)
   end
 
   def unique_players?

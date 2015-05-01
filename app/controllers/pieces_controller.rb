@@ -2,15 +2,21 @@ class PiecesController < ApplicationController
   def update
     @piece = Piece.find(params[:id])
     @game = @piece.game
-    # attempt to move piece
-    @piece.attempt_move(piece_params) if your_turn?
 
-    render json: {
-      update_url: game_path(@game)
-    }
-    update_firebase(
-      update_url: game_path(@game),
-      time_stamp: Time.now.to_i)
+    if !your_turn?
+      render text: 'It must be your turn',
+             status: :unauthorized
+    else
+      @piece.attempt_move(piece_params)
+
+      render json: {
+        update_url: game_path(@game)
+      }
+
+      update_firebase(
+        update_url: game_path(@game),
+        time_stamp: Time.now.to_i)
+    end
   end
 
   private
@@ -18,7 +24,8 @@ class PiecesController < ApplicationController
   def piece_params
     @piece_params = params.require(:piece).permit(
       :x_position,
-      :y_position)
+      :y_position,
+      :type)
   end
 
   def your_turn?

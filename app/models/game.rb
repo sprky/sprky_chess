@@ -1,5 +1,7 @@
 class Game < ActiveRecord::Base
   after_create :initialize_board!
+  after_create :set_default_turn
+  after_create :assign_pieces
 
   has_many :players
   has_many :pieces
@@ -11,7 +13,6 @@ class Game < ActiveRecord::Base
     pieces.where(color: true).each do |p|
       p.update_attributes(player_id: white_player_id)
     end
-
     pieces.where(color: false).each do |p|
       p.update_attributes(player_id: black_player_id)
     end
@@ -57,6 +58,51 @@ class Game < ActiveRecord::Base
       "color = ? and state = 'en_passant'",
       color).update_all(state: 'moved')
   end
+
+  # determind if obstruction occurs at x, y in game
+  def obstruction(x, y)
+    pieces.where(x_position: x, y_position: y).last
+  end
+
+  def pieces_remaining(color)
+    pieces.includes(:game).where(
+      "color = ? and state != 'off-board'",
+      color).to_a
+  end
+
+  # switches game turn to color
+  def switch_players(color)
+    # ensure that game is set to correct turn
+    if color
+      update_attributes(turn: white_player_id)
+    else
+      update_attributes(turn: black_player_id)
+    end
+  end
+
+  def unique_players?
+    white_player_id != black_player_id
+  end
+
+  # update turn and game state after successful move
+  def update_state(current_player_color)
+    # check if opposite player is in check
+    if check?(!current_player_color)
+      if checkmate?(!current_player_color)
+        update_attributes(state: 'checkmate')
+      else
+        # if so, game state is check
+        update_attributes(state: 'check')
+      end
+    else
+      # if not, game state is not check
+      update_attributes(state: nil)
+    end
+    # give turn over to other player
+    switch_players(!current_player_color)
+  end
+
+  private
 
   def initialize_board!
     # White Pieces
@@ -104,46 +150,9 @@ class Game < ActiveRecord::Base
     King.create(game_id: id, x_position: 4, y_position: 7, color: false)
   end
 
-  # determind if obstruction occurs at x, y in game
-  def obstruction(x, y)
-    pieces.where(x_position: x, y_position: y).last
+  def set_default_turn
+    update_attributes(turn: white_player_id)
   end
-
-  def pieces_remaining(color)
-    pieces.includes(:game).where(
-      "color = ? and state != 'off-board'",
-      color).to_a
-  end
-
-  # switches game turn to color
-  def switch_players(color)
-    # ensure that game is set to correct turn
-    if color
-      update_attributes(turn: white_player_id)
-    else
-      update_attributes(turn: black_player_id)
-    end
-  end
-
-  # update turn and game state after successful move
-  def update_state(current_player_color)
-    # check if opposite player is in check
-    if check?(!current_player_color)
-      if checkmate?(!current_player_color)
-        update_attributes(state: 'checkmate')
-      else
-        # if so, game state is check
-        update_attributes(state: 'check')
-      end
-    else
-      # if not, game state is not check
-      update_attributes(state: nil)
-    end
-    # give turn over to other player
-    switch_players(!current_player_color)
-  end
-
-  private
 
   def throw_invalid_move
     update_attributes(state: "Invalid Move - you can't move into check")
