@@ -53,10 +53,10 @@ hgroup.welcome {
   margin: 0;
   width: 100%;
   background: $light-gray;
-  padding: 4em 0 8em 0;
+  padding: 3em 0 9em 0;
   hgroup {
     text-align: center;
-    margin-bottom: 2em;
+    margin-bottom: 3em;
   } 
 }
 
@@ -94,8 +94,6 @@ hgroup.welcome {
   padding: 8% 4%;
   margin: 0;
   color: white;
-  h4 {
-  }
   &.red {
     background-color: $red;
   }
@@ -105,23 +103,23 @@ hgroup.welcome {
   position: absolute;
   bottom: 0%;
   left: 50%;
-  height: 36px;
-  width: 36px;
-  margin-bottom: -18px;
+  height: 2em;
+  width: 2em;
+  margin-bottom: -1em;
   background-color: $primary-color;
   transform: rotate(45deg);
 
   @include media($code-breakpoint-up) {
     top: 50%;
     left: 100%;
-    margin-top: -36px;
-    margin-left: -18px;
+    margin-top: -2em;
+    margin-left: -1em;
   }
 
   &.red {
     background-color: $red;
     bottom: 0%;
-    margin-top: -18px;
+    margin-top: -1em;
     @include media($code-breakpoint-up) {
       left: 0%;
       top: 50%;
