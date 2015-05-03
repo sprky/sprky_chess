@@ -72,17 +72,14 @@
           <h4>Check and Checkmate</h4>
           <p>An integral part of the chess game, check and checkmate gave us our biggest logic challenge. Through several iterations and a number of refactors we eventually landed on two elegant and simple methods.</p>
           <h5>Check</h5>
-          <p>Check is determined both before a move transaction is completed to ensure a player doesn't move into check and after to see if the opponent is in check. A simple iteration through all opponents to see if any of them can make a valid move to the king's position determines a state of check</p>
+          <p>In order to determine check, we looped through all opponents pieces to if any piece can legally move to the king's position. The check method runs before and after a move transaction is completed. This ensures a player doesn't move themselves into check and also determines if the opponent is in check. </p>
           <h5>Checkmate</h5>
-          <p>Once a player is in check we determined that there are three ways to get out. If any of those are present the game is not in a state of checkmate. ActiveRecord transactions were set up to allow 2 levels of moves to be examined (moving a piece then seeing if a state of check exists) without altering the database.</p>
-          <p>A king can move himself out of check. This was the simplest method to implement by trying each of the possible king moves.</p>
-          <p>The piece causing check can be captured. This is accomplished by seeing if any opposing piece can capture the piece causing check.</p>
-          <p>Lastly, the move can be blocked. We resused code from our move obstruction method to get an array of possible squares that could be used for the block. Each opposing piece was checked to see if it could move into one of the blocking squares.</p>
+          <p>Once a player is in check we determined that there are three ways to get out of check. If any of those moves are possible, the game is not in a state of checkmate. We set up ActiveRecord transactions to examine two levels of moves without altering the database. This allowed us to simulate a move and then verify if a state of check exists after the move.</p>
         </div>
       </div>
       <div class="code-box-container">
         <div class="code-example">
-          <pre><code class="language-js">
+          <pre><code class="language-javascript">
             function selectPiece( piece ) {
               var pieceId = $(piece).data("piece-id");
 
@@ -91,23 +88,21 @@
               if (isYourTurn &amp;&amp; ( pieceId != "" )) {
                 $(piece).addClass('piece-selected');
                 piece_selected = true; 
-                piece_x_position = $(piece).data("x-position");
-                piece_y_position = $(piece).data("y-position");
                 piecePathUrl = '/pieces/' + pieceId;
               }
             }
 
             function sendMove( destination ) {
-              destination_x_position = $(destination).data("x-position");
-              destination_y_position = $(destination).data("y-position");
+              x = $(destination).data("x-position");
+              y = $(destination).data("y-position");
 
               $.ajax({
                 type: 'PUT',
                 url: piecePathUrl,
                 dataType: 'json',
                 data: { piece: { 
-                        x_position: destination_x_position,
-                        y_position: destination_y_position 
+                        x_position: x,
+                        y_position: y 
                         }
                       },
                 success: function(data) {
@@ -120,10 +115,10 @@
         </div>
         <div class="code-description">
           <h4>Javascript</h4>
-          <p>To reduce the number of http requests we implemented a number of checks on the front end which made extensive use of data attributes assigned to the html in our gameboard.html.erb function. These data attributes included data-game-id, data-your-turn, data-game-message as well as informatin within each square such as data-x-position, data-y-position and data-piece-id. This allowed our front-end to work seemlessly with our server-side logic.</p>
-          <p>In order to select a piece to move the code checks that there is a piece assigned to the square and that it's currently your turn.  Another javacript function determines a destination and triggers sendMove.</p>
+          <p>To reduce http requests we implemented a number of checks on the front-end which made extensive use of data attributes. These data attributes included data-game-id, data-your-turn, data-game-message as well as informatin within each square such as data-x-position, data-y-position, data-piece-type, and data-piece-id. This allowed us to create a seamless integration between our front-end and back-end logic.</p>
+          <p>In order to select a piece, the code checks that there is a piece assigned to the square and that it's currently your turn.  Another javacript function determines a destination and triggers sendMove.</p>
           <p>The sendMove function sends an AJAX call to our PiecesController with an updated x and y position. Upon success the controller returns with the correct URL for an updated game board (games/:id) and the page is reloaded.</p>
-          <p>Our goal is to modify this to update the gameboard partial rather than trigger a full page reload.</p>
+          <p>One enhancement we'd like to implement is to update the gameboard partial rather than trigger a full page reload.</p>
         </div>
       </div>
     </div>
