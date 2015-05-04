@@ -1,38 +1,16 @@
 <% if game %>
-	<p>
-		Black Player: 
-		<% if game.black_player_id.present? %> 
-		  <%= player_email_from_id(game.black_player_id) %> 
-		<% else %>
-			<%= link_to 'Invite Player', new_game_invitations_path(game), class: 'button' %>
-		<% end %>
-	</p>
+	<p><%= raw show_opponent %></p>
 	<table id='gameboard' data-game-state='<%= game.state %>' data-your-turn='<%= your_turn? %>' data-game-id='<%= game.id %>'>
-		<% if current_player.id != game.white_player_id %>
-			<!-- show board from black player perspective -->
-			<% (0..7).each do |row| %>
-				<tr class='y-position-<%= row %>' >
-					<% 7.downto(0).each do |column| %>
-						<% query_result = game.pieces.find { |p| p["x_position"] == column && p["y_position"] == row } %>
-    				<%= raw gameboard_td(query_result, column, row) %>
-					<% end %>
-				</tr>
-		 	<% end %>
-		<% else %>
-			<!-- show board from white player perspective -->
-			<% 7.downto(0) do |row| %>
-				<tr class='y-position-<%= row %>' >
-					<% (0..7).each do |column| %>
-						<% query_result = game.pieces.select { |p| p["x_position"] == column && p["y_position"] == row }.first %>
-    				<%= raw gameboard_td(query_result, column, row) %>
-					<% end %>
-				</tr>
-		 	<% end %>
-		<% end %>
-	</table>
-	<p>
-		White Player: 
-	  <%= player_email_from_id(game.white_player_id) %> 
-  </p>
+		<!-- show board from black player perspective -->
+		<% row_range.each do |row| %>
+			<tr class='y-position-<%= row %>' >
+				<% 7.downto(0).each do |column| %>
+					<% query_result = game.pieces.find { |p| p["x_position"] == column && p["y_position"] == row } %>
+  				<%= raw gameboard_td(query_result, column, row) %>
+				<% end %>
+			</tr>
+	 	<% end %>
+	</table> 	
+	<p><%= raw show_player %></p>
 <% end %>
 
