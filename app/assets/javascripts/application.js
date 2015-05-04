@@ -33,7 +33,7 @@ $(document).ready(function() {
   // boolean to determine if a piece has been selected
   var piece_selected = false;
   // set up variables for ajax call
-  var piecePathUrl;
+  var pieceURL;
   
   // set up click listener for all tds on gameboard
   $('#gameboard td').click( function() {
@@ -44,7 +44,7 @@ $(document).ready(function() {
         deselectPiece(this);
       } else {
         // this must be the destination, make ajax call for a move
-        sendMove(this);
+        initiateMove(this);
       }
     } else {
       // no piece has been selected, select this piece
@@ -69,20 +69,17 @@ $(document).ready(function() {
     if (isYourTurn && ( pieceId != "" )) {
       $(piece).addClass('piece-selected');
       piece_selected = true; 
-      piecePathUrl = '/pieces/' + pieceId;
+      pieceURL = '/pieces/' + pieceId;
     }
   }
 
-  function sendMove( destination ) {
+  function initiateMove( destination_td ) {
     // source and destination are selected, send ajax call
-    var destination_x = $(destination).data("x-position");
-    var destination_y = $(destination).data("y-position");
+    var destination_x = $(destination_td).data("x-position");
+    var destination_y = $(destination_td).data("y-position");
     var piece_td = $('#gameboard td.piece-selected');
-    var type = piece_td.data('piece-type');
-
+    
     if ( isPawn( piece_td ) && isMovingToLastRank( destination_y )) {
-      // type = prompt("Pawn promotion! Please choose a piece to promote to: \n 'Queen' or 'Knight' ");
-      // console.log( type );
       openModal('#promo-modal');
 
       $(".modal-fade-screen, .modal-close").on("click", function() {
@@ -93,45 +90,40 @@ $(document).ready(function() {
         e.stopPropagation();
       });
 
-      $('.promo-selection-choice input').on('change', function() {
-        var $this = $(this);
-        var type = $this.val();
-        console.log(type);
-      });
-
       $('.promo-selection-submit input').on('click', function() {
-        $.ajax({
-          type: 'PATCH',
-          url: piecePathUrl,
-          dataType: 'json',
-          data: { 
-            piece: { 
-              x_position: destination_x,
-              y_position: destination_y,
-              type: type
-            }
-          },
-          success: function(data) {
-            $(location).attr('href', data.update_url);
+        var type = $('.promo-selection-choice input:checked').val();
+        var piece = {
+          piece: {
+            x_position: destination_x,
+            y_position: destination_y,
+            type: type
           }
-        });
+        };
+        console.log('Pawn promotion', piece);
+        sendMove(pieceURL, piece);
       });
     } else {
-      $.ajax({
-        type: 'PATCH',
-        url: piecePathUrl,
-        dataType: 'json',
-        data: { 
-          piece: { 
-            x_position: destination_x,
-            y_position: destination_y
-          }
-        },
-        success: function(data) {
-          $(location).attr('href', data.update_url);
+      var piece = { 
+        piece: { 
+          x_position: destination_x,
+          y_position: destination_y
         }
-      });
+      };
+      sendMove(pieceURL, piece);
     }
+  }
+
+  // makes the AJAX call to move a piece
+  function sendMove(pieceURL, piece) {
+    $.ajax({
+      type: 'PATCH',
+      url: pieceURL,
+      dataType: 'json',
+      data: piece,
+      success: function(data) {
+        $(location).attr('href', data.update_url);
+      }
+    });
   }
 
   function isPawn( piece_td ) {
