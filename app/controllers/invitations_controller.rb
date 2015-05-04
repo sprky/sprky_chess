@@ -12,7 +12,6 @@ class InvitationsController < ApplicationController
   end
 
   def show
-    before_action :authenticate_user!
     @game = Game.find(params[:game_id])
   end
 

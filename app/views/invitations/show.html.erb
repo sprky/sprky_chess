@@ -1,12 +1,16 @@
 <div class="invitation-container">
   <div class="invitation-content">
-    <h1>Want to Play?</h1>
-    <p><%= player_email_from_id(current_invitation.player_id) %> has invited you to play chess.</p>
-    <%= simple_form_for @game, url: game_path(@game) do |f| %>
-      <%= f.input :black_player_id, as: :hidden, input_html: { value: current_player.id } %>
-      <%= f.input :game, as: :hidden, input_html: { value: @game } %>
+    <% if current_invitation.present? %>
+      <h1>Want to Play?</h1>
+      <p><%= player_email_from_id(current_invitation.player_id) %> has invited you to play chess.</p>
+      <%= simple_form_for @game, url: game_path(@game) do |f| %>
+        <%= f.input :black_player_id, as: :hidden, input_html: { value: current_player.id } %>
+        <%= f.input :game, as: :hidden, input_html: { value: @game } %>
 
-      <%= f.submit 'Join Game', action: :update, method: :patch, class: 'button' %>
+        <%= f.submit 'Join Game', action: :update, method: :patch, class: 'button' %>
+      <% end %>
+    <% else %>
+      <p>There are no invitations for this game</p>
     <% end %>
   </div>
 </div>
