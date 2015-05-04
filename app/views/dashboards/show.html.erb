@@ -1,7 +1,7 @@
 <div class='dashboard-container'>
   <div class='dashboard-content'>
     <hgroup>
-      <h2>My Dashboard</h1>
+      <h2>Dashboard</h1>
       <h4 class='subheader'><%= current_player.email %></h3>
     </hgroup>
     <section class='games-information'>
@@ -9,7 +9,7 @@
       <% if player_signed_in? %>
         <section class='my-games'>
           <% if @my_games.present? %>
-            <h4>My games</h4>
+            <h3>My games</h3>
           <% end %>
           <ul class='game-list'>
             <% if @my_games.present? %>
@@ -37,6 +37,9 @@
                 </li>
               <% end %>
             <% end %>
+          </ul>
+
+          <ul class='game-list'>
             <% if @my_games.present? %>
               <h4>My opponents turn</h4>
             <% end %>

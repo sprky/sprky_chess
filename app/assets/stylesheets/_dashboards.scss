@@ -11,12 +11,20 @@
   @include shift(1);
   text-align: center;
 
+  .games-information {
+    text-align: center;
+    h4 {
+      text-align: center;
+      margin-bottom: .75em;
+    }
+  }
+
   .game-list {
     text-align: left;
     margin-top: 1em;
     @include media($large-screen) {
       width: 80%;
-      margin: 1em auto 0em auto;
+      margin: 1.5em auto 3em auto;
     }
   }
 
