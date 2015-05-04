@@ -12,7 +12,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    unless @game.present?
+    unless game.present?
       return redirect_to dashboard_path
     end
   end
