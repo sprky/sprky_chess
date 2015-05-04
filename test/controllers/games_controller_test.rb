@@ -83,4 +83,13 @@ class GamesControllerTest < ActionController::TestCase
     assert_equal guest.id, game.black_player_id
     assert_equal host.id, game.white_player_id
   end
+
+  test 'Should return to dashboard for unknown game' do
+    player = FactoryGirl.create(:player)
+    sign_in player
+
+    get :show, id: 99
+
+    assert_redirected_to dashboard_path
+  end
 end
