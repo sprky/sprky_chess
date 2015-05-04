@@ -12,6 +12,9 @@ class GamesController < ApplicationController
   end
 
   def show
+    unless @game.present?
+      return redirect_to dashboard_path
+    end
   end
 
   def index
@@ -31,7 +34,7 @@ class GamesController < ApplicationController
   private
 
   def game
-    @game ||= Game.find params[:id]
+    @game ||= Game.where(id: params[:id]).last
   end
 
   def game_params
