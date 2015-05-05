@@ -4,7 +4,7 @@
 		<!-- show board from black player perspective -->
 		<% row_range.each do |row| %>
 			<tr class='y-position-<%= row %>' >
-				<% 7.downto(0).each do |column| %>
+				<% row_range.reverse.each do |column| %>
 					<% query_result = game.pieces.find { |p| p["x_position"] == column && p["y_position"] == row } %>
   				<%= raw gameboard_td(query_result, column, row) %>
 				<% end %>
