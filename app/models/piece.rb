@@ -33,6 +33,7 @@ class Piece < ActiveRecord::Base
     opponents = game.pieces_remaining(!color)
     # for each opponent, iterate through all squares that could obstruct
     opponents.each do |opponent|
+      next if opponent.type == 'King'
       obstruction_array.each do |square|
         # return true if we find even one way to obstruct check
         return true if opponent.valid_move?(square[0], square[1])

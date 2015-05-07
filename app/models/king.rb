@@ -7,17 +7,17 @@ class King < Piece
 
   # determine if king can move himself out of check
   def can_move_out_of_check?
+    starting_x = x_position
+    starting_y = y_position
     success = false
     ((x_position - 1)..(x_position + 1)).each do |x|
       ((y_position - 1)..(y_position + 1)).each do |y|
-        Piece.transaction do
-          move_to(x_position: x, y_position: y) if valid_move?(x, y)
-          # if game.check?(color) comes up false,
-          # even once, assign  true
-          success = true unless game.check?(color)
-          # reset any attempted moves
-          fail ActiveRecord::Rollback
-        end
+        update_attributes(x_position: x, y_position: y) if valid_move?(x, y)
+        # if game.check?(color) comes up false,
+        # even once, assign  true
+        success = true unless game.check?(color)
+        # reset any attempted moves
+        update_attributes(x_position: starting_x, y_position: starting_y)
       end
     end
     success
