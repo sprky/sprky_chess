@@ -24,10 +24,6 @@ $(document).ready(function () {
   }
 
   function sendMove ( $pieceSelected, $destination ) {
-    console.log ( 'sent ' + $pieceSelected.data( 'piece-id' ) + ' to '
-     + $destination.data( 'x-position' ) + ' ' 
-     + $destination.data( 'y-position' ) );
-
     var piece = {
       id: $pieceSelected.data( 'piece-id' ),
       x_position: $destination.data( 'x-position' ),
@@ -59,23 +55,15 @@ $(document).ready(function () {
     });
   }
 
-  function selectedSamePiece( $piece ) {
-    console.log( 'selected same piece' );
-    var pieceId = $piece.data( 'piece-id' );
-    // need to grab pieceId from first pieceIsSelected in click handler
-  }
-
   function selectPiece( $piece ) {
     var isPlayersTurn = $( '#gameboard' ).data( 'your-turn' );
 
     if ( isPlayersTurn ) {
-      console.log( 'selected a ' + $piece.data( 'piece-type' ) );
       $piece.addClass( 'selected' );
     }
   }
 
   function deselectPiece( $piece ) {
-    console.log( 'deslected a ' + $piece.data( 'piece-type' ) );
     $piece.removeClass( 'selected' );
   }
 
