@@ -34,7 +34,7 @@ $(document).ready(function () {
       y_position: $destination.data( 'y-position' )
     }
 
-    if ( isPawn( $pieceSelected ) && isMovingToLastRank( piece.y_position )) {
+    if ( isPawnPromotion( $pieceSelected, piece.y_position ) ) {
       openModal('#promo-modal', function( pieceType ) {
         piece.type = pieceType;
         submitAjax( piece );
@@ -43,19 +43,12 @@ $(document).ready(function () {
     } else {
       submitAjax( piece );
     }
-
   }
 
   function submitAjax( piece ) {
-
-    var pieceId = piece.id;
-
-    // removes the id property from piece
-    delete piece.id;
-
     $.ajax({
       type: 'PATCH',
-      url: '/pieces/' + pieceId,
+      url: '/pieces/' + piece.id,
       dataType: 'json',
       data: { 
         piece: piece
@@ -86,25 +79,17 @@ $(document).ready(function () {
     $piece.removeClass( 'selected' );
   }
 
-  function selectDestination() {
-
-  }
-
   // Pawn Promotion
   function isPawn( $piece ) {
-    return ( $piece.data('piece-type') == 'Pawn')
+    return ( $piece.data('piece-type') == 'Pawn');
   }
 
   function isMovingToLastRank( y ) {
-    return ( ( y == 0 ) || ( y == 7 ) ) 
+    return ( ( y == 0 ) || ( y == 7 ) );
   }
 
-  function isPawnPromotion(piece, y) {
-    if(isPawn(piece) && isMovingToLastRank(piece, y)) {
-      return true;
-    } else {
-      return false;
-    }
+  function isPawnPromotion( $piece, y) {
+    return ( isPawn( $piece ) && isMovingToLastRank( y ) ); 
   }
 
   // Modal
@@ -132,13 +117,8 @@ $(document).ready(function () {
     });
   }
 
-  // Logic Methods
   function isPlayersTurn() {
-    if ($('#gameboard').data('your-turn')) {
-      return true;
-    } else {
-      return false;
-    }
+    return ( $( '#gameboard' ).data( 'your-turn' ) );
   }
 
 });

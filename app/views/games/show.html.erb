@@ -22,7 +22,7 @@
                   <%= piece_image game, current_player, name %>
                   <%= name %>
                 </label>
-                <input type="radio" name="piece-type" value="#{name}" id="#{name.downcase}">
+                <input type="radio" name="piece-type" value="<%= name %>" id="<%= name.downcase %>">
               </div>
             <% end %>
         </div>
