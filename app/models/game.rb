@@ -39,11 +39,11 @@ class Game < ActiveRecord::Base
     # make sure color is in check and get @piece_causing_check
     return false unless check?(color)
 
-    # see if king can get himself out of check
-    return false if checked_king.can_move_out_of_check?
-
     # see if another piece can capture checking piece
     return false if @piece_causing_check.can_be_captured?
+
+    # see if king can get himself out of check
+    return false if checked_king.can_move_out_of_check?
 
     # # see if another piece can block check
     return false if @piece_causing_check.can_be_blocked?(checked_king)

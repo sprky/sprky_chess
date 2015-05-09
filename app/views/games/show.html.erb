@@ -18,7 +18,7 @@
           <div class="promo-selection-container">
             <% ['Queen', 'Bishop', 'Rook', 'Knight'].each do |name| %>
               <div class="promo-selection-choice">              
-                <label for="#{name.downcase}">
+                <label for="<%= name.downcase %>">
                   <%= piece_image game, current_player, name %>
                   <%= name %>
                 </label>

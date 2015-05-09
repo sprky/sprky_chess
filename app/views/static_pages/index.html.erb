@@ -72,7 +72,7 @@
           <h4>Check and Checkmate</h4>
           <p>An integral part of the chess game, check and checkmate gave us our biggest logic challenge. Through several iterations and a number of refactors we eventually landed on two elegant and simple methods.</p>
           <h5>Check</h5>
-          <p>In order to determine check, we looped through all opponents pieces to if any piece can legally move to the king's position. The check method runs before and after a move transaction is completed. This ensures a player doesn't move themselves into check and also determines if the opponent is in check. </p>
+          <p>In order to determine check, we looped through all opponent's pieces to see if any piece can legally move to the king's position. The check method runs before and after a move transaction is completed. This ensures a player doesn't move themselves into check and also determines if the opponent is in check. </p>
           <h5>Checkmate</h5>
           <p>Once a player is in check we determined that there are three ways to get out of check. If any of those moves are possible, the game is not in a state of checkmate. We set up ActiveRecord transactions to examine two levels of moves without altering the database. This allowed us to simulate a move and then verify if a state of check exists after the move.</p>
         </div>
@@ -115,10 +115,10 @@
         </div>
         <div class="code-description">
           <h4>Javascript</h4>
-          <p>To reduce http requests we implemented a number of checks on the front-end which made extensive use of data attributes. These data attributes included data-game-id, data-your-turn, data-game-message as well as informatin within each square such as data-x-position, data-y-position, data-piece-type, and data-piece-id. This allowed us to create a seamless integration between our front-end and back-end logic.</p>
+          <p>To reduce http requests we implemented a number of checks on the front-end which made extensive use of data attributes. These data attributes included data-game-id, data-your-turn, data-game-message as well as information within each square such as data-x-position, data-y-position, data-piece-type, and data-piece-id. This allowed us to create a seamless integration between our front-end and back-end logic.</p>
           <p>In order to select a piece, the code checks that there is a piece assigned to the square and that it's currently your turn.  Another javacript function determines a destination and triggers sendMove.</p>
           <p>The sendMove function sends an AJAX call to our PiecesController with an updated x and y position. Upon success the controller returns with the correct URL for an updated game board (games/:id) and the page is reloaded.</p>
-          <p>One enhancement we'd like to implement is to update the gameboard partial rather than trigger a full page reload.</p>
+          <p>One planned enhancement is to return an updated gameboard partial rather than trigger a full page reload.</p>
         </div>
       </div>
     </div>

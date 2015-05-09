@@ -18,7 +18,6 @@
 //= require_tree .
 
 $(document).ready(function() {
- 
   var load_time_stamp = $('body').data('time-stamp');
   var gameID = "game"+ $('#gameboard').data('game-id')
   var fbRef = new Firebase('https://amber-inferno-5356.firebaseio.com/');
