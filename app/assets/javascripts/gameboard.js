@@ -3,15 +3,17 @@ $(document).ready(function () {
   // Selecting & Moving Pieces
   $( '#gameboard td' ).click( function() {
     $this = $(this);
+    // Returns boolean to determine piece is selected or not
     var pieceIsSelected = $( '#gameboard td' ).hasClass( 'selected' );
-    var squareHasPiece = $this.find( 'img' ).length;
-    var $pieceSelected = pieceSelected();
 
     if ( pieceIsSelected ) {
-      if ( $pieceSelected.data( 'piece-id' ) == $this.data( 'piece-id' ) ) {
+      // Returns jQuery object of selectedPiece if a piece is selected
+      var $piece = selectedPiece();
+
+      if ($piece.data('piece-id') == $this.data('piece-id')) {
         deselectPiece( $this );
       } else {
-          sendMove ( $pieceSelected, $this );
+          sendMove ( $piece, $this );
         }
     } else {
       selectPiece( $this );
@@ -19,29 +21,29 @@ $(document).ready(function () {
 
   });
 
-  function pieceSelected() {
+  function selectedPiece() {
     return $( '#gameboard td.selected' );
   }
 
-  function sendMove ( $pieceSelected, $destination ) {
+  function sendMove ( $piece, $destination ) {
     var piece = {
-      id: $pieceSelected.data( 'piece-id' ),
+      id: $piece.data( 'piece-id' ),
       x_position: $destination.data( 'x-position' ),
       y_position: $destination.data( 'y-position' )
     }
 
-    if ( isPawnPromotion( $pieceSelected, piece.y_position ) ) {
+    if ( isPawnPromotion( $piece, piece.y_position ) ) {
       openModal('#promo-modal', function( pieceType ) {
         piece.type = pieceType;
-        submitAjax( piece );
+        submitPieceUpdate( piece );
       });
 
     } else {
-      submitAjax( piece );
+      submitPieceUpdate( piece );
     }
   }
 
-  function submitAjax( piece ) {
+  function submitPieceUpdate( piece ) {
     $.ajax({
       type: 'PATCH',
       url: '/pieces/' + piece.id,
@@ -84,6 +86,7 @@ $(document).ready(function () {
   function openModal ( modalId, callback ) {
     var $modal = $(modalId);
 
+    // Change modal-state checkbox to checked
     $modal.prop("checked", true);
 
     if ($modal.is(":checked")) {
@@ -100,13 +103,10 @@ $(document).ready(function () {
       e.stopPropagation();
     });
 
+    // When form is submitted, pass input value into callback function
     $('.promo-selection-submit input').on('click', function() {
       callback( $('.promo-selection-choice input').val() );
     });
-  }
-
-  function isPlayersTurn() {
-    return ( $( '#gameboard' ).data( 'your-turn' ) );
   }
 
 });
