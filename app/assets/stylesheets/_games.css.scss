@@ -50,7 +50,7 @@
     &:hover {
       border: 2px solid $primary-color !important;
     }
-    &.piece-selected {
+    &.selected {
       border: 2px solid $primary-color !important;
 
       &.select-destination {
