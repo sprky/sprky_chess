@@ -11,5 +11,5 @@ SPRKY is composed of the following members:
 
 SPRKY is led by the great [Ken Mazaika](https://github.com/kenmazaika).
 
-Visit SPRKY Chess live at [sprky.herokuapp.com]()
+Visit SPRKY Chess live at [sprky.herokuapp.com](https://sprky.herokuapp.com)
 
