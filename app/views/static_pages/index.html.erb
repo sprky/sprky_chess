@@ -80,43 +80,38 @@
       <div class="code-box-container">
         <div class="code-example">
           <pre><code class="language-javascript">
-            function selectPiece( piece ) {
-              var pieceId = $(piece).data("piece-id");
+            function sendMove ($piece, $destination) {
+              var piece = {
+                id: $piece.data('piece-id'),
+                x_position: $destination.data('x-position'),
+                y_position: $destination.data('y-position')
+              }
 
-              var isYourTurn = $('#gameboard').data('your-turn');
+              if ( isPawnPromotion($piece, piece.y_position)) {
+                openModal('#promo-modal', function(pieceType) {
+                  piece.type = pieceType;
+                  submitPieceUpdate(piece);
+                });
 
-              if (isYourTurn &amp;&amp; ( pieceId != "" )) {
-                $(piece).addClass('piece-selected');
-                piece_selected = true; 
-                piecePathUrl = '/pieces/' + pieceId;
+              } else {
+                submitPieceUpdate(piece);
               }
             }
 
-            function sendMove( destination ) {
-              x = $(destination).data("x-position");
-              y = $(destination).data("y-position");
+            function selectPiece($piece) {
+              var isPlayersTurn = $('#gameboard').data('your-turn');
 
-              $.ajax({
-                type: 'PUT',
-                url: piecePathUrl,
-                dataType: 'json',
-                data: { piece: { 
-                        x_position: x,
-                        y_position: y 
-                        }
-                      },
-                success: function(data) {
-                  $(location).attr('href', data.update_url);
-                }
-              });   
+              if (isPlayersTurn) {
+                $piece.addClass('selected');
+              }
             }
           </code></pre>
           <div class="arrow"></div>
         </div>
         <div class="code-description">
           <h4>Javascript</h4>
-          <p>To reduce http requests we implemented a number of checks on the front-end which made extensive use of data attributes. These data attributes included data-game-id, data-your-turn, data-game-message as well as information within each square such as data-x-position, data-y-position, data-piece-type, and data-piece-id. This allowed us to create a seamless integration between our front-end and back-end logic.</p>
-          <p>In order to select a piece, the code checks that there is a piece assigned to the square and that it's currently your turn.  Another javacript function determines a destination and triggers sendMove.</p>
+          <p>To reduce http requests we implemented some front-end logic which made extensive use of data attributes. This allowed us to create a seamless integration between our front-end and back-end logic and maintain a snappy user experience</p>
+          <p>In order to select a piece, the code checks that there is a piece assigned to the square and that it's currently that player's turn.  Another javacript function determines a destination and triggers sendMove.</p>
           <p>The sendMove function sends an AJAX call to our PiecesController with an updated x and y position. Upon success the controller returns with the correct URL for an updated game board (games/:id) and the page is reloaded.</p>
           <p>One planned enhancement is to return an updated gameboard partial rather than trigger a full page reload.</p>
         </div>
