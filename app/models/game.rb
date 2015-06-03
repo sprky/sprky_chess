@@ -59,6 +59,10 @@ class Game < ActiveRecord::Base
       color).update_all(state: 'moved')
   end
 
+  def nil_player?
+    white_player_id.nil? || black_player_id.nil?
+  end
+
   # determind if obstruction occurs at x, y in game
   def obstruction(x, y)
     pieces.where(x_position: x, y_position: y).last
