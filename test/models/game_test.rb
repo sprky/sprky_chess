@@ -39,6 +39,25 @@ class GameTest < ActiveSupport::TestCase
     assert_equal expected, actual
   end
 
+  test 'Game should have nil player' do
+    game1 = FactoryGirl.create(
+      :game,
+      black_player_id: 1,
+      white_player_id: nil)
+    game2 = FactoryGirl.create(
+      :game,
+      black_player_id: nil,
+      white_player_id: 1)
+
+    assert game1.nil_player?
+    assert game2.nil_player?
+  end
+
+  test 'Game should not have nil player' do
+    setup_game
+    refute @game.nil_player?
+  end
+
   def setup_game
     player_creating_game = FactoryGirl.create(:player, id: 2)
     @game = FactoryGirl.create(

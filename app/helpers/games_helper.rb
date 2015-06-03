@@ -10,6 +10,7 @@ module GamesHelper
 
   def game_message(game)
     return 'CHECKMATE!' if game.state == 'checkmate'
+    return 'Waiting for opponent' if game.nil_player?
     turn = game.present? && game.turn == game.white_player_id ? 'White turn' : 'Black turn'
     "#{turn} #{game.state}".strip
   end

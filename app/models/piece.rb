@@ -15,6 +15,7 @@ class Piece < ActiveRecord::Base
   # puts player into check
   def attempt_move(params)
     Piece.transaction do
+      return false if game.nil_player?
       return false unless moving_own_piece?
       fail ActiveRecord::Rollback unless move_to(params)
       fail ActiveRecord::Rollback if game.check?(color)

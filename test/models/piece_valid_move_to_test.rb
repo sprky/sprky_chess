@@ -87,13 +87,13 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
   end
 
   test 'Should allow moved not causing check' do
-    game = FactoryGirl.create(:game)
+    setup_game
     black_pawn = FactoryGirl.create(
       :pawn,
       x_position: 2,
       y_position: 4,
       color: false,
-      game_id: game.id)
+      game_id: @game.id)
     black_pawn.attempt_move(x_position: 2, y_position: 3)
     black_pawn.reload
 
@@ -125,5 +125,12 @@ class PieceValidMoveToTest < ActiveSupport::TestCase
     black_queen.reload
 
     assert_equal false, black_queen.can_be_captured?
+  end
+
+  def setup_game
+    @game = FactoryGirl.create(
+      :game,
+      black_player_id: 1,
+      white_player_id: 2)
   end
 end
