@@ -25,6 +25,12 @@ class GamesController < ApplicationController
     if game.valid? && unique_players?
       game.update_attributes game_params
       game.assign_pieces
+
+      # temporary fix to remedy games that allowed a white player move
+      # before black player was assigned and gave black player a nil value
+      if game.turn.nil? && game.black_player_id.present?
+        game.update_attributes(turn: black_player_id)
+      end
       return redirect_to game_path game
     end
 
