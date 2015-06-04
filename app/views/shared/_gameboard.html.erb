@@ -11,6 +11,15 @@
 			</tr>
 	 	<% end %>
 	</table> 	
-	<p><%= raw show_player %></p>
+	<p>
+		<% unless show_player.nil? %>
+			<%= raw show_player %>
+		<% else %>
+			<%= simple_form_for game, :method => :put do |f| %>
+			  <%= f.input :black_player_id, :as => :hidden, :input_html => { :value => current_player.id } %>
+			  <%= f.submit 'Join Game' %>
+			<% end %>
+		<% end %>
+	</p>
 <% end %>
 

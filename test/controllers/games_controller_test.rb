@@ -5,13 +5,15 @@ class GamesControllerTest < ActionController::TestCase
     player = FactoryGirl.create(:player)
     sign_in player
     game = FactoryGirl.create(:game, white_player_id: player.id)
-    patch :update, id: game.id, game: { black_player_id: 37 }
+    player2 = FactoryGirl.create(:player)
+    game.update_attributes(turn: nil)
+    patch :update, id: game.id, game: { black_player_id: player2.id }
     game.reload
     assert_response :found
-    assert_redirected_to game_path(assigns(:game))
-    # method exists to randomize which player is white and which is black
-    # for this reason either color may end up being player 37
-    assert game.white_player_id == 37 ||  game.black_player_id == 37
+    assert_redirected_to game_path(game)
+    assert game.black_player_id == player2.id
+    # test that a turn: nil will be assigned to black player when black_player joins game
+    assert game.turn == player2.id
   end
 
   test 'game join fail due to identical player_id\'s' do
