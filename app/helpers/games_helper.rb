@@ -35,10 +35,8 @@ module GamesHelper
   end
 
   def show_player
-    if current_player.id == game.white_player_id
-      "White Player: #{player_email_from_id(current_player)}"
-    else
-      "Black Player: #{player_email_from_id(current_player)}"
-    end
+    return "White Player: #{player_email_from_id(current_player)}" if current_player.id == game.white_player_id
+    return "Black Player: #{player_email_from_id(current_player)}" if current_player.id == game.black_player_id
+    nil
   end
 end
